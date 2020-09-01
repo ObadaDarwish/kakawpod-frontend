@@ -1,0 +1,36 @@
+.signupContainer {
+  width: 100%;
+  background: $background-gradient;
+  min-height: 100vh;
+  @include flex_center(row);
+
+  &__signupWrapper {
+    background: $white;
+    border: 1px solid $gray-200;
+    padding: 2rem;
+    box-shadow: 0 0 0.3rem 0.2rem $gray-200;
+    width: 50rem;
+    @include flex_center(column);
+    margin-top: 7rem;
+    @include media-breakpoint-down(sm) {
+      width: 90%;
+    }
+
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    p {
+      font-size: 1.6rem;
+
+      a {
+        transition: color 0.5s ease;
+
+        &:hover {
+          color: $text-hover;
+        }
+      }
+    }
+  }
+}

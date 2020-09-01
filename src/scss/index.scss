@@ -1,7 +1,15 @@
 @import "_variables";
 @import "_mixins";
-@import "_imports";
+$grid-breakpoints: (
+        xs: 0,
+        sm: 480px,
+        md: 768px,
+        lg: 1024px,
+        xl: 1300px
+) !default;
 @import "./bootstrap/bootstrap";
+@import "_imports";
+
 
 
 @font-face {
