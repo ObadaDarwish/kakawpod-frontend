@@ -1,0 +1,66 @@
+
+.headerContainer {
+  max-width: 160rem;
+  height: 7rem;
+  background: $color3;
+  position: fixed;
+  @include flex(row);
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  &__logo {
+    flex-basis: 50%;
+    @include flex(row);
+    align-items: center;
+    justify-content: flex-start;
+
+    &__wrapper {
+      font-family: proza-libre, sans-serif;
+      margin: 0 5rem;
+      @include flex_center(column);
+      height: 15rem;
+      background: #f5dada;
+      padding: 0 1rem;
+
+      img {
+        width: 5rem;
+        height: 5rem;
+        margin-top: 4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      p {
+        font-size: 2.2rem;
+        text-align: center;
+        line-height: 2.5rem;
+        span{
+          font-size: 1.6rem;
+        }
+      }
+    }
+
+
+  }
+
+  &__navigationTabs {
+    flex-basis: 50%;
+    @include flex(row);
+    justify-content: flex-end;
+
+    a {
+      font-size: 1.8rem;
+      margin-right: 5rem;
+      transition: color 0.5s ease;
+
+      &:hover {
+        color: $text-hover;
+      }
+
+      &.active {
+        color: $text-hover;
+      }
+    }
+  }
+}

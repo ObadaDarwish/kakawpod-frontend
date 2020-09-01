@@ -1,0 +1,47 @@
+@import "_variables";
+@import "_mixins";
+@import "_imports";
+@import "./bootstrap/bootstrap";
+
+
+@font-face {
+  font-family: 'proza-libre';
+  src: url("../assets/fonts/ProzaLibre-Regular.ttf");
+}
+
+body {
+  margin: 0;
+  font-family: proza libre, sans-serif;
+  max-width: 160rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+.appContainer{
+
+}
+
+html {
+  font-size: 10px;
+
+}
+
+a {
+  text-decoration: none;
+
+  &:active {
+    color: $color1;
+  }
+
+  &:hover {
+    text-decoration: none;
+    color: $color1;
+  }
+}
+
+h1, h2, h3, h4, h5, h6, a,p {
+  margin: 0;
+  padding: 0;
+  color: $color1;
+}
+
+
