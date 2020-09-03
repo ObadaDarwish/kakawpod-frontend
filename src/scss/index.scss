@@ -1,5 +1,6 @@
 @import "_variables";
 @import "_mixins";
+
 $grid-breakpoints: (
         xs: 0,
         sm: 480px,
@@ -9,7 +10,6 @@ $grid-breakpoints: (
 ) !default;
 @import "./bootstrap/bootstrap";
 @import "_imports";
-
 
 
 @font-face {
@@ -24,9 +24,7 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
-.appContainer{
 
-}
 
 html {
   font-size: 10px;
@@ -46,10 +44,19 @@ a {
   }
 }
 
-h1, h2, h3, h4, h5, h6, a,p {
+h1, h2, h3, h4, h5, h6, a, p {
   margin: 0;
   padding: 0;
   color: $color1;
 }
 
+.notification {
+  h4,div {
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+  }
+
+
+}
 

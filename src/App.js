@@ -5,6 +5,9 @@ import Signup from './components/auth/Signup/Signup';
 import Login from './components/auth/Login/Login';
 import About from './components/About/About';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 function App() {
     return (
         <Router>
@@ -15,6 +18,7 @@ function App() {
                 <Route path={'/login'} component={Login} />
                 <Route path={'/about'} component={About} />
             </div>
+            <NotificationContainer />
         </Router>
     );
 }
