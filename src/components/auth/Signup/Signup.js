@@ -74,13 +74,13 @@ const Signup = () => {
     };
 
     return (
-        <div className={'signupContainer'}>
-            <div className={'signupContainer__signupWrapper'}>
+        <div className={'formContainer'}>
+            <div className={'formContainer__formWrapper'}>
                 <h1>Sign up</h1>
                 <p>
                     have and account? <Link to={'/login'}>Login</Link>
                 </p>
-                <div className={'signupContainer__signupWrapper__HL'} />
+                <div className={'formContainer__formWrapper__HL'} />
                 <form className={classes.root} noValidate autoComplete="off">
                     <InputUI
                         error={formData.name.has_error}

@@ -59,10 +59,11 @@
       @include flex(row);
       justify-content: flex-end;
       align-items: center;
+      padding: 0 3rem;
 
       a {
         font-size: 1.8rem;
-        margin-right: 5rem;
+        margin-right: 3rem;
         transition: color 0.5s ease;
 
         &:hover {
@@ -71,6 +72,11 @@
 
         &.active {
           color: $text-hover;
+        }
+      }
+      &__cartIcon{
+        &:focus{
+          outline: none;
         }
       }
     }

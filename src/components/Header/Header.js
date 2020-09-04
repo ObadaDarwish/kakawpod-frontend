@@ -3,7 +3,24 @@ import { Link, NavLink } from 'react-router-dom';
 import icon from '../../assets/images/cocoaPlant.png';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 import { useSelector } from 'react-redux';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import { withStyles } from '@material-ui/core/styles';
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
+
+const StyledBadge = withStyles((theme) => ({
+    badge: {
+        right: -4,
+        top: 15,
+        border: `2px solid #F3E1E1`,
+        fontSize: '1.2rem',
+        width: '2.4rem',
+        height: '2.4rem',
+        borderRadius: '10rem',
+    },
+}))(Badge);
 const Header = () => {
+    const isAuth = useSelector((state) => state.user);
     const isLoading = useSelector((state) => state.loadingIndicator);
     return (
         <div className={'headerOuterContainer'}>
@@ -33,8 +50,19 @@ const Header = () => {
                         'headerOuterContainer__headerContainer__navigationTabs'
                     }
                 >
-                    <NavLink to={'/login'}>login</NavLink>
+                    {!isAuth && <NavLink to={'/login'}>login</NavLink>}
+
                     <NavLink to={'/about'}>about</NavLink>
+                    <IconButton
+                        aria-label="cart"
+                        className={
+                            'headerOuterContainer__headerContainer__navigationTabs__cartIcon'
+                        }
+                    >
+                        <StyledBadge badgeContent={4} color="secondary">
+                            <ShoppingCartOutlinedIcon fontSize={'large'} />
+                        </StyledBadge>
+                    </IconButton>
                 </section>
             </div>
             {isLoading && <LoadingIndicator />}

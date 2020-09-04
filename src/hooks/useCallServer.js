@@ -6,11 +6,12 @@ const useCallServer = () => {
     const [response, setResponse] = useState({});
 
     const callServer = async (method, url, data) => {
-        await axios({
+        let repsonse = await axios({
             method: method,
             url: url,
             data: data,
         });
+        return repsonse;
     };
 
     return [response, setResponse, error, setError, callServer];
