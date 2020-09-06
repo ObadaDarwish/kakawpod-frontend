@@ -11,19 +11,13 @@
   right: 0;
   left: 0;
 &__headerTopContainer{
-  background: $color1;
+  background:#ead2d2;
   width: 100%;
   padding: 0.3rem 0;
+
   a{
     font-size: 1.4rem;
-    color:#fff;
     margin-right: 1rem;
-    &:hover{
-      color: $color3;
-    }
-    &.active {
-      color: $color3;
-    }
   }
 }
   &__headerContainer {

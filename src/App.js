@@ -13,6 +13,7 @@ import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import axios from 'axios';
 import Landing from './containers/Landing/Landing';
+import BlockRoute from './HOC/BlockRoute/BlockRoute';
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -27,8 +28,8 @@ function App() {
                     <Header />
                     <Switch>
                         <Route exact path={'/'} component={Landing} />
-                        <Route path={'/signup'} component={Signup} />
-                        <Route path={'/login'} component={Login} />
+                        <BlockRoute path={'/signup'} component={Signup} />
+                        <BlockRoute path={'/login'} component={Login} />
                         <PrivateRoute path={'/profile'} component={Profile} />
                         <Route path={'/about'} component={About} />
                     </Switch>

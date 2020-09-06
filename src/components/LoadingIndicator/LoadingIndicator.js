@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
             marginTop: theme.spacing(2),
         },
         position: 'absolute',
-        top: '7rem',
+        top: '9rem',
         zIndex: '-1',
         '& .MuiLinearProgress-colorPrimary': {
             background: '#F1D1D1',
