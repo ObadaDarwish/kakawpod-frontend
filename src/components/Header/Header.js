@@ -17,6 +17,7 @@ const StyledBadge = withStyles((theme) => ({
         width: '2.4rem',
         height: '2.4rem',
         borderRadius: '10rem',
+        background: '#7D5A5A',
     },
 }))(Badge);
 const Header = () => {
