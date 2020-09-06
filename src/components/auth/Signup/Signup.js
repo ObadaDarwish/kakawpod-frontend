@@ -30,7 +30,11 @@ const Signup = () => {
     const emailRef = createRef();
     const passwordRef = createRef();
     const confirmPasswordRef = createRef();
-
+    const keylistener = (event) => {
+        if (event.key === 'Enter') {
+            submitSignUp();
+        }
+    };
     const submitSignUp = () => {
         const isFormValid = validateForm(
             nameRef.current.value,
@@ -81,7 +85,12 @@ const Signup = () => {
                     have and account? <Link to={'/login'}>Login</Link>
                 </p>
                 <div className={'formContainer__formWrapper__HL'} />
-                <form className={classes.root} noValidate autoComplete="off">
+                <form
+                    className={classes.root}
+                    noValidate
+                    autoComplete="off"
+                    onKeyDown={(e) => keylistener(e)}
+                >
                     <InputUI
                         error={formData.name.has_error}
                         errorMessage={formData.name.error_message}

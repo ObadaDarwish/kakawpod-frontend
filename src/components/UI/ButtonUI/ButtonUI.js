@@ -16,7 +16,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-const ButtonUI = ({ name, className, is_disabled, clickHandler }) => {
+const ButtonUI = ({
+    name,
+    className,
+    is_disabled,
+    clickHandler,
+    downKeyListener,
+}) => {
     const classes = useStyles();
     return (
         <Button

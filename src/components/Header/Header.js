@@ -7,7 +7,7 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
-
+import UserMenu from './User_menu/User_menu';
 const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -4,
@@ -24,6 +24,16 @@ const Header = () => {
     const isLoading = useSelector((state) => state.loadingIndicator);
     return (
         <div className={'headerOuterContainer'}>
+            <div className={'headerOuterContainer__headerTopContainer'}>
+                <section className={'headerOuterContainer__navigationTabs'}>
+                    <NavLink
+                        className={'headerOuterContainer__navigationTabs__tab'}
+                        to={'/about'}
+                    >
+                        about
+                    </NavLink>
+                </section>
+            </div>
             <div className={'headerOuterContainer__headerContainer'}>
                 <section
                     className={'headerOuterContainer__headerContainer__logo'}
@@ -45,24 +55,32 @@ const Header = () => {
                         </p>
                     </Link>
                 </section>
-                <section
-                    className={
-                        'headerOuterContainer__headerContainer__navigationTabs'
-                    }
-                >
-                    {!isAuth && <NavLink to={'/login'}>login</NavLink>}
+                <section className={'headerOuterContainer__navigationTabs'}>
+                    {isAuth && <UserMenu isAuth={isAuth} />}
 
-                    <NavLink to={'/about'}>about</NavLink>
-                    <IconButton
-                        aria-label="cart"
-                        className={
-                            'headerOuterContainer__headerContainer__navigationTabs__cartIcon'
-                        }
-                    >
-                        <StyledBadge badgeContent={4} color="secondary">
-                            <ShoppingCartOutlinedIcon fontSize={'large'} />
-                        </StyledBadge>
-                    </IconButton>
+                    {!isAuth && (
+                        <NavLink
+                            className={
+                                'headerOuterContainer__navigationTabs__tab'
+                            }
+                            to={'/login'}
+                        >
+                            login
+                        </NavLink>
+                    )}
+
+                    {isAuth && (
+                        <IconButton
+                            aria-label="cart"
+                            className={
+                                'headerOuterContainer__navigationTabs__cartIcon'
+                            }
+                        >
+                            <StyledBadge badgeContent={4} color="secondary">
+                                <ShoppingCartOutlinedIcon fontSize={'large'} />
+                            </StyledBadge>
+                        </IconButton>
+                    )}
                 </section>
             </div>
             {isLoading && <LoadingIndicator />}

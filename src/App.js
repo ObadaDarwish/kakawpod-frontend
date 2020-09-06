@@ -27,8 +27,8 @@ function App() {
                     <Header />
                     <Switch>
                         <Route exact path={'/'} component={Landing} />
-                        <PrivateRoute path={'/signup'} component={Signup} />
-                        <PrivateRoute path={'/login'} component={Login} />
+                        <Route path={'/signup'} component={Signup} />
+                        <Route path={'/login'} component={Login} />
                         <PrivateRoute path={'/profile'} component={Profile} />
                         <Route path={'/about'} component={About} />
                     </Switch>

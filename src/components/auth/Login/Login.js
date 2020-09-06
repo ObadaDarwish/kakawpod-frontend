@@ -28,6 +28,11 @@ const Login = () => {
     const dispatch = useDispatch();
     const [, , , , callServer] = useCallServer();
     const [formData, validateForm] = useValidateLogin();
+    const keylistener = (event) => {
+        if (event.key === 'Enter') {
+            submitLogin();
+        }
+    };
     const submitLogin = () => {
         const isFormValid = validateForm(
             emailRef.current.value,
@@ -72,7 +77,12 @@ const Login = () => {
                     <Link to={'/signUp'}>register now</Link>
                 </p>
                 <div className={'formContainer__formWrapper__HL'} />
-                <form className={classes.root} noValidate autoComplete="off">
+                <form
+                    className={classes.root}
+                    noValidate
+                    autoComplete="off"
+                    onKeyDown={(e) => keylistener(e)}
+                >
                     <InputUI
                         error={formData.email.has_error}
                         errorMessage={formData.email.error_message}

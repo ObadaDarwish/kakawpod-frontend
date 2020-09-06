@@ -1,7 +1,7 @@
 .headerOuterContainer {
   @include flex(column);
   max-width: 160rem;
-  height: 7rem;
+  //height: 9.5rem;
   background: $color3;
   position: fixed;
   align-items: center;
@@ -10,11 +10,26 @@
   top: 0;
   right: 0;
   left: 0;
-
+&__headerTopContainer{
+  background: $color1;
+  width: 100%;
+  padding: 0.3rem 0;
+  a{
+    font-size: 1.4rem;
+    color:#fff;
+    margin-right: 1rem;
+    &:hover{
+      color: $color3;
+    }
+    &.active {
+      color: $color3;
+    }
+  }
+}
   &__headerContainer {
     width: 100%;
     @include flex(row);
-    height: inherit;
+    height: 7rem;
 
     &__logo {
       flex-basis: 50%;
@@ -54,30 +69,56 @@
 
     }
 
-    &__navigationTabs {
-      flex-basis: 50%;
+  }
+
+  &__navigationTabs {
+    flex-basis: 50%;
+    @include flex(row);
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 3rem;
+    .MuiMenu-paper{
+      background: red;
+    }
+    &__userSection {
+
       @include flex(row);
-      justify-content: flex-end;
       align-items: center;
-      padding: 0 3rem;
-
-      a {
-        font-size: 1.8rem;
-        margin-right: 3rem;
-        transition: color 0.5s ease;
-
-        &:hover {
-          color: $text-hover;
-        }
-
-        &.active {
-          color: $text-hover;
-        }
+      margin-right: 3rem;
+      cursor: pointer;
+      position: relative;
+      &::after{
+        content: '';
+        position: absolute;
+        right: -2rem;
+        top: -0.8rem;
+        height: 4rem;
+        width: 0.2rem;
+        background: $color4;
       }
-      &__cartIcon{
-        &:focus{
-          outline: none;
-        }
+      p{
+        margin-left:  0.8rem;
+        font-size: 1.6rem;
+      }
+    }
+
+    &__tab{
+      font-size: 1.8rem;
+      margin-right: 3rem;
+      transition: color 0.5s ease;
+
+      &:hover {
+        color: $text-hover;
+      }
+
+      &.active {
+        color: $text-hover;
+      }
+    }
+
+    &__cartIcon {
+      &:focus {
+        outline: none;
       }
     }
   }

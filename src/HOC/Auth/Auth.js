@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/actions/auth_actions';
 import CircularLoadingIndicator from '../../components/LoadingIndicator/CircularLoadingIndicator';
 const Auth = (props) => {
-    const [isLoading, auth, error] = useFetchData(
+    const [isLoading, auth] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/user`
     );
     const dispatch = useDispatch();

@@ -8,22 +8,22 @@ const PrivateRoute = ({ component: Component, auth, path, ...rest }) => {
         <Route
             {...rest}
             render={(props) => {
-                if ((path === '/login' || path === '/signup') && isAuth) {
-                    return <Redirect to={'/'} />;
-                } else {
-                    return isAuth ? (
-                        <Component {...props} />
-                    ) : (
-                        <Redirect
-                            to={{
-                                pathname: '/login',
-                                state: {
-                                    from: props.location,
-                                },
-                            }}
-                        />
-                    );
-                }
+                // if ((path === '/login' || path === '/signup') && isAuth) {
+                //     return <Redirect to={'/'} />;
+                // } else {
+                return isAuth ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/login',
+                            state: {
+                                from: props.location,
+                            },
+                        }}
+                    />
+                );
+                // }
             }}
         />
     );
