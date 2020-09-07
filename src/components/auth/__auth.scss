@@ -19,11 +19,16 @@
 
     h1 {
       margin-bottom: 2rem;
+      @include media-breakpoint-down(sm){
+        font-size: 1.8rem;
+      }
     }
 
     p {
       font-size: 1.6rem;
-
+      @include media-breakpoint-down(sm){
+          font-size: 1.4rem;
+      }
       a {
         transition: color 0.5s ease;
 
@@ -42,6 +47,9 @@
       align-self: flex-start;
       font-size: 1.6rem;
       margin-top: 1rem;
+      @include media-breakpoint-down(sm){
+        font-size: 1.4rem;
+      }
     }
   }
 }

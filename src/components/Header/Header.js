@@ -69,19 +69,16 @@ const Header = () => {
                             login
                         </NavLink>
                     )}
-
-                    {isAuth && (
-                        <IconButton
-                            aria-label="cart"
-                            className={
-                                'headerOuterContainer__navigationTabs__cartIcon'
-                            }
-                        >
-                            <StyledBadge badgeContent={4} color="secondary">
-                                <ShoppingCartOutlinedIcon fontSize={'large'} />
-                            </StyledBadge>
-                        </IconButton>
-                    )}
+                    <IconButton
+                        aria-label="cart"
+                        className={
+                            'headerOuterContainer__navigationTabs__cartIcon'
+                        }
+                    >
+                        <StyledBadge badgeContent={4} color="secondary">
+                            <ShoppingCartOutlinedIcon fontSize={'large'} />
+                        </StyledBadge>
+                    </IconButton>
                 </section>
             </div>
             {isLoading && <LoadingIndicator />}

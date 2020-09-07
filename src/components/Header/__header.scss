@@ -10,16 +10,18 @@
   top: 0;
   right: 0;
   left: 0;
-&__headerTopContainer{
-  background:#ead2d2;
-  width: 100%;
-  padding: 0.3rem 0;
 
-  a{
-    font-size: 1.4rem;
-    margin-right: 1rem;
+  &__headerTopContainer {
+    background: #ead2d2;
+    width: 100%;
+    padding: 0.3rem 0;
+
+    a {
+      font-size: 1.4rem;
+      margin-right: 1rem;
+    }
   }
-}
+
   &__headerContainer {
     width: 100%;
     @include flex(row);
@@ -41,11 +43,19 @@
         height: 13rem;
         background: #f5dada;
         padding: 0 1rem;
+        @include media-breakpoint-down(md) {
+         flex-direction: row;
+          height: 7rem;
+          left: 0;
+        }
 
         img {
           width: 5rem;
           height: 5rem;
           margin-bottom: 1.8rem;
+          @include media-breakpoint-down(md){
+            margin-bottom: 0;
+          }
         }
 
         p {
@@ -71,9 +81,11 @@
     justify-content: flex-end;
     align-items: center;
     padding: 0 3rem;
-    .MuiMenu-paper{
+
+    .MuiMenu-paper {
       background: red;
     }
+
     &__userSection {
 
       @include flex(row);
@@ -81,22 +93,24 @@
       margin-right: 3rem;
       cursor: pointer;
       position: relative;
-      &::after{
+      height: 7rem;
+
+      &::after {
         content: '';
         position: absolute;
         right: -2rem;
-        top: -0.8rem;
         height: 4rem;
         width: 0.2rem;
         background: $color4;
       }
-      p{
-        margin-left:  0.8rem;
+
+      p {
+        margin-left: 0.8rem;
         font-size: 1.6rem;
       }
     }
 
-    &__tab{
+    &__tab {
       font-size: 1.8rem;
       margin-right: 1rem;
       transition: color 0.5s ease;
