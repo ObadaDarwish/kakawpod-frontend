@@ -8,6 +8,7 @@ import { setLoading } from '../../../store/actions/loadingIndicator_actions';
 import useValidateSignUp from '../../../hooks/useValidateSignUp';
 import useCallServer from '../../../hooks/useCallServer';
 import { NotificationManager } from 'react-notifications';
+import { login } from '../../../store/actions/auth_actions';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -60,7 +61,9 @@ const Signup = () => {
                         'Sign up',
                         3000
                     );
-                    history.push('/login');
+                    localStorage.setItem('token', res.data.token);
+                    dispatch(login(res.data.user));
+                    history.push('/shop');
                 })
                 .catch((err) => {
                     if (err.response) {
