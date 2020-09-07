@@ -100,7 +100,11 @@ const Login = () => {
                     >
                         Forgot your password?
                     </NavLink>
-                    <ButtonUI name={'Login'} className={classes.login_button} />
+                    <ButtonUI
+                        name={'Login'}
+                        type={'submit'}
+                        className={classes.login_button}
+                    />
                 </form>
             </div>
         </div>

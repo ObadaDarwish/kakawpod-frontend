@@ -124,6 +124,7 @@ const Signup = () => {
                     />
                     <ButtonUI
                         name={'Sign up'}
+                        type={'submit'}
                         className={classes.signUp_button}
                     />
                 </form>
