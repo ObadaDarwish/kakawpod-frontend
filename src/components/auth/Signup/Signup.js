@@ -9,6 +9,7 @@ import useValidateSignUp from '../../../hooks/useValidateSignUp';
 import useCallServer from '../../../hooks/useCallServer';
 import { NotificationManager } from 'react-notifications';
 import { login } from '../../../store/actions/auth_actions';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -31,12 +32,9 @@ const Signup = () => {
     const emailRef = createRef();
     const passwordRef = createRef();
     const confirmPasswordRef = createRef();
-    const keylistener = (event) => {
-        if (event.key === 'Enter') {
-            submitSignUp();
-        }
-    };
-    const submitSignUp = () => {
+
+    const submitSignUp = (e) => {
+        e.preventDefault();
         const isFormValid = validateForm(
             nameRef.current.value,
             emailRef.current.value,
@@ -92,7 +90,7 @@ const Signup = () => {
                     className={classes.root}
                     noValidate
                     autoComplete="off"
-                    onKeyDown={(e) => keylistener(e)}
+                    onSubmit={(e) => submitSignUp(e)}
                 >
                     <InputUI
                         error={formData.name.has_error}
@@ -127,7 +125,6 @@ const Signup = () => {
                     <ButtonUI
                         name={'Sign up'}
                         className={classes.signUp_button}
-                        clickHandler={submitSignUp}
                     />
                 </form>
             </div>

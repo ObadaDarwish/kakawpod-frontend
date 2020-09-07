@@ -21,6 +21,7 @@ const ButtonUI = ({
     className,
     is_disabled,
     clickHandler,
+    type,
     downKeyListener,
 }) => {
     const classes = useStyles();
@@ -28,6 +29,7 @@ const ButtonUI = ({
         <Button
             variant="contained"
             className={`${classes.root} ${className}`}
+            type={type}
             disabled={is_disabled}
             onClick={clickHandler}
         >

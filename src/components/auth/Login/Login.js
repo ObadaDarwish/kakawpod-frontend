@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,12 +28,8 @@ const Login = () => {
     const dispatch = useDispatch();
     const [, , , , callServer] = useCallServer();
     const [formData, validateForm] = useValidateLogin();
-    const keylistener = (event) => {
-        if (event.key === 'Enter') {
-            submitLogin();
-        }
-    };
-    const submitLogin = () => {
+    const submitLogin = (e) => {
+        e.preventDefault();
         const isFormValid = validateForm(
             emailRef.current.value,
             passwordRef.current.value
@@ -81,7 +77,7 @@ const Login = () => {
                     className={classes.root}
                     noValidate
                     autoComplete="off"
-                    onKeyDown={(e) => keylistener(e)}
+                    onSubmit={(e) => submitLogin(e)}
                 >
                     <InputUI
                         error={formData.email.has_error}
@@ -98,11 +94,13 @@ const Login = () => {
                         type={'password'}
                         required={true}
                     />
-                    <ButtonUI
-                        name={'Login'}
-                        className={classes.login_button}
-                        clickHandler={submitLogin}
-                    />
+                    <NavLink
+                        to={'/forgotPassword'}
+                        className={'formContainer__formWrapper__forgotPassword'}
+                    >
+                        Forgot your password?
+                    </NavLink>
+                    <ButtonUI name={'Login'} className={classes.login_button} />
                 </form>
             </div>
         </div>

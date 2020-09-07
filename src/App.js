@@ -15,6 +15,7 @@ import axios from 'axios';
 import Landing from './containers/Landing/Landing';
 import BlockRoute from './HOC/BlockRoute/BlockRoute';
 import Missing from './components/Missing/Missing';
+import RequestResetPassword from './components/RequestResetPassword/RequestResetPassword';
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -32,6 +33,10 @@ function App() {
                         <BlockRoute path={'/signup'} component={Signup} />
                         <BlockRoute path={'/login'} component={Login} />
                         <PrivateRoute path={'/profile'} component={Profile} />
+                        <Route
+                            path={'/forgotPassword'}
+                            component={RequestResetPassword}
+                        />
                         <Route path={'/about'} component={About} />
                         <Route component={Missing} />
                     </Switch>
