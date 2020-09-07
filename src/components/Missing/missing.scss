@@ -1,0 +1,20 @@
+.missingContainer {
+  width: 100%;
+  height: 100vh;
+ @include flex_center(row);
+  &__missingWrapper{
+    @include flex(column);
+    p{
+      font-family: proza-libre,sans-serif;
+      font-size: 2rem;
+      padding-bottom: 5rem;
+      font-weight: bold;
+    }
+    h1{
+      font-size: 20rem;
+      font-family: Lobster,sans-serif;
+      text-align: center;
+    }
+  }
+
+}
