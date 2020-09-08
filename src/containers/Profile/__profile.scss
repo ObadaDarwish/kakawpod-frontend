@@ -1,14 +1,139 @@
-.profileContainer{
+.profileContainer {
   width: 100%;
   min-height: 100vh;
-  @include flex(row);
-  padding-top: 20rem;
-  &__profileImageWrapper{
+  @include flex(column);
+  padding: 15rem 10rem;
 
+  .formWrapper {
+    @include flex(row);
+    justify-content: space-between;
+    width: 100%;
   }
-  &__detailsWrapper{
-    &__contactWrapper{
 
+  &__profileImageWrapper {
+    align-self: flex-start;
+    background: $color4;
+    padding: 3rem 2rem;
+    flex-basis: 30%;
+    @include flex_center(column);
+
+    img {
+      width: 25rem;
+      margin-bottom: 2rem;
     }
+  }
+
+  &__detailsWrapper {
+    @include flex(column);
+    flex-basis: 60%;
+
+
+    &__contactWrapper {
+      background: $color4;
+      @include flex(row);
+      padding: 2rem;
+      padding-top: 3rem;
+      justify-content: space-around;
+      position: relative;
+
+      &__inputWrapper {
+        flex-basis: 45%;
+      }
+
+      &:after {
+        position: absolute;
+        height: 3rem;
+        width: 100%;
+        content: 'Contacts';
+        top: 0;
+        left: 0;
+        background: $color3;
+        color: $color1;
+        font-size: 1.4rem;
+        @include flex_center(row);
+      }
+    }
+
+    &__addressWrapper {
+      background: $color4;
+      padding: 2rem;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      position: relative;
+      @include flex(column);
+
+      &:after {
+        position: absolute;
+        height: 3rem;
+        width: 100%;
+        content: 'Addresses';
+        top: 0;
+        left: 0;
+        background: $color3;
+        color: $color1;
+        font-size: 1.4rem;
+        @include flex_center(row);
+      }
+
+      &__addressButton {
+        align-self: flex-end;
+        margin: 2rem 0;
+      }
+
+      &__address {
+        &__addressContainer {
+          @include flex(row);
+          align-items: center;
+          background: $white;
+          padding: 0 2rem;
+
+          &__addressWrapper {
+            margin: 1rem 0;
+            padding: 2rem;
+            width: 100%;
+            position: relative;
+            margin-left: 3rem;
+
+            &:after {
+              position: absolute;
+              content: '';
+              width: 0.1rem;
+              height: 90%;
+              background: $color1;
+              top: 5%;
+              left: 0;
+            }
+
+            p {
+              font-size: 1.6rem;
+            }
+            &__editButton{
+              background: none;
+              border: none;
+              font-size: 1.4rem;
+              cursor: pointer;
+              color: $color1;
+              transition: color 0.5s ease;
+              padding: 0;
+              margin-top: 1rem;
+              &:focus{
+                outline: none;
+              }
+              &:hover{
+                color: $text-hover;
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  &__buttonWrapper {
+    width: 100%;
+    @include flex_center(row);
+    justify-content: center;
+    margin-top: 3rem;
   }
 }

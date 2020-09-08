@@ -16,6 +16,7 @@ import Landing from './containers/Landing/Landing';
 import BlockRoute from './HOC/BlockRoute/BlockRoute';
 import Missing from './components/Missing/Missing';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
+import Helmet from 'react-helmet';
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -25,6 +26,10 @@ axios.interceptors.request.use(function (config) {
 function App() {
     return (
         <Router>
+            <Helmet>
+                <title>{'ODs chocolate'}</title>
+                <meta name="description" content="Nested component" />
+            </Helmet>
             <div className={'appContainer'}>
                 <Auth>
                     <Header />

@@ -5,16 +5,25 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
     inputField: {
-        width: '100%',
-        margin: '1rem',
+        width: (props) => props.width || '100%',
+        margin: '1rem 0',
         [theme.breakpoints.down('sm')]: {
-            margin: '0.2rem',
+            margin: '0.2rem 0',
         },
     },
 }));
-const InputUI = ({ label, type, required, reference, error, errorMessage }) => {
+const InputUI = ({
+    defaultValue,
+    label,
+    type,
+    required,
+    reference,
+    error,
+    errorMessage,
+    ...props
+}) => {
     const matches = useMediaQuery('(max-width:768px)');
-    const classes = useStyles();
+    const classes = useStyles(props);
     return (
         <TextField
             id="standard-basic"
@@ -25,6 +34,7 @@ const InputUI = ({ label, type, required, reference, error, errorMessage }) => {
             inputRef={reference}
             helperText={errorMessage}
             error={error}
+            defaultValue={defaultValue}
             inputProps={{
                 style: { fontSize: matches ? 16 : 20, color: '#7D5A5A' },
             }}

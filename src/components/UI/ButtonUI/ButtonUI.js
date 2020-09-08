@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#FAF2F2',
         height: '3.5rem',
         fontSize: '1.6rem',
-        width: '100%',
+        width: (props) => props.width || '100%',
         '&:hover': {
             background: '#5b3d3d',
         },
@@ -22,9 +22,10 @@ const ButtonUI = ({
     is_disabled,
     clickHandler,
     type,
-    downKeyListener,
+    Icon,
+    ...props
 }) => {
-    const classes = useStyles();
+    const classes = useStyles(props);
     return (
         <Button
             variant="contained"
