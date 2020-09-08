@@ -51,7 +51,7 @@ const Header = () => {
                             alt="ODs chocolate logo"
                         />
                         <p>
-                            ODs <br />
+                            ODs
                             <span>Chocolate</span>
                         </p>
                     </Link>

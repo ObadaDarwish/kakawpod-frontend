@@ -1,0 +1,14 @@
+.profileContainer{
+  width: 100%;
+  min-height: 100vh;
+  @include flex(row);
+  padding-top: 20rem;
+  &__profileImageWrapper{
+
+  }
+  &__detailsWrapper{
+    &__contactWrapper{
+
+    }
+  }
+}
