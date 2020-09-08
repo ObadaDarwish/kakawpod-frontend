@@ -50,10 +50,8 @@ const Header = () => {
                             name="ODs chocolate logo"
                             alt="ODs chocolate logo"
                         />
-                        <p>
-                            ODs
-                            <span>Chocolate</span>
-                        </p>
+                        <p>ODs</p>
+                        <span>Chocolate</span>
                     </Link>
                 </section>
                 <section className={'headerOuterContainer__navigationTabs'}>

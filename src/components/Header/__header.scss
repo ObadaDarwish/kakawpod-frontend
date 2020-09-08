@@ -36,13 +36,15 @@
 
       &__wrapper {
         position: absolute;
-        top: -3rem;
+        top: -2rem;
         left: 5rem;
         font-family: proza-libre, sans-serif;
         @include flex_center(column);
         height: 12rem;
         background: #f5dada;
         border-radius: 0.3rem;
+        border:0.4rem solid $color1;
+        padding: 1rem;
         @include media-breakpoint-down(md) {
           //height: 10rem;
           left: 1.5rem;
@@ -67,11 +69,9 @@
           @include media-breakpoint-down(md) {
             font-size: 1.8rem;
           }
-
-          span {
-            margin-left: 0.5rem;
-            font-size: 1.6rem;
-          }
+        }
+        span {
+          font-size: 1.2rem;
         }
       }
 
