@@ -9,8 +9,11 @@ const useStyles = makeStyles((theme) => ({
             marginTop: theme.spacing(2),
         },
         position: 'absolute',
-        top: '9rem',
+        bottom: 0,
         zIndex: '-1',
+        [theme.breakpoints.down('sm')]: {
+            zIndex: '1',
+        },
         '& .MuiLinearProgress-colorPrimary': {
             background: '#F1D1D1',
         },
