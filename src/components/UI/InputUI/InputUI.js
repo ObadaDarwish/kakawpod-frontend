@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
     inputField: {
         width: '100%',
         margin: '1rem',
+        [theme.breakpoints.down('sm')]: {
+            margin: '0.2rem',
+        },
     },
 }));
 const InputUI = ({ label, type, required, reference, error, errorMessage }) => {
