@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import InputUI from '../../components/UI/InputUI/InputUI';
 import RadioButtonUi from '../../components/UI/RadioButtonUI/RadioButtonUI';
+import DataPrompt from '../../components/DataPrompt/DataPrompt';
 
 const Profile = () => {
     const nameRef = createRef();
@@ -90,10 +91,11 @@ const Profile = () => {
                                 'profileContainer__detailsWrapper__addressWrapper__address'
                             }
                         >
-                            {User.addresses &&
+                            {User.addresses.length ? (
                                 User.addresses.map((address, index) => {
                                     return (
                                         <div
+                                            key={address._id}
                                             className={
                                                 'profileContainer__detailsWrapper__addressWrapper__address__addressContainer'
                                             }
@@ -129,7 +131,12 @@ const Profile = () => {
                                             </div>
                                         </div>
                                     );
-                                })}
+                                })
+                            ) : (
+                                <DataPrompt
+                                    message={'No addresses were found.'}
+                                />
+                            )}
                         </div>
                     </div>
                 </section>
