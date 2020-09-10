@@ -11,6 +11,31 @@
   right: 0;
   left: 0;
 
+  &__verifyEmailPromptContainer {
+    position: absolute;
+    top: 1rem;
+    width: 90%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background: #f5dada;
+    box-shadow: 0 0 3px 2px #c7acac;
+
+    h1 {
+      span {
+        text-decoration: underline;
+        transition: color 0.5s ease;
+
+        &:hover {
+          cursor: pointer;
+          color: $text-hover;
+        }
+      }
+    }
+  }
+
   &__headerTopContainer {
     background: #ead2d2;
     width: 100%;
@@ -71,6 +96,7 @@
             font-size: 1.8rem;
           }
         }
+
         span {
           font-size: 1.2rem;
         }

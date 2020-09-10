@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../../assets/images/cocoaPlant.png';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import UserMenu from './User_menu/User_menu';
+import VerifyEmailPrompt from './VerifyEmailPrompt/VerifyEmailPrompt';
 const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -4,
@@ -23,8 +24,19 @@ const StyledBadge = withStyles((theme) => ({
 const Header = () => {
     const isAuth = useSelector((state) => state.user);
     const isLoading = useSelector((state) => state.loadingIndicator);
+    const [canShowEmailPrompt, setShowEmailPrompt] = useState(
+        isAuth && !isAuth.email_verified
+    );
+    const closePrompt = () => {
+        setShowEmailPrompt(false);
+    };
+
     return (
         <div className={'headerOuterContainer'}>
+            {canShowEmailPrompt && (
+                <VerifyEmailPrompt closePrompt={closePrompt} />
+            )}
+
             <div className={'headerOuterContainer__headerTopContainer'}>
                 <section className={'headerOuterContainer__navigationTabs'}>
                     <NavLink
