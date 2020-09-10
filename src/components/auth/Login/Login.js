@@ -7,7 +7,7 @@ import { NotificationManager } from 'react-notifications';
 import useValidateLogin from '../../../hooks/useValidateLogin';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../store/actions/auth_actions';
+import { updateUser } from '../../../store/actions/auth_actions';
 import useCallServer from '../../../hooks/useCallServer';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,7 +47,7 @@ const Login = () => {
             loginCall
                 .then((response) => {
                     localStorage.setItem('token', response.data.token);
-                    dispatch(login(response.data.user));
+                    dispatch(updateUser(response.data.user));
                     history.push('/shop');
                 })
                 .catch((err) => {

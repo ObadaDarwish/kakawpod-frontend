@@ -17,6 +17,7 @@ import BlockRoute from './HOC/BlockRoute/BlockRoute';
 import Missing from './components/Missing/Missing';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
 import Helmet from 'react-helmet';
+import EmailVerification from './components/EmailVerification/EmailVerification';
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -38,6 +39,10 @@ function App() {
                         <BlockRoute path={'/signup'} component={Signup} />
                         <BlockRoute path={'/login'} component={Login} />
                         <PrivateRoute path={'/profile'} component={Profile} />
+                        <PrivateRoute
+                            path={'/verifyEmail'}
+                            component={EmailVerification}
+                        />
                         <Route
                             path={'/forgotPassword'}
                             component={ResetPassword}

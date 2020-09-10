@@ -8,7 +8,7 @@ import { setLoading } from '../../../store/actions/loadingIndicator_actions';
 import useValidateSignUp from '../../../hooks/useValidateSignUp';
 import useCallServer from '../../../hooks/useCallServer';
 import { NotificationManager } from 'react-notifications';
-import { login } from '../../../store/actions/auth_actions';
+import { updateUser } from '../../../store/actions/auth_actions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,7 +60,7 @@ const Signup = () => {
                         3000
                     );
                     localStorage.setItem('token', res.data.token);
-                    dispatch(login(res.data.user));
+                    dispatch(updateUser(res.data.user));
                     history.push('/shop');
                 })
                 .catch((err) => {

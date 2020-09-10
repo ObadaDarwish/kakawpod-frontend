@@ -33,7 +33,7 @@ const Header = () => {
 
     return (
         <div className={'headerOuterContainer'}>
-            {canShowEmailPrompt && (
+            {canShowEmailPrompt && isAuth && !isAuth.email_verified && (
                 <VerifyEmailPrompt closePrompt={closePrompt} />
             )}
 

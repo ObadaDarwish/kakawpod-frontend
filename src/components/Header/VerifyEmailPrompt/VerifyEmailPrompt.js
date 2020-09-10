@@ -24,11 +24,13 @@ const VerifyEmailPrompt = ({ closePrompt }) => {
                 );
             })
             .catch((err) => {
-                NotificationManager.error(
-                    err.response.data.message,
-                    'Resend verification email',
-                    3000
-                );
+                if (err.response) {
+                    NotificationManager.error(
+                        err.response.data.message,
+                        'Resend verification email',
+                        3000
+                    );
+                }
             })
             .finally(() => dispatch(setLoading(false)));
     };

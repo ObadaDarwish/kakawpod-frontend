@@ -1,8 +1,9 @@
-import { LOGIN_USER, LOGOUT_USER } from '../action_types';
+import { LOGOUT_USER, UPDATE_USER } from '../action_types';
 
-const loginReducer = (state = null, action) => {
-    if (action.type === LOGIN_USER) {
-        state = action.user;
+const Auth_reducer = (state = null, action) => {
+    if (action.type === UPDATE_USER) {
+        let newState = { ...action.user };
+        state = newState;
     }
     if (action.type === LOGOUT_USER) {
         state = null;
@@ -11,4 +12,4 @@ const loginReducer = (state = null, action) => {
     return state;
 };
 
-export default loginReducer;
+export default Auth_reducer;
