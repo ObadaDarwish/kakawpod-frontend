@@ -2,9 +2,12 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import useCallServer from '../../../hooks/useCallServer';
-import { NotificationManager } from 'react-notifications';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
+import {
+    errorNotification,
+    successNotification,
+} from '../../../utils/notification-utils';
 
 const VerifyEmailPrompt = ({ closePrompt }) => {
     const [, , , , callServer] = useCallServer();
@@ -17,18 +20,16 @@ const VerifyEmailPrompt = ({ closePrompt }) => {
         );
         resendVerificationEmail
             .then(() => {
-                NotificationManager.success(
+                successNotification(
                     'verification email was successfully send',
-                    'Email verification',
-                    3000
+                    'Email verification'
                 );
             })
             .catch((err) => {
                 if (err.response) {
-                    NotificationManager.error(
+                    errorNotification(
                         err.response.data.message,
-                        'Resend verification email',
-                        3000
+                        'Resend verification email'
                     );
                 }
             })

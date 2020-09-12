@@ -3,12 +3,12 @@ import { Link, NavLink, useHistory } from 'react-router-dom';
 import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import { makeStyles } from '@material-ui/core/styles';
-import { NotificationManager } from 'react-notifications';
-import useValidateLogin from '../../../hooks/useValidateLogin';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../store/actions/auth_actions';
 import useCallServer from '../../../hooks/useCallServer';
+import useValidateInputs from '../../../hooks/useValidateInputs';
+import { errorNotification } from '../../../utils/notification-utils';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -27,12 +27,14 @@ const Login = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [, , , , callServer] = useCallServer();
-    const [formData, validateForm] = useValidateLogin();
+    const [formData, validateForm] = useValidateInputs();
     const submitLogin = (e) => {
         e.preventDefault();
         const isFormValid = validateForm(
+            null,
             emailRef.current.value,
-            passwordRef.current.value
+            passwordRef.current.value,
+            null
         );
         if (isFormValid) {
             dispatch(setLoading(true));
@@ -52,11 +54,7 @@ const Login = () => {
                 })
                 .catch((err) => {
                     if (err.response) {
-                        NotificationManager.error(
-                            err.response.data.message,
-                            'Login',
-                            3000
-                        );
+                        errorNotification(err.response.data.message, 'Login');
                     }
                 })
                 .finally(() => {

@@ -4,9 +4,12 @@ import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import { makeStyles } from '@material-ui/core/styles';
 import validator from 'validator/es';
 import useCallServer from '../../hooks/useCallServer';
-import { NotificationManager } from 'react-notifications';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import {
+    errorNotification,
+    successNotification,
+} from '../../utils/notification-utils';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -39,18 +42,16 @@ const RequestResetPassword = () => {
             );
             callReset
                 .then(() => {
-                    NotificationManager.success(
+                    successNotification(
                         'Reset password email has been successfully sent, please check your inbox',
-                        'Reset password',
-                        3000
+                        'Reset password'
                     );
                 })
                 .catch((err) => {
                     if (err.response) {
-                        NotificationManager.error(
+                        errorNotification(
                             err.response.data.message,
-                            'Reset password',
-                            3000
+                            'Reset password'
                         );
                     }
                 })

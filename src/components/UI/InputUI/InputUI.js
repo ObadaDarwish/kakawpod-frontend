@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             margin: '0.2rem 0',
         },
+        '& .MuiFormHelperText-root': {
+            fontSize: '1.4rem',
+        },
     },
 }));
 const InputUI = ({

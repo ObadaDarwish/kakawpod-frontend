@@ -5,10 +5,13 @@ import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
-import useValidateSignUp from '../../../hooks/useValidateSignUp';
+import useValidateInputs from '../../../hooks/useValidateInputs';
 import useCallServer from '../../../hooks/useCallServer';
-import { NotificationManager } from 'react-notifications';
 import { updateUser } from '../../../store/actions/auth_actions';
+import {
+    errorNotification,
+    successNotification,
+} from '../../../utils/notification-utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,7 +29,7 @@ const Signup = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const [formData, validateForm] = useValidateSignUp();
+    const [formData, validateForm] = useValidateInputs();
     const [, , , , callServer] = useCallServer();
     const nameRef = createRef();
     const emailRef = createRef();
@@ -54,10 +57,9 @@ const Signup = () => {
             );
             signupCall
                 .then((res) => {
-                    NotificationManager.success(
+                    successNotification(
                         'New user has been created successfully',
-                        'Sign up',
-                        3000
+                        'Sign up'
                     );
                     localStorage.setItem('token', res.data.token);
                     dispatch(updateUser(res.data.user));
@@ -65,11 +67,7 @@ const Signup = () => {
                 })
                 .catch((err) => {
                     if (err.response) {
-                        NotificationManager.error(
-                            err.response.data.message,
-                            'Sign up',
-                            3000
-                        );
+                        errorNotification(err.response.data.message, 'Sign up');
                     }
                 })
                 .finally(() => {

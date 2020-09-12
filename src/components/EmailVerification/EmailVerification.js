@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import useCallServer from '../../hooks/useCallServer';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
-import { NotificationManager } from 'react-notifications';
 import { updateUser } from '../../store/actions/auth_actions';
 import { useHistory } from 'react-router-dom';
+import { errorNotification } from '../../utils/notification-utils';
 const queryString = require('query-string');
 const EmailVerification = (props) => {
     const isAuth = useSelector((state) => state.user);
@@ -27,10 +27,9 @@ const EmailVerification = (props) => {
             })
             .catch((err) => {
                 if (err.response) {
-                    NotificationManager.error(
+                    errorNotification(
                         err.response.data.message,
-                        'Email verification',
-                        3000
+                        'Email verification'
                     );
                     history.push('/');
                 }

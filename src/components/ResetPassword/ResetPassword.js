@@ -4,9 +4,12 @@ import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
-import { NotificationManager } from 'react-notifications';
 import useCallServer from '../../hooks/useCallServer';
 import { useDispatch } from 'react-redux';
+import {
+    errorNotification,
+    successNotification,
+} from '../../utils/notification-utils';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -43,19 +46,17 @@ const ResetPassword = ({ queryParams }) => {
             );
             callReset
                 .then(() => {
-                    NotificationManager.success(
+                    successNotification(
                         'Password has been updated successfully',
-                        'Reset password',
-                        3000
+                        'Reset password'
                     );
                     history.push('/login');
                 })
                 .catch((err) => {
                     if (err.response) {
-                        NotificationManager.error(
+                        errorNotification(
                             err.response.data.message,
-                            'Reset password',
-                            3000
+                            'Reset password'
                         );
                     }
                 })
