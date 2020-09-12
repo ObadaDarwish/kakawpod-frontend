@@ -1,5 +1,4 @@
 import React, { createRef } from 'react';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import InputUI from '../../UI/InputUI/InputUI';
 import useValidateInputs from '../../../hooks/useValidateInputs';

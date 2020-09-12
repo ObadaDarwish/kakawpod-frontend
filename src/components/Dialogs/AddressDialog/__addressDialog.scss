@@ -1,0 +1,12 @@
+.formWrapper {
+  @include flex(row wrap);
+justify-content: space-between;
+  &__inputWrapper {
+    margin: 1rem 1.5rem;
+    width: 40%;
+
+    &--full {
+      width: 100%;
+    }
+  }
+}

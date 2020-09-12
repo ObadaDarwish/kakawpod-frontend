@@ -3,11 +3,10 @@ import user from '../../assets/images/user.png';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import InputUI from '../../components/UI/InputUI/InputUI';
-import RadioButtonUi from '../../components/UI/RadioButtonUI/RadioButtonUI';
-import DataPrompt from '../../components/DataPrompt/DataPrompt';
 import PasswordDialog from '../../components/Dialogs/PasswordDialog/PasswordDialog';
 import useValidateInputs from '../../hooks/useValidateInputs';
 import useCallServer from '../../hooks/useCallServer';
+import AddressComponent from '../../components/AddressComponent/AddressComponent';
 import {
     errorNotification,
     successNotification,
@@ -17,7 +16,6 @@ const Profile = () => {
     const nameRef = createRef();
     const emailRef = createRef();
     const phoneRef = createRef();
-    const [selectedValue, setSelectedValue] = useState(0);
     const [openDialog, setOpenDialog] = useState(false);
     const [formData, validateForm] = useValidateInputs();
     const [, , , , callServer] = useCallServer();
@@ -43,7 +41,7 @@ const Profile = () => {
             })
             .finally(() => dispatch(setLoading(false)));
     };
-    const updateProfileHanlder = (e) => {
+    const updateProfileHandler = (e) => {
         e.preventDefault();
         let emailValue = emailRef.current.value;
         if (emailValue !== User.email) {
@@ -58,7 +56,7 @@ const Profile = () => {
         setOpenDialog(false);
         updateProfile(value);
     };
-    const handleAddressChange = () => {};
+
     return (
         <>
             <PasswordDialog open={openDialog} onClose={closeDialogHandler} />
@@ -66,7 +64,7 @@ const Profile = () => {
                 className={'profileContainer'}
                 noValidate
                 autoComplete="off"
-                onSubmit={(e) => updateProfileHanlder(e)}
+                onSubmit={(e) => updateProfileHandler(e)}
             >
                 <div className={'formWrapper'}>
                     <section
@@ -121,75 +119,7 @@ const Profile = () => {
                                 />
                             </div>
                         </div>
-                        <div
-                            className={
-                                'profileContainer__detailsWrapper__addressWrapper'
-                            }
-                        >
-                            <div
-                                className={
-                                    'profileContainer__detailsWrapper__addressWrapper__addressButton'
-                                }
-                            >
-                                <ButtonUI name={'Add address'} />
-                            </div>
-                            <div
-                                className={
-                                    'profileContainer__detailsWrapper__addressWrapper__address'
-                                }
-                            >
-                                {User.addresses && User.addresses.length ? (
-                                    User.addresses.map((address, index) => {
-                                        return (
-                                            <div
-                                                key={address._id}
-                                                className={
-                                                    'profileContainer__detailsWrapper__addressWrapper__address__addressContainer'
-                                                }
-                                            >
-                                                <RadioButtonUi
-                                                    value={index}
-                                                    isChecked={
-                                                        selectedValue === 0
-                                                    }
-                                                    handleChange={
-                                                        handleAddressChange
-                                                    }
-                                                    ariaLabel={'address 1'}
-                                                />
-                                                <div
-                                                    className={
-                                                        'profileContainer__detailsWrapper__addressWrapper__address__addressContainer__addressWrapper'
-                                                    }
-                                                >
-                                                    <p>
-                                                        {address.apartment},
-                                                        {address.floor},
-                                                        {address.building}
-                                                    </p>
-                                                    <p> {address.street}</p>
-                                                    <p>{address.area}</p>
-                                                    <p>{address.city}</p>
-                                                    <p>{address.country}</p>
-                                                    <p>{User.phone}</p>
-                                                    <button
-                                                        className={
-                                                            'profileContainer__detailsWrapper__addressWrapper__address__addressContainer__addressWrapper__editButton'
-                                                        }
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        );
-                                    })
-                                ) : (
-                                    <DataPrompt
-                                        message={'No addresses were found.'}
-                                    />
-                                )}
-                            </div>
-                        </div>
+                        <AddressComponent user={User} />
                     </section>
                 </div>
                 <div className={'profileContainer__buttonWrapper'}>
