@@ -41,8 +41,7 @@ const Profile = () => {
             })
             .finally(() => dispatch(setLoading(false)));
     };
-    const updateProfileHandler = (e) => {
-        e.preventDefault();
+    const updateProfileHandler = () => {
         let emailValue = emailRef.current.value;
         if (emailValue !== User.email) {
             setOpenDialog(true);
@@ -53,6 +52,7 @@ const Profile = () => {
         }
     };
     const closeDialogHandler = (value) => {
+        console.log('update profile close dialog');
         setOpenDialog(false);
         updateProfile(value);
     };
@@ -60,12 +60,7 @@ const Profile = () => {
     return (
         <>
             <PasswordDialog open={openDialog} onClose={closeDialogHandler} />
-            <form
-                className={'profileContainer'}
-                noValidate
-                autoComplete="off"
-                onSubmit={(e) => updateProfileHandler(e)}
-            >
+            <div className={'profileContainer'}>
                 <div className={'formWrapper'}>
                     <section
                         className={'profileContainer__profileImageWrapper'}
@@ -123,9 +118,14 @@ const Profile = () => {
                     </section>
                 </div>
                 <div className={'profileContainer__buttonWrapper'}>
-                    <ButtonUI name={'Save'} type={'submit'} width={'30%'} />
+                    <ButtonUI
+                        clickHandler={updateProfileHandler}
+                        name={'Save'}
+                        type={'submit'}
+                        width={'30%'}
+                    />
                 </div>
-            </form>
+            </div>
         </>
     );
 };

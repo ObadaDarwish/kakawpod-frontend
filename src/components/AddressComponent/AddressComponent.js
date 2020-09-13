@@ -6,15 +6,31 @@ import AddressDialog from '../Dialogs/AddressDialog/AddressDialog';
 const AddressComponent = ({ user }) => {
     const [selectedValue, setSelectedValue] = useState(0);
     const [openDialog, setOpenDialog] = useState(false);
+    const [selectedAddressData, setSelectedAddressData] = useState(null);
+    const [dialogStatus, setDialogStatus] = useState('add');
     const handleAddressChange = (value) => {
         console.log(value);
     };
-    const handleDialog = () => {
+    const addAddressDialog = () => {
+        setDialogStatus('add');
         setOpenDialog(true);
+    };
+    const closeDialog = () => {
+        setOpenDialog(false);
+    };
+    const editAddressHandler = (address) => {
+        setDialogStatus('edit');
+        setOpenDialog(true);
+        setSelectedAddressData(address);
     };
     return (
         <>
-            <AddressDialog open={openDialog} />
+            <AddressDialog
+                open={openDialog}
+                status={dialogStatus}
+                selectedAddress={selectedAddressData}
+                onClose={closeDialog}
+            />
             <div className={'profileContainer__detailsWrapper__addressWrapper'}>
                 <div
                     className={
@@ -22,7 +38,7 @@ const AddressComponent = ({ user }) => {
                     }
                 >
                     <ButtonUI
-                        clickHandler={handleDialog}
+                        clickHandler={addAddressDialog}
                         name={'Add address'}
                     />
                 </div>
@@ -61,6 +77,9 @@ const AddressComponent = ({ user }) => {
                                         <p>{address.country}</p>
                                         <p>{user.phone}</p>
                                         <button
+                                            onClick={() =>
+                                                editAddressHandler(address)
+                                            }
                                             className={
                                                 'profileContainer__detailsWrapper__addressWrapper__address__addressContainer__addressWrapper__editButton'
                                             }

@@ -57,11 +57,12 @@ const SelectUi = ({
                     style: { fontSize: matches ? 16 : 20, color: '#7D5A5A' },
                 }}
             >
-                {list.map((item) => (
-                    <MenuItem key={item} value={item}>
-                        {item}
-                    </MenuItem>
-                ))}
+                {list &&
+                    list.map((item) => (
+                        <MenuItem key={item} value={item}>
+                            {item}
+                        </MenuItem>
+                    ))}
             </Select>
             {error && errorMessage && (
                 <FormHelperText>{errorMessage}</FormHelperText>
