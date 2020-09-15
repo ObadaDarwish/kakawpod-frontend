@@ -3,10 +3,14 @@ import Dialog from '@material-ui/core/Dialog';
 import InputUI from '../../UI/InputUI/InputUI';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiDialog-paper': {
+            display: 'flex',
+            flexDirection: 'column',
             background: '#F1D1D1',
             minWidth: '50rem',
             [theme.breakpoints.down('sm')]: {
@@ -19,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ConfirmDialog = ({ open, checkText, onClose }) => {
+const ConfirmDialog = ({ open, checkText, onClose, close }) => {
     const classes = useStyles();
     const confirmInputRef = createRef();
     const [inputData, setInputData] = useState({
@@ -43,6 +47,16 @@ const ConfirmDialog = ({ open, checkText, onClose }) => {
             open={open}
             className={classes.root}
         >
+            <IconButton
+                onClick={close}
+                style={{
+                    alignSelf: 'flex-end',
+                    margin: '1rem',
+                    outline: 'none',
+                }}
+            >
+                <CloseIcon fontSize={'large'} />
+            </IconButton>
             <form
                 className={`formWrapper`}
                 style={{ margin: '2rem' }}

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiDialog-paper': {
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'flex-end',
             background: '#F1D1D1',
             minWidth: '50rem',
             [theme.breakpoints.down('sm')]: {
@@ -145,7 +144,7 @@ const AddressDialog = ({
             <IconButton
                 onClick={onClose}
                 style={{
-                    alignItems: 'flex-end',
+                    alignSelf: 'flex-end',
                     margin: '1rem',
                     outline: 'none',
                 }}

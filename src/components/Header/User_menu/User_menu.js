@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
             '& .MuiMenuItem-root': {
                 fontSize: '1.6rem',
             },
+            '& .MuiListItem-root': {
+                '& a': {
+                    width: '100%',
+                },
+            },
         },
     },
 }));

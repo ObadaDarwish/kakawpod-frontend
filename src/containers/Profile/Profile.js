@@ -12,6 +12,7 @@ import {
     successNotification,
 } from '../../utils/notification-utils';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
+
 const Profile = () => {
     const nameRef = createRef();
     const emailRef = createRef();
@@ -55,10 +56,16 @@ const Profile = () => {
         setOpenDialog(false);
         updateProfile(value);
     };
-
+    const closePasswordDialog = () => {
+        setOpenDialog(false);
+    };
     return (
         <>
-            <PasswordDialog open={openDialog} onClose={closeDialogHandler} />
+            <PasswordDialog
+                open={openDialog}
+                onClose={closeDialogHandler}
+                close={closePasswordDialog}
+            />
             <div className={'profileContainer'}>
                 <div className={'formWrapper'}>
                     <section

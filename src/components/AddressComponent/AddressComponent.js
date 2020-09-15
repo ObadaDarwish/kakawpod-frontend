@@ -99,6 +99,9 @@ const AddressComponent = ({ user }) => {
                 dispatch(setLoading(false));
             });
     };
+    const closeConfirmDialog = () => {
+        setOpenConfirmDialog(false);
+    };
 
     return (
         <>
@@ -113,6 +116,7 @@ const AddressComponent = ({ user }) => {
                 open={openConfirmDialog}
                 checkText={'delete'}
                 onClose={deleteAddressHandler}
+                close={closeConfirmDialog}
             />
             <div className={'profileContainer__detailsWrapper__addressWrapper'}>
                 <div
