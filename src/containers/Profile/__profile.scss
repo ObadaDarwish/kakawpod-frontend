@@ -3,11 +3,17 @@
   min-height: 100vh;
   @include flex(column);
   padding: 15rem 10rem;
+  @include media-breakpoint-down(sm) {
+    padding: 15rem 1rem;
+  }
 
   .formWrapper {
     @include flex(row);
     justify-content: space-between;
     width: 100%;
+    @include media-breakpoint-down(md) {
+      @include flex(column)
+    }
   }
 
   &__profileImageWrapper {
@@ -16,6 +22,12 @@
     padding: 3rem 2rem;
     flex-basis: 30%;
     @include flex_center(column);
+
+    @include media-breakpoint-down(md) {
+      flex-basis: 100%;
+      align-self: stretch;
+    }
+
 
     img {
       width: 25rem;
@@ -26,15 +38,21 @@
   &__detailsWrapper {
     @include flex(column);
     flex-basis: 60%;
-
+    @include media-breakpoint-down(md) {
+      flex-basis: 100%;
+      margin-top: 2rem;
+    }
 
     &__contactWrapper {
       background: $color4;
       @include flex(row);
       padding: 2rem;
-      padding-top: 3rem;
+      padding-top: 5rem;
       justify-content: space-around;
       position: relative;
+      @include media-breakpoint-down(sm) {
+        @include flex(column)
+      }
 
       &__inputWrapper {
         flex-basis: 45%;
@@ -86,6 +104,9 @@
           align-items: center;
           background: $white;
           padding: 0 2rem;
+          @include media-breakpoint-down(xs) {
+            @include flex(column)
+          }
 
           &__addressWrapper {
             margin: 1rem 0;
@@ -107,9 +128,11 @@
             p {
               font-size: 1.6rem;
             }
-            &__control{
+
+            &__control {
               @include flex(row);
-              &__Button{
+
+              &__Button {
                 background: none;
                 border: none;
                 font-size: 1.4rem;
@@ -119,10 +142,12 @@
                 padding: 0;
                 margin-top: 1rem;
                 margin-right: 1rem;
-                &:focus{
+
+                &:focus {
                   outline: none;
                 }
-                &:hover{
+
+                &:hover {
                   color: $text-hover;
                 }
               }

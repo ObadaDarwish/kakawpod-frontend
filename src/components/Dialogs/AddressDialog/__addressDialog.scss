@@ -4,7 +4,9 @@ justify-content: space-between;
   &__inputWrapper {
     margin: 0.5rem 1rem;
     width: 40%;
-
+    @include media-breakpoint-down(xs){
+      width: 100%;
+    }
     &--full {
       width: 100%;
     }
