@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const CustomRadio = withStyles({
     root: {
-        color: '#FAF2F2',
+        color: '#7D5A5A',
         '&$checked': {
             color: '#7D5A5A',
         },
@@ -15,7 +15,7 @@ const RadioButtonUi = ({ isChecked, value, handleChange, ariaLabel }) => {
     return (
         <CustomRadio
             checked={isChecked}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             value={value}
             name="radio-button-demo"
             inputProps={{

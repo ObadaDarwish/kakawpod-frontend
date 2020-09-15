@@ -14,6 +14,7 @@ import {
     errorNotification,
     successNotification,
 } from '../../../utils/notification-utils';
+import { setLoading } from '../../../store/actions/loadingIndicator_actions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +33,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-const AddressDialog = ({ onClose, open, status, selectedAddress }) => {
+const AddressDialog = ({
+    onClose,
+    open,
+    status,
+    selectedAddress,
+    addressesCount,
+}) => {
     const classes = useStyles();
     const [selectedArea, setSelectedArea] = useState('');
     const [selectedCity, setSelectedCity] = useState('Cairo');
@@ -62,8 +69,11 @@ const AddressDialog = ({ onClose, open, status, selectedAddress }) => {
             apartment: apartmentRef.current.value,
             floor: floorRef.current.value,
             landmark: landmarkRef.current.value,
+            primary:
+                status === 'add' ? !!!addressesCount : selectedAddress.primary,
         };
         const checkEndPoint = () => {
+            dispatch(setLoading(true));
             if (status === 'add') {
                 return callServer(
                     'POST',
@@ -114,7 +124,8 @@ const AddressDialog = ({ onClose, open, status, selectedAddress }) => {
                 if (err.response) {
                     errorNotification(err.response.data.message, 'Address');
                 }
-            });
+            })
+            .finally(() => dispatch(setLoading(false)));
     };
     const cities = ['Cairo'];
     areas =

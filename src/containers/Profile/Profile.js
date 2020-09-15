@@ -52,7 +52,6 @@ const Profile = () => {
         }
     };
     const closeDialogHandler = (value) => {
-        console.log('update profile close dialog');
         setOpenDialog(false);
         updateProfile(value);
     };
