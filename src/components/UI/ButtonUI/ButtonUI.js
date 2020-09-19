@@ -1,15 +1,18 @@
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles((theme) => ({
     root: {
-        background: '#7D5A5A',
-        color: '#FAF2F2',
-        height: '3.5rem',
-        fontSize: '1.6rem',
+        background: (props) =>
+            props.inverseBackground ? '#FAF2F2' : '#7D5A5A',
+        color: (props) => (props.inverseBackground ? '#7D5A5A' : '#FAF2F2'),
+        height: (props) => props.height || '3.5rem',
+        fontSize: (props) => props.fontSize || '1.6rem',
         width: (props) => props.width || '100%',
         '&:hover': {
-            background: '#5b3d3d',
+            background: (props) =>
+                props.inverseBackground ? '#efe7e7' : '#5b3d3d',
         },
         '&:focus': {
             outline: '#eee',

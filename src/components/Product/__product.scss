@@ -1,0 +1,30 @@
+.product {
+  @include flex(column);
+  align-items: center;
+  margin: 1rem;
+  transition: box-shadow 0.5s ease;
+
+  &:hover {
+    box-shadow: 0 0 0.2rem 0.3rem $color4;
+  }
+
+  &__img {
+    width: 23.5rem;
+    height: 23.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin: 0.5rem 0;
+  }
+
+  p {
+    font-size: 1.6rem;
+    margin: 0.5rem 0;
+  }
+
+  &__buttonWrapper {
+    margin: 2rem 0;
+    width: 70%;
+  }
+}
