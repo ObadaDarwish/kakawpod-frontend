@@ -5,8 +5,10 @@ import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import Product from '../../components/Product/Product';
 import img from '../../assets/images/milkbar.jpg';
 import img1 from '../../assets/images/milkchocolate.jpg';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Landing = () => {
+    const sm = useMediaQuery('(max-width:768px)');
     return (
         <div className={'landingContainer'}>
             <section className={'landingContainer__videoContainer'}>
@@ -44,15 +46,13 @@ const Landing = () => {
                 </video>
             </section>
             <section className={'landingContainer__sampleContainer'}>
-                <h1>
-                    Wondering our chocolate <br />
-                    taste
-                </h1>
-                <ButtonUI
-                    className={'landingContainer__sampleContainer__button'}
-                    name={'Get free sample'}
-                    height={'6rem'}
-                />
+                <h1>Wondering our chocolate taste</h1>
+                <div className={'landingContainer__sampleContainer__button'}>
+                    <ButtonUI
+                        name={'Get free sample'}
+                        height={sm ? '4rem' : '6rem'}
+                    />
+                </div>
             </section>
             <section className={'landingContainer__topSellingContainer'}>
                 <div className={'landingContainer__topSellingContainer__title'}>
@@ -135,7 +135,7 @@ const Landing = () => {
                         </div>
                         <ButtonUI
                             name={'know more'}
-                            width={'40%'}
+                            width={sm ? '60%' : '40%'}
                             height={'4.5rem'}
                             inverseBackground
                         />
@@ -150,7 +150,7 @@ const Landing = () => {
                         <ButtonUI
                             name={'Quotation'}
                             height={'4.5rem'}
-                            width={'40%'}
+                            width={sm ? '60%' : '40%'}
                         />
                         <div
                             className={

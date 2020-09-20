@@ -11,6 +11,18 @@
   &__img {
     width: 23.5rem;
     height: 23.5rem;
+    @include media-breakpoint-down(md){
+      width: 22rem;
+      height: 22rem;
+    }
+    @include media-breakpoint-down(sm){
+      width: 20rem;
+      height: 20rem;
+    }
+    @include media-breakpoint-down(xs){
+      width: 18rem;
+      height: 18rem;
+    }
   }
 
   h1 {
@@ -26,5 +38,11 @@
   &__buttonWrapper {
     margin: 2rem 0;
     width: 70%;
+    @include media-breakpoint-down(md){
+      width: 80%;
+    }
+    @include media-breakpoint-down(sm){
+      width: 100%;
+    }
   }
 }
