@@ -132,7 +132,7 @@
     height: 40rem;
     background: url("../../assets/images/always-grey.png");
     background-repeat: repeat;
-    background-color:  $color1;
+    background-color: $color1;
     position: relative;
     @include flex(row);
     align-items: center;
@@ -192,6 +192,7 @@
     &__wrapper {
       width: 50rem;
       height: 20rem;
+      transition: all 0.5s ease-in-out;
 
       &__dark {
         background: $color1;
@@ -211,17 +212,22 @@
         }
       }
 
+      &__left {
+        border-radius: 0.8rem 0 0 0.8rem;
+      }
+
+      &__right {
+        border-radius: 0 0.8rem 0.8rem 0;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
       padding: 3rem;
       @include flex_center(row);
       justify-content: space-between;
 
-      &__left {
-        border-radius: 0.5rem 0 0 0.5rem;
-      }
-
-      &__right {
-        border-radius: 0 0.5rem 0.5rem 0;
-      }
 
       &__textWrapper {
         @include flex(column);
@@ -244,7 +250,6 @@
       background-repeat: no-repeat;
       background-size: 100%;
       @include flex_center(row);
-
 
     }
 

@@ -16,6 +16,7 @@ import Landing from './containers/Landing/Landing';
 import BlockRoute from './HOC/BlockRoute/BlockRoute';
 import Missing from './components/Missing/Missing';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
+import Footer from './components/Footer/Footer';
 import Helmet from 'react-helmet';
 import EmailVerification from './components/EmailVerification/EmailVerification';
 axios.interceptors.request.use(function (config) {
@@ -50,6 +51,7 @@ function App() {
                         <Route path={'/about'} component={About} />
                         <Route component={Missing} />
                     </Switch>
+                    <Footer />
                 </Auth>
             </div>
             <NotificationContainer />

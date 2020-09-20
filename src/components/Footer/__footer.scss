@@ -1,0 +1,100 @@
+.footerContainer {
+  @include flex(column);
+  background: $background-gradient;
+
+  &__topSection {
+    @include flex(row);
+
+    &__leftBlock {
+      @include flex(column);
+      align-items: flex-start;
+      padding: 5rem 8rem;
+      flex-basis: 50%;
+
+      &__followUs {
+        h1 {
+
+          font-size: 2rem;
+        }
+
+        position: relative;
+
+        &:before {
+          position: absolute;
+          content: '';
+          top: -2rem;
+          height: 0.8rem;
+          width: 100%;
+          background: $line-gradient;
+        }
+      }
+
+      &__socials {
+        @include flex(row);
+        margin-top: 1rem;
+        font-size: 3rem;
+        &__facebook{
+          color: $color1;
+          transition: color 0.5s ease-in-out;
+          &:hover{
+            color: #4267B2;
+            cursor: pointer;
+          }
+        }
+        &__instagram{
+          color: $color1;
+          transition: color 0.5s ease-in-out;
+          &:hover{
+            color:#fd1d1d;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    &__rightBlock {
+      @include flex(row);
+
+
+      flex-basis: 50%;
+
+      &__email {
+        position: relative;
+        display: flex;
+        align-items: center;
+        &:before{
+          position: absolute;
+          content: '';
+          left: 0;
+          width: 0.6rem;
+          height: 50%;
+          background: $color1;
+        }
+        a {
+          font-size: 1.8rem;
+          background: $white;
+          padding: 0.8rem 1.5rem;
+          margin-left: 1rem;
+          transition: background-color 0.5s ease-in-out;
+          &:hover{
+            cursor: pointer;
+            background-color: $color4;
+          }
+        }
+
+      }
+    }
+  }
+
+  &__bottomSection {
+    @include flex_center(row);
+    padding: 0.5rem;
+    background: $color3;
+    border-top: 0.2rem solid $color2;
+
+    p {
+      font-size: 1.4rem;
+      margin-left: 0.5rem;
+    }
+  }
+}
