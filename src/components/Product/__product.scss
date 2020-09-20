@@ -8,41 +8,52 @@
     box-shadow: 0 0 0.2rem 0.3rem $color4;
   }
 
+  @include media-breakpoint-down(xs) {
+    @include flex(row);
+  }
+
   &__img {
     width: 23.5rem;
     height: 23.5rem;
-    @include media-breakpoint-down(md){
+    @include media-breakpoint-down(md) {
       width: 22rem;
       height: 22rem;
     }
-    @include media-breakpoint-down(sm){
+    @include media-breakpoint-down(sm) {
       width: 20rem;
       height: 20rem;
     }
-    @include media-breakpoint-down(xs){
-      width: 18rem;
-      height: 18rem;
+    @include media-breakpoint-down(xs) {
+      width: 12rem;
+      height: 12rem;
     }
   }
 
-  h1 {
-    font-size: 1.8rem;
-    margin: 0.5rem 0;
+  &__detailsWrapper {
+    @include flex_center(column);
+    width: 100%;
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0.5rem 0;
+    }
+
+    p {
+      font-size: 1.6rem;
+      margin: 0.5rem 0;
+    }
+
+    &__buttonWrapper {
+      margin: 2rem 0;
+      width: 70%;
+      @include media-breakpoint-down(md) {
+        width: 80%;
+      }
+      @include media-breakpoint-down(sm) {
+        width: 90%;
+      }
+
+    }
   }
 
-  p {
-    font-size: 1.6rem;
-    margin: 0.5rem 0;
-  }
-
-  &__buttonWrapper {
-    margin: 2rem 0;
-    width: 70%;
-    @include media-breakpoint-down(md){
-      width: 80%;
-    }
-    @include media-breakpoint-down(sm){
-      width: 100%;
-    }
-  }
 }

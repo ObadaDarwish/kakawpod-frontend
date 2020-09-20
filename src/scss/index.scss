@@ -21,7 +21,10 @@ $grid-breakpoints: (
   font-family: 'lobster';
   src: url("../assets/fonts/Lobster-Regular.ttf");
 }
-
+.appContainer{
+  @include flex(column);
+  min-height: 100vh;
+}
 body {
   margin: 0;
   font-family: proza libre, sans-serif;

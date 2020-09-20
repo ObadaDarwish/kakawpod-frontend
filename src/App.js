@@ -19,6 +19,7 @@ import ResetPassword from './containers/ResetPassword/ResetPassword';
 import Footer from './components/Footer/Footer';
 import Helmet from 'react-helmet';
 import EmailVerification from './components/EmailVerification/EmailVerification';
+import Shop from './containers/Shop/Shop';
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -49,6 +50,7 @@ function App() {
                             component={ResetPassword}
                         />
                         <Route path={'/about'} component={About} />
+                        <Route path={'/shop'} component={Shop} />
                         <Route component={Missing} />
                     </Switch>
                     <Footer />

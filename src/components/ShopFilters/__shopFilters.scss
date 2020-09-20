@@ -1,0 +1,18 @@
+.shopFiltersContainer {
+  border:0.1rem solid $gray-200;
+  padding: 1.5rem;
+  &__row {
+    @include flex(row);
+    align-items: center;
+  }
+
+  &__column {
+    @include flex(column)
+  }
+
+  p {
+    margin-right: 1rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+}

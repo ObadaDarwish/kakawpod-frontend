@@ -7,14 +7,15 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        width: '100%',
+        height: (props) => props.height || '100vh',
         '& .MuiCircularProgress-colorPrimary': {
             color: '#7D5A5A',
         },
     },
 }));
-const CircularLoadingIndicator = () => {
-    const classes = useStyles();
+const CircularLoadingIndicator = (props) => {
+    const classes = useStyles(props);
 
     return (
         <div className={classes.root}>
