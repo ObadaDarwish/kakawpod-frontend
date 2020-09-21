@@ -1,6 +1,7 @@
 .footerContainer {
   @include flex(column);
-  background: $background-gradient;
+  background: $color4;
+  border-top: 0.1rem solid $color3;
   margin-top: auto;
 
   &__topSection {

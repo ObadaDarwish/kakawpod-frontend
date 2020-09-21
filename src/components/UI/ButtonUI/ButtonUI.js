@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
         height: (props) => props.height || '3.5rem',
         fontSize: (props) => props.fontSize || '1.6rem',
         width: (props) => props.width || '100%',
+        minWidth: (props) => props.width || '2.6rem',
         '&:hover': {
             background: (props) =>
                 props.inverseBackground ? '#efe7e7' : '#5b3d3d',

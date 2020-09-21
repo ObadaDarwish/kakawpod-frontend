@@ -37,7 +37,8 @@ const InputUI = ({
             inputRef={reference}
             helperText={errorMessage}
             error={error}
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
+            value={defaultValue}
             inputProps={{
                 style: { fontSize: matches ? 16 : 20, color: '#7D5A5A' },
             }}

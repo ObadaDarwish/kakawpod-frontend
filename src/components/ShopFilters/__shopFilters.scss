@@ -1,6 +1,6 @@
 .shopFiltersContainer {
   border:0.1rem solid $gray-200;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   &__row {
     @include flex(row);
     align-items: center;

@@ -1,0 +1,152 @@
+.shopMixBoxContainer {
+  min-height: 100vh;
+  @include flex(column);
+
+  &__filtersWrapper {
+    width: 100%;
+    @include flex(row);
+    justify-content: center;
+
+    &__mixBox {
+      @include flex(row);
+      padding: 1rem 1.5rem;
+      align-items: center;
+      border: 0.1rem solid #e9ecef;
+      margin: 0 4rem;
+
+      &__box {
+        padding: 1rem 2rem;
+        background: $color4;
+        transition: all 0.5s ease-in-out;
+
+        p {
+
+          font-size: 1.6rem;
+        }
+
+        &--active {
+          background: $color3;
+        }
+
+        &:hover {
+          background: $color3;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__boxSummaryProductsWrapper {
+    @include flex(row);
+    margin: 4rem 2rem;
+    align-items: flex-start;
+
+    &__mixBoxSummary {
+      width: 35rem;
+      min-height: 35rem;
+      overflow-y: auto;
+      border: 0.1rem solid $hr-border-color;
+      margin: 0 2rem;
+      @include flex(column);
+      justify-content: flex-start;
+
+      &__header {
+        background: $color2;
+        padding: 1rem;
+
+        p {
+          font-size: 1.6rem;
+        }
+      }
+
+      &__content {
+        padding: 2rem;
+
+        &__item {
+          @include flex(row);
+          align-items: center;
+
+          p {
+
+            font-size: 1.4rem;
+            margin-right: auto;
+          }
+
+          .MuiTextField-root {
+            margin: 1rem;
+          }
+
+          .MuiInput-input {
+            text-align: center;
+          }
+
+          &__counterControls {
+            @include flex(column);
+
+            .MuiButton-root {
+              margin: 0.3rem;
+              padding: 0.5rem;
+            }
+          }
+        }
+
+
+      }
+
+      &__controlWrapper {
+        margin-top: auto;
+
+
+        &__progressBar {
+          padding: 2rem;
+          position: relative;
+
+          &__min {
+            position: absolute;
+            left: 2rem;
+            top: -1rem;
+
+            p {
+              font-size: 1.4rem;
+            }
+          }
+
+          &__max {
+            position: absolute;
+            right: 2rem;
+            top: -1rem;
+
+            p {
+              font-size: 1.4rem;
+            }
+          }
+
+          .MuiLinearProgress-root {
+            height: 0.8rem;
+            border-radius: 0.5rem;
+          }
+
+          .MuiLinearProgress-colorPrimary {
+            background-color: $color4;
+          }
+
+          .MuiLinearProgress-barColorPrimary {
+            background-color: $color1;
+          }
+        }
+
+        &__addToCart {
+          margin-top: auto;
+        }
+
+      }
+
+    }
+
+    &__products {
+      @include flex(row);
+      width: 100%;
+      padding: 0 2rem;
+    }
+  }
+}

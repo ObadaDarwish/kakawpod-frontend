@@ -1,8 +1,8 @@
 import React from 'react';
 
-const DataPrompt = ({ message }) => {
+const DataPrompt = ({ message, margin }) => {
     return (
-        <div className={'dataPromptContainer'}>
+        <div className={'dataPromptContainer'} style={{ margin: margin }}>
             <p>{message}</p>
         </div>
     );

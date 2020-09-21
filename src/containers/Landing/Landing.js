@@ -66,25 +66,25 @@ const Landing = () => {
                     <Product
                         image={img}
                         title={'milk chocolate'}
-                        description={'80gm'}
+                        weight={80}
                         price={'EGP45'}
                     />
                     <Product
                         image={img1}
                         title={'milk chocolate'}
-                        description={'80gm'}
+                        weight={80}
                         price={'EGP45'}
                     />
                     <Product
                         image={img}
                         title={'milk chocolate'}
-                        description={'80gm'}
+                        weight={80}
                         price={'EGP45'}
                     />{' '}
                     <Product
                         image={img1}
                         title={'milk chocolate'}
-                        description={'80gm'}
+                        weight={80}
                         price={'EGP45'}
                     />
                 </div>
