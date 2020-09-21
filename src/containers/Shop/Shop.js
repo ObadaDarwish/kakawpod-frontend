@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import banner from '../../assets/images/banner.jpg';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -7,13 +7,10 @@ import ShopBars from '../../components/ShopBars/ShopBars';
 import ShopMixBox from '../../components/ShopMixBox/ShopMixBox';
 import { NavLink, Route } from 'react-router-dom';
 import { Switch, Redirect } from 'react-router';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Shop = ({ match }) => {
-    // const [activeTab, setActiveTab] = useState('bars');
-    // const activeTabHandler = (catergory) => {
-    //     setActiveTab(catergory);
-    // };
-
+    const matches = useMediaQuery('(max-width:768px)');
     return (
         <div className={'shopContainer'}>
             <div className={'shopContainer__carousel'}>
@@ -29,6 +26,7 @@ const Shop = ({ match }) => {
                             className={
                                 'shopContainer__carousel__carousel-item__image'
                             }
+                            alt={'ODs chocolate promotion banner'}
                             src={banner}
                         />
                     </div>
@@ -37,6 +35,7 @@ const Shop = ({ match }) => {
                             className={
                                 'shopContainer__carousel__carousel-item__image'
                             }
+                            alt={'ODs chocolate promotion banner'}
                             src={banner}
                         />
                         <div
@@ -55,7 +54,7 @@ const Shop = ({ match }) => {
                     activeClassName={'shopContainer__navTabs__tab--active'}
                     className={`shopContainer__navTabs__tab`}
                 >
-                    Chocolate bars
+                    {matches ? 'bars' : 'Chocolate bars'}
                 </NavLink>
                 <NavLink
                     to={`${match.path}/mixBox`}
@@ -76,7 +75,7 @@ const Shop = ({ match }) => {
                     activeClassName={'shopContainer__navTabs__tab--active'}
                     className={`shopContainer__navTabs__tab`}
                 >
-                    Cooking chocolate
+                    {matches ? 'Cooking' : 'Cooking chocolate'}
                 </NavLink>
             </div>
             <Switch>

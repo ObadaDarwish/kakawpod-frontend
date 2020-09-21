@@ -5,21 +5,25 @@ import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const queryString = require('query-string');
 
 const ShopBars = ({ match, location }) => {
+    const matches = useMediaQuery('(max-width:1025px)');
     let queryParams = queryString.parse(location.search);
-    const { type } = queryParams;
+    let { type } = queryParams;
+    if (!type) {
+        type = 'milk';
+    }
     const history = useHistory();
     const [isLoading, data] = useFetchData(
-        `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=bar${
-            type ? '&chocolate_type=' + type : ''
+        `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=bar&type=${
+            type ? type : 'milk'
         }`
     );
 
     const { products, totalPages } = data || {};
-    console.log(isLoading, data);
     const handleFilterChange = (e) => {
         const event = e.target;
         history.push({
@@ -32,7 +36,7 @@ const ShopBars = ({ match, location }) => {
             <ShopFilters
                 handleChange={handleFilterChange}
                 filter={type}
-                direction={'column'}
+                direction={matches ? 'row' : 'column'}
             />
             <div className={'shopBarsContainer__products'}>
                 {isLoading ? (
@@ -45,7 +49,7 @@ const ShopBars = ({ match, location }) => {
                                 image={product.images[0].url}
                                 title={product.name}
                                 description={product.description}
-                                price={product.price}
+                                price={`EGP${product.price}`}
                             />
                         );
                     })

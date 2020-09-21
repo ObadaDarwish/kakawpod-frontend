@@ -10,6 +10,7 @@
 
   @include media-breakpoint-down(xs) {
     @include flex(row);
+    width: 90%;
   }
 
   &__img {
@@ -24,8 +25,8 @@
       height: 20rem;
     }
     @include media-breakpoint-down(xs) {
-      width: 12rem;
-      height: 12rem;
+      width: 14rem;
+      height: 100%;
     }
   }
 
