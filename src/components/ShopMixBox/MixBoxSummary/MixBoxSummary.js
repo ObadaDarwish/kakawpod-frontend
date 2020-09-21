@@ -3,21 +3,25 @@ import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DataPrompt from '../../DataPrompt/DataPrompt';
+import { useMediaQuery } from '@material-ui/core';
 
 const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
+    const matches = useMediaQuery('(max-width:768px)');
     return (
         <section
             className={
                 'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary'
             }
         >
-            <div
-                className={
-                    'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__header'
-                }
-            >
-                <p>Content</p>
-            </div>
+            {!matches && (
+                <div
+                    className={
+                        'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__header'
+                    }
+                >
+                    <p>Content</p>
+                </div>
+            )}
             <div
                 className={
                     'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__content'
@@ -90,6 +94,7 @@ const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
                         <p>{selectedBox.name}</p>
                     </div>
                 </div>
+
                 <div
                     className={
                         'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__controlWrapper__addToCart'

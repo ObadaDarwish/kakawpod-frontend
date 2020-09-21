@@ -80,7 +80,7 @@ const Landing = () => {
                         title={'milk chocolate'}
                         weight={80}
                         price={'EGP45'}
-                    />{' '}
+                    />
                     <Product
                         image={img1}
                         title={'milk chocolate'}

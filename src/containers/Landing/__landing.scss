@@ -173,7 +173,7 @@
       margin: 4rem 0;
       width: 100%;
       overflow-x: auto;
-      @include media-breakpoint-down(xs) {
+      @include media-breakpoint-down(sm) {
         @include flex(column);
         height: 40rem;
       }

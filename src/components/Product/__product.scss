@@ -8,9 +8,14 @@
     box-shadow: 0 0 0.2rem 0.3rem $color4;
   }
 
-  @include media-breakpoint-down(xs) {
+  @include media-breakpoint-down(sm) {
     @include flex(row);
-    width: 90%;
+    width: 100%;
+
+  }
+  @include media-breakpoint-down(xs){
+    @include flex(column);
+    width: 100%;
   }
 
   &__img {
@@ -25,8 +30,8 @@
       height: 20rem;
     }
     @include media-breakpoint-down(xs) {
-      width: 14rem;
-      height: 100%;
+      width: 85%;
+      height: 14rem;
     }
   }
 

@@ -10,7 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const queryString = require('query-string');
 
 const ShopBars = ({ match, location }) => {
-    const matches = useMediaQuery('(max-width:1025px)');
+    const matches = useMediaQuery('(max-width:1024px)');
     let queryParams = queryString.parse(location.search);
     let { type } = queryParams;
     if (!type) {

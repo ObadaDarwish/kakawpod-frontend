@@ -9,6 +9,7 @@ import Profile from './containers/Profile/Profile';
 import PrivateRoute from './HOC/PrivateRoute/PrivateRoute';
 import Auth from './HOC/Auth/Auth';
 import { BrowserRouter as Router } from 'react-router-dom';
+
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import axios from 'axios';

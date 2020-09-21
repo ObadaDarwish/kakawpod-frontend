@@ -31,6 +31,9 @@
     margin: 2rem 4rem;
     border-bottom: 0.2rem solid $color1;
     @include flex(row);
+    @include media-breakpoint-down(xs) {
+      margin: 2rem 0.5rem;
+    }
 
     &__tab {
       margin-right: 1.5rem;

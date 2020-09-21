@@ -1,6 +1,9 @@
 .shopFiltersContainer {
   border:0.1rem solid $gray-200;
   padding: 1rem 1.5rem;
+  @include media-breakpoint-down(xs){
+    width: 90%;
+  }
   &__row {
     @include flex(row);
     align-items: center;

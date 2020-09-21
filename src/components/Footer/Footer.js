@@ -2,7 +2,6 @@ import React from 'react';
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
-import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
     return (

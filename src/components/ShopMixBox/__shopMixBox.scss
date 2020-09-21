@@ -6,6 +6,10 @@
     width: 100%;
     @include flex(row);
     justify-content: center;
+    @include media-breakpoint-down(sm) {
+      @include flex(column);
+      align-items: center;
+    }
 
     &__mixBox {
       @include flex(row);
@@ -13,6 +17,10 @@
       align-items: center;
       border: 0.1rem solid #e9ecef;
       margin: 0 4rem;
+      @include media-breakpoint-down(xs) {
+        margin: 0;
+        margin-bottom: 1rem;
+      }
 
       &__box {
         padding: 1rem 2rem;
@@ -40,15 +48,30 @@
     @include flex(row);
     margin: 4rem 2rem;
     align-items: flex-start;
+    @include media-breakpoint-down(sm) {
+      @include flex(column);
+    }
 
     &__mixBoxSummary {
       width: 35rem;
-      min-height: 35rem;
-      overflow-y: auto;
+      height: 35rem;
       border: 0.1rem solid $hr-border-color;
       margin: 0 2rem;
       @include flex(column);
       justify-content: flex-start;
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        position: fixed;
+        height: 35rem;
+        bottom: 0;
+        left: 0;
+        z-index: 1000000;
+        background: $color4;
+        margin: 0;
+      }
+      @include media-breakpoint-down(sm) {
+        height: 20rem;
+      }
 
       &__header {
         background: $color2;
@@ -61,10 +84,12 @@
 
       &__content {
         padding: 2rem;
+        overflow-y: auto;
 
         &__item {
           @include flex(row);
           align-items: center;
+          margin-bottom: 1rem;
 
           p {
 
@@ -100,11 +125,19 @@
         &__progressBar {
           padding: 2rem;
           position: relative;
+          @include media-breakpoint-down(sm) {
+            padding-top: 2.5rem;
+            padding-bottom: 1rem;
+            box-shadow: 0 0 0.1rem 0.1rem $color2;
+          }
 
           &__min {
             position: absolute;
             left: 2rem;
             top: -1rem;
+            @include media-breakpoint-down(sm) {
+              top: 0;
+            }
 
             p {
               font-size: 1.4rem;
@@ -115,6 +148,9 @@
             position: absolute;
             right: 2rem;
             top: -1rem;
+            @include media-breakpoint-down(sm) {
+              top: 0;
+            }
 
             p {
               font-size: 1.4rem;
@@ -127,7 +163,7 @@
           }
 
           .MuiLinearProgress-colorPrimary {
-            background-color: $color4;
+            background-color: $color3;
           }
 
           .MuiLinearProgress-barColorPrimary {
@@ -144,9 +180,8 @@
     }
 
     &__products {
-      @include flex(row);
+      @include flex(row wrap);
       width: 100%;
-      padding: 0 2rem;
     }
   }
 }

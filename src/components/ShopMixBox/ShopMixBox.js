@@ -77,7 +77,7 @@ const ShopMixBox = ({ match, location }) => {
             }
         } else {
             infoNotification(
-                'Box is full, please upgrade your bix.',
+                'Box is full, please upgrade your box.',
                 'Box limit'
             );
         }
