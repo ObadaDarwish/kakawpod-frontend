@@ -48,21 +48,27 @@
     @include flex(row);
     margin: 4rem 2rem;
     align-items: flex-start;
+    position: relative;
     @include media-breakpoint-down(sm) {
       @include flex(column);
     }
 
+
     &__mixBoxSummary {
+      position: sticky;
+      top: 15rem;
       width: 35rem;
       height: 35rem;
       border: 0.1rem solid $hr-border-color;
       margin: 0 2rem;
       @include flex(column);
       justify-content: flex-start;
+      transition: all 0.5s ease-in-out;
       @include media-breakpoint-down(sm) {
         width: 100%;
         position: fixed;
         height: 35rem;
+        top: unset;
         bottom: 0;
         left: 0;
         z-index: 1000000;
@@ -70,7 +76,7 @@
         margin: 0;
       }
       @include media-breakpoint-down(sm) {
-        height: 20rem;
+        height: 35vh;
       }
 
       &__header {
@@ -182,6 +188,7 @@
     &__products {
       @include flex(row wrap);
       width: 100%;
+      min-height: 60rem;
     }
   }
 }

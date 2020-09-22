@@ -19,7 +19,7 @@ const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
                         'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__header'
                     }
                 >
-                    <p>Content</p>
+                    <p>Mix box</p>
                 </div>
             )}
             <div
