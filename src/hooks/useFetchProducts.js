@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetchData = (url) => {
+const useFetchProducts = (url) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [response, setResponse] = useState(null);
+    const [response, setResponse] = useState([]);
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -13,7 +13,13 @@ const useFetchData = (url) => {
             .get(url)
             .then((res) => {
                 if (canUpdate) {
-                    setResponse(res.data);
+                    let products = res.data.products.map((item) => {
+                        return {
+                            ...item,
+                            isAddButtonDisabled: false,
+                        };
+                    });
+                    setResponse(products);
                     setIsLoading(false);
                 }
             })
@@ -30,4 +36,4 @@ const useFetchData = (url) => {
 
     return [isLoading, response, setResponse, error, setError];
 };
-export default useFetchData;
+export default useFetchProducts;

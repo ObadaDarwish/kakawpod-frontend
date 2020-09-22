@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ShopFilters from '../ShopFilters/ShopFilters';
 import { useHistory } from 'react-router-dom';
 import useFetchData from '../../hooks/useFetchData';
@@ -7,31 +7,38 @@ import Product from '../Product/Product';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import MixBoxSummary from './MixBoxSummary/MixBoxSummary';
 import MixBoxFilters from './MixBoxFilters/MixBoxFilters';
-import { infoNotification } from '../../utils/notification-utils';
+import {
+    errorNotification,
+    infoNotification,
+} from '../../utils/notification-utils';
+import useCallServer from '../../hooks/useCallServer';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import useFetchMixBoxItems from '../../hooks/useFetchMixBoxItems';
+import useFetchProducts from '../../hooks/useFetchProducts';
 
 const queryString = require('query-string');
+
 const ShopMixBox = ({ match, location }) => {
     let queryParams = queryString.parse(location.search);
-    const [boxItems, setBoxItems] = useState([]);
-    let { type } = queryParams;
-    if (!type) {
-        type = 'milk';
-    }
-    let [isLoadingMixBox, mixBoxes] = useFetchData(
+    const dispatch = useDispatch();
+    const [, , , , callServer] = useCallServer();
+    let { type = 'milk' } = queryParams;
+    let [, mixBoxItems, setMixBoxItems] = useFetchMixBoxItems(
+        `${process.env.REACT_APP_API_ENDPOINT}/user/mixBox`
+    );
+    let [, mixBoxes] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=mixBox`
     );
     mixBoxes = mixBoxes && mixBoxes.products;
     const [selectedBox, setSelectedBox] = useState(
         mixBoxes ? mixBoxes[0] : { name: '3 bars', _id: 0 }
     );
-    let [isLoadingBars, bars] = useFetchData(
+    let [isLoadingBars, bars, setBars] = useFetchProducts(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=bar&type=${
             type ? type : 'milk'
         }`
     );
-    if (bars) {
-        bars = bars.products;
-    }
     const history = useHistory();
     const handleFilterChange = (e) => {
         const event = e.target;
@@ -53,28 +60,62 @@ const ShopMixBox = ({ match, location }) => {
     };
     const getItemsCount = () => {
         let count = 0;
-        boxItems.forEach((item) => {
+        mixBoxItems.forEach((item) => {
             count += item.count;
         });
+
         return count;
     };
     const getBoxLimit = () => {
         return parseInt(selectedBox.name.substr(0, 1));
     };
     const handleAddToBox = (product) => {
-        let items = [...boxItems];
+        const toggleAddButton = (value) => {
+            setBars((prevState) => {
+                let newState = [...prevState];
+                let isFound = newState.findIndex(
+                    (item) => item._id === product._id
+                );
+                if (isFound !== -1) {
+                    newState[isFound].isAddButtonDisabled = value;
+                }
+                return newState;
+            });
+        };
+        let items = [...mixBoxItems];
         if (getItemsCount() < getBoxLimit()) {
-            let isProdFound = -1;
-            isProdFound = items.findIndex((item) => item._id === product._id);
-            let newCount = 1;
-            if (isProdFound >= 0) {
-                newCount = items[isProdFound].count + 1;
-                items[isProdFound].count = newCount;
-                setBoxItems(items);
-            } else {
-                items.push({ ...product, count: 1 });
-                setBoxItems(items);
-            }
+            toggleAddButton(true);
+            dispatch(setLoading(true));
+            callServer(
+                'POST',
+                `${process.env.REACT_APP_API_ENDPOINT}/shop/mixBox`,
+                { product_id: product._id }
+            )
+                .then((response) => {
+                    console.log(response);
+                    let isProdFound = -1;
+                    isProdFound = items.findIndex(
+                        (item) => item._id === product._id
+                    );
+                    let newCount = 1;
+                    if (isProdFound >= 0) {
+                        newCount = items[isProdFound].count + 1;
+                        items[isProdFound].count = newCount;
+                        setMixBoxItems(items);
+                    } else {
+                        items.push({ ...product, count: 1 });
+                        setMixBoxItems(items);
+                    }
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        errorNotification(err.response.data.message, 'Mix box');
+                    }
+                })
+                .finally(() => {
+                    dispatch(setLoading(false));
+                    toggleAddButton(false);
+                });
         } else {
             infoNotification(
                 'Box is full, please upgrade your box.',
@@ -99,7 +140,7 @@ const ShopMixBox = ({ match, location }) => {
             <div className={'shopMixBoxContainer__boxSummaryProductsWrapper'}>
                 <MixBoxSummary
                     selectedBox={selectedBox}
-                    boxItems={boxItems}
+                    boxItems={mixBoxItems}
                     itemsCount={getItemsCount()}
                     boxLimit={getBoxLimit()}
                 />
@@ -110,7 +151,7 @@ const ShopMixBox = ({ match, location }) => {
                 >
                     {isLoadingBars ? (
                         <CircularLoadingIndicator height={'20rem'} />
-                    ) : bars && bars.length ? (
+                    ) : bars.length ? (
                         bars.map((product) => {
                             return (
                                 <Product
@@ -121,6 +162,9 @@ const ShopMixBox = ({ match, location }) => {
                                     weight={product.weight}
                                     price={`EGP${product.price}`}
                                     buttonText={'Add to box'}
+                                    isAddButtonDisabled={
+                                        product.isAddButtonDisabled
+                                    }
                                     addToBox={() => handleAddToBox(product)}
                                 />
                             );

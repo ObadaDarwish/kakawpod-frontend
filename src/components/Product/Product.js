@@ -9,6 +9,7 @@ const Product = ({
     price,
     buttonText,
     addToBox,
+    isAddButtonDisabled,
 }) => {
     return (
         <div className={'product'}>
@@ -20,6 +21,7 @@ const Product = ({
                 <div className={'product__detailsWrapper__buttonWrapper'}>
                     <ButtonUI
                         name={buttonText ? buttonText : 'Add to cart'}
+                        is_disabled={isAddButtonDisabled}
                         clickHandler={addToBox}
                     />
                 </div>

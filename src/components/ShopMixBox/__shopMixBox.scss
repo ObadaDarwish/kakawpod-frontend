@@ -55,6 +55,7 @@
 
 
     &__mixBoxSummary {
+      position: -webkit-sticky;
       position: sticky;
       top: 15rem;
       width: 35rem;
@@ -187,6 +188,7 @@
 
     &__products {
       @include flex(row wrap);
+      align-items: flex-start;
       width: 100%;
       min-height: 60rem;
     }
