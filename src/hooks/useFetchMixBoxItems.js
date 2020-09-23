@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const useFetchMixBoxItems = (url) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [response, setResponse] = useState([]);
+    const [response, setResponse] = useState(null);
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -20,7 +20,13 @@ const useFetchMixBoxItems = (url) => {
                             count: item.quantity,
                         };
                     });
-                    setResponse(mixBoxItems);
+                    setResponse({
+                        name: res.data.box_name,
+                        _id: res.data.box_id,
+                        items: mixBoxItems,
+                        limit: res.data.limit,
+                        price: res.data.box_price,
+                    });
                     setIsLoading(false);
                 }
             })

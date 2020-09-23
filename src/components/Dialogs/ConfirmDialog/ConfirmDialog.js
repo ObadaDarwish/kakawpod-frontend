@@ -59,7 +59,7 @@ const ConfirmDialog = ({ open, checkText, onClose, close }) => {
             </IconButton>
             <form
                 className={`formWrapper`}
-                style={{ margin: '2rem' }}
+                style={{ margin: '2rem', marginTop: 0 }}
                 onSubmit={(e) => confirm(e)}
             >
                 <h1>Please type '{checkText}'.</h1>

@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DataPrompt from '../../DataPrompt/DataPrompt';
 import { useMediaQuery } from '@material-ui/core';
-
-const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+const MixBoxSummary = ({
+    selectedBox,
+    boxItems,
+    itemsCount,
+    boxLimit,
+    clearMixBoxHandler,
+    handleItemUpdate,
+}) => {
     const matches = useMediaQuery('(max-width:768px)');
+    const plusButton = (bar) => {
+        handleItemUpdate('add', { ...bar });
+    };
+    const minusButton = (bar) => {
+        handleItemUpdate('subtract', { ...bar });
+    };
+
     return (
         <section
             className={
@@ -20,6 +34,17 @@ const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
                     }
                 >
                     <p>Mix box</p>
+                    <div
+                        className={
+                            'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__header__clearBox'
+                        }
+                        onClick={clearMixBoxHandler}
+                    >
+                        <DeleteOutlinedIcon
+                            fontSize={'large'}
+                            color={'inherit'}
+                        />
+                    </div>
                 </div>
             )}
             <div
@@ -51,11 +76,13 @@ const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
                                         height={'2rem'}
                                         width={'2rem'}
                                         name={'+'}
+                                        clickHandler={() => plusButton(item)}
                                     />
                                     <ButtonUI
                                         height={'2rem'}
                                         width={'2rem'}
                                         name={'-'}
+                                        clickHandler={() => minusButton(item)}
                                     />
                                 </div>
                             </div>
@@ -101,7 +128,7 @@ const MixBoxSummary = ({ selectedBox, boxItems, itemsCount, boxLimit }) => {
                     }
                 >
                     <ButtonUI
-                        name={'Add to cart'}
+                        name={`Add to cart(EGP${selectedBox.price})`}
                         is_disabled={itemsCount !== boxLimit}
                     />
                 </div>

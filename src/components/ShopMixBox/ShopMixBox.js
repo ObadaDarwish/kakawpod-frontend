@@ -7,33 +7,34 @@ import Product from '../Product/Product';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import MixBoxSummary from './MixBoxSummary/MixBoxSummary';
 import MixBoxFilters from './MixBoxFilters/MixBoxFilters';
+import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
 import {
     errorNotification,
     infoNotification,
 } from '../../utils/notification-utils';
 import useCallServer from '../../hooks/useCallServer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
 import useFetchMixBoxItems from '../../hooks/useFetchMixBoxItems';
 import useFetchProducts from '../../hooks/useFetchProducts';
+import LoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 
 const queryString = require('query-string');
 
 const ShopMixBox = ({ match, location }) => {
     let queryParams = queryString.parse(location.search);
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const dispatch = useDispatch();
     const [, , , , callServer] = useCallServer();
     let { type = 'milk' } = queryParams;
-    let [, mixBoxItems, setMixBoxItems] = useFetchMixBoxItems(
+    let [, myMixBox, setMyMixBox] = useFetchMixBoxItems(
         `${process.env.REACT_APP_API_ENDPOINT}/user/mixBox`
     );
     let [, mixBoxes] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=mixBox`
     );
     mixBoxes = mixBoxes && mixBoxes.products;
-    const [selectedBox, setSelectedBox] = useState(
-        mixBoxes ? mixBoxes[0] : { name: '3 bars', _id: 0 }
-    );
+
     let [isLoadingBars, bars, setBars] = useFetchProducts(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=bar&type=${
             type ? type : 'milk'
@@ -50,7 +51,29 @@ const ShopMixBox = ({ match, location }) => {
     const handleBoxChange = (box) => {
         let boxLimit = parseInt(box.name.substr(0, 1));
         if (getItemsCount() <= boxLimit) {
-            setSelectedBox(box);
+            dispatch(setLoading(true));
+            callServer(
+                'PUT',
+                `${process.env.REACT_APP_API_ENDPOINT}/shop/mixBox/limit`,
+                {
+                    box_id: box._id,
+                }
+            )
+                .then(() => {
+                    setMyMixBox((prevState) => {
+                        return {
+                            ...prevState,
+                            ...box,
+                            limit: boxLimit,
+                        };
+                    });
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        errorNotification(err.response.data.message, 'Mix box');
+                    }
+                })
+                .finally(() => dispatch(setLoading(false)));
         } else {
             infoNotification(
                 `Can't downgrade, please remove extra items from box.`,
@@ -60,14 +83,11 @@ const ShopMixBox = ({ match, location }) => {
     };
     const getItemsCount = () => {
         let count = 0;
-        mixBoxItems.forEach((item) => {
+        myMixBox.items.forEach((item) => {
             count += item.count;
         });
 
         return count;
-    };
-    const getBoxLimit = () => {
-        return parseInt(selectedBox.name.substr(0, 1));
     };
     const handleAddToBox = (product) => {
         const toggleAddButton = (value) => {
@@ -82,8 +102,8 @@ const ShopMixBox = ({ match, location }) => {
                 return newState;
             });
         };
-        let items = [...mixBoxItems];
-        if (getItemsCount() < getBoxLimit()) {
+        let items = [...myMixBox.items];
+        if (getItemsCount() < myMixBox.limit) {
             toggleAddButton(true);
             dispatch(setLoading(true));
             callServer(
@@ -92,7 +112,6 @@ const ShopMixBox = ({ match, location }) => {
                 { product_id: product._id }
             )
                 .then((response) => {
-                    console.log(response);
                     let isProdFound = -1;
                     isProdFound = items.findIndex(
                         (item) => item._id === product._id
@@ -101,10 +120,20 @@ const ShopMixBox = ({ match, location }) => {
                     if (isProdFound >= 0) {
                         newCount = items[isProdFound].count + 1;
                         items[isProdFound].count = newCount;
-                        setMixBoxItems(items);
+                        setMyMixBox((prevState) => {
+                            return {
+                                ...prevState,
+                                items: items,
+                            };
+                        });
                     } else {
                         items.push({ ...product, count: 1 });
-                        setMixBoxItems(items);
+                        setMyMixBox((prevState) => {
+                            return {
+                                ...prevState,
+                                items: items,
+                            };
+                        });
                     }
                 })
                 .catch((err) => {
@@ -123,57 +152,151 @@ const ShopMixBox = ({ match, location }) => {
             );
         }
     };
+    const confirmClearMixBox = () => {
+        setOpenConfirmDialog(true);
+    };
+    const closeConfirmDialog = () => {
+        setOpenConfirmDialog(false);
+    };
+    const clearMixBox = () => {
+        closeConfirmDialog();
+        dispatch(setLoading(true));
+        callServer(
+            'PUT',
+            `${process.env.REACT_APP_API_ENDPOINT}/shop/mixBox/clear`
+        )
+            .then(() => {
+                setMyMixBox((prevState) => {
+                    return {
+                        ...prevState,
+                        items: [],
+                    };
+                });
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(
+                        err.response.data.message,
+                        'Clear mix box'
+                    );
+                }
+            })
+            .finally(() => dispatch(setLoading(false)));
+    };
+    const updateMixBoxItems = (type, bar) => {
+        if (getItemsCount() < myMixBox.limit || type === 'subtract') {
+            let newCount = type === 'add' ? ++bar.count : --bar.count;
+            if (newCount >= 0) {
+                dispatch(setLoading(true));
+                callServer(
+                    'PUT',
+                    `${process.env.REACT_APP_API_ENDPOINT}/shop/mixBox`,
+                    { product_id: bar._id, quantity: newCount }
+                )
+                    .then(() => {
+                        setMyMixBox((prevState) => {
+                            let items = [...prevState.items];
+                            let index = items.findIndex(
+                                (item) => item._id === bar._id
+                            );
+                            items[index].count = newCount;
+                            return {
+                                ...prevState,
+                                items: items,
+                            };
+                        });
+                    })
+                    .catch((err) => {
+                        if (err.response) {
+                            errorNotification(
+                                err.response.data.message,
+                                'Mix box'
+                            );
+                        }
+                    })
+                    .finally(() => dispatch(setLoading(false)));
+            }
+        } else {
+            infoNotification(
+                'Box is full, please upgrade your box.',
+                'Box limit'
+            );
+        }
+    };
+
     return (
         <div className={'shopMixBoxContainer'}>
-            <div className={'shopMixBoxContainer__filtersWrapper'}>
-                <MixBoxFilters
-                    mixBoxes={mixBoxes}
-                    selectedBox={selectedBox}
-                    handleChange={handleBoxChange}
-                />
-                <ShopFilters
-                    handleChange={handleFilterChange}
-                    filter={type}
-                    direction={'row'}
-                />
-            </div>
-            <div className={'shopMixBoxContainer__boxSummaryProductsWrapper'}>
-                <MixBoxSummary
-                    selectedBox={selectedBox}
-                    boxItems={mixBoxItems}
-                    itemsCount={getItemsCount()}
-                    boxLimit={getBoxLimit()}
-                />
-                <section
-                    className={
-                        'shopMixBoxContainer__boxSummaryProductsWrapper__products'
-                    }
-                >
-                    {isLoadingBars ? (
-                        <CircularLoadingIndicator height={'20rem'} />
-                    ) : bars.length ? (
-                        bars.map((product) => {
-                            return (
-                                <Product
-                                    key={product._id}
-                                    image={product.images[0].url}
-                                    title={product.name}
-                                    description={product.description}
-                                    weight={product.weight}
-                                    price={`EGP${product.price}`}
-                                    buttonText={'Add to box'}
-                                    isAddButtonDisabled={
-                                        product.isAddButtonDisabled
-                                    }
-                                    addToBox={() => handleAddToBox(product)}
+            <ConfirmDialog
+                open={openConfirmDialog}
+                checkText={'clear'}
+                onClose={clearMixBox}
+                close={closeConfirmDialog}
+            />
+            {myMixBox ? (
+                <>
+                    <div className={'shopMixBoxContainer__filtersWrapper'}>
+                        <MixBoxFilters
+                            mixBoxes={mixBoxes}
+                            selectedBox={myMixBox}
+                            handleChange={handleBoxChange}
+                        />
+                        <ShopFilters
+                            handleChange={handleFilterChange}
+                            filter={type}
+                            direction={'row'}
+                        />
+                    </div>
+                    <div
+                        className={
+                            'shopMixBoxContainer__boxSummaryProductsWrapper'
+                        }
+                    >
+                        <MixBoxSummary
+                            selectedBox={myMixBox}
+                            boxItems={myMixBox.items}
+                            itemsCount={getItemsCount()}
+                            boxLimit={myMixBox.limit}
+                            handleItemUpdate={updateMixBoxItems}
+                            clearMixBoxHandler={confirmClearMixBox}
+                        />
+                        <section
+                            className={
+                                'shopMixBoxContainer__boxSummaryProductsWrapper__products'
+                            }
+                        >
+                            {isLoadingBars ? (
+                                <CircularLoadingIndicator height={'20rem'} />
+                            ) : bars.length ? (
+                                bars.map((product) => {
+                                    return (
+                                        <Product
+                                            key={product._id}
+                                            image={product.images[0].url}
+                                            title={product.name}
+                                            description={product.description}
+                                            weight={product.weight}
+                                            price={`EGP${product.price}`}
+                                            buttonText={'Add to box'}
+                                            isAddButtonDisabled={
+                                                product.isAddButtonDisabled
+                                            }
+                                            addToBox={() =>
+                                                handleAddToBox(product)
+                                            }
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <DataPrompt
+                                    message={'No products were found'}
                                 />
-                            );
-                        })
-                    ) : (
-                        <DataPrompt message={'No products were found'} />
-                    )}
-                </section>
-            </div>
+                            )}
+                        </section>
+                    </div>
+                </>
+            ) : (
+                <LoadingIndicator />
+            )}
         </div>
     );
 };
