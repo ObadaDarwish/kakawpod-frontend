@@ -18,43 +18,17 @@ import { setLoading } from '../../store/actions/loadingIndicator_actions';
 import useFetchProducts from '../../hooks/useFetchProducts';
 import LoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import { parseJSON, stringfyJSON } from '../../utils/jsonConversion';
+import useFetchMixBox from '../../hooks/useFetchMixBox';
 
 const queryString = require('query-string');
 
 const ShopMixBox = ({ match, location }) => {
     let queryParams = queryString.parse(location.search);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-    const dispatch = useDispatch();
-    const [, , , , callServer] = useCallServer();
     let { type = 'milk' } = queryParams;
-    let defaultMixBox = {
-        items: [],
-        limit: 3,
-        name: '3 bars',
-    };
-    let [myMixBox, setMyMixBox] = useState(
-        parseJSON(localStorage.getItem('mixBox')) || defaultMixBox
-    );
-    let [, mixBoxes] = useFetchData(
+    let [isLoading, error, myMixBox, setMyMixBox, mixBoxes] = useFetchMixBox(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=mixBox`
     );
-
-    if (mixBoxes) {
-        mixBoxes = mixBoxes.products;
-        let isMixBoxFound = mixBoxes.findIndex((box) => box.name === '3 bars');
-        if (
-            !localStorage.getItem('mixBox') &&
-            isMixBoxFound >= 0 &&
-            myMixBox.price !== mixBoxes[isMixBoxFound].price
-        ) {
-            setMyMixBox((prevState) => {
-                return {
-                    ...prevState,
-                    ...mixBoxes[isMixBoxFound],
-                };
-            });
-        }
-    }
     let [isLoadingBars, bars, setBars] = useFetchProducts(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=bar&type=${
             type ? type : 'milk'
@@ -180,9 +154,9 @@ const ShopMixBox = ({ match, location }) => {
                 onClose={clearMixBox}
                 close={closeConfirmDialog}
             />
-            {myMixBox ? (
+            {!isLoading ? (
                 <>
-                    <div className={'shopMixBoxContainer__filtersWrapper'}>
+                    <div className={'filtersWrapper'}>
                         <MixBoxFilters
                             mixBoxes={mixBoxes}
                             selectedBox={myMixBox}

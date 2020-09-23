@@ -73,4 +73,48 @@
       }
     }
   }
+
+ .filtersWrapper {
+    width: 100%;
+    @include flex(row);
+    justify-content: center;
+    @include media-breakpoint-down(sm) {
+      @include flex(column);
+      align-items: center;
+    }
+
+    &__mixBox {
+      @include flex(row);
+      padding: 1rem 1.5rem;
+      align-items: center;
+      border: 0.1rem solid #e9ecef;
+      margin: 0 4rem;
+      @include media-breakpoint-down(xs) {
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      &__box {
+        padding: 1rem 2rem;
+        background: $color4;
+        transition: all 0.5s ease-in-out;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        p {
+
+          font-size: 1.6rem;
+        }
+
+        &--active {
+          background: $color3;
+        }
+
+        &:hover {
+          background: $color3;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

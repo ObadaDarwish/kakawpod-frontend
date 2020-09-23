@@ -8,6 +8,7 @@ import ShopMixBox from '../../components/ShopMixBox/ShopMixBox';
 import { NavLink, Route } from 'react-router-dom';
 import { Switch, Redirect } from 'react-router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ShopLuxuryBox from '../../components/ShopLuxuryBox/ShopLuxuryBox';
 
 const Shop = ({ match }) => {
     const matches = useMediaQuery('(max-width:768px)');
@@ -88,6 +89,10 @@ const Shop = ({ match }) => {
                 />
                 <Route path={`${match.path}/bars`} component={ShopBars} />
                 <Route path={`${match.path}/mixBox`} component={ShopMixBox} />
+                <Route
+                    path={`${match.path}/luxuryBox`}
+                    component={ShopLuxuryBox}
+                />
             </Switch>
         </div>
     );

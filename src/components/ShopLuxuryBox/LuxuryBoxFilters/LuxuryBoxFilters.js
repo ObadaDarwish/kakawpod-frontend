@@ -1,10 +1,10 @@
 import React from 'react';
 
-const MixBoxFilters = ({ mixBoxes, selectedBox, handleChange }) => {
+const LuxuryBoxFilters = ({ luxuryBoxes, selectedBox, handleChange }) => {
     return (
         <div className={'filtersWrapper__mixBox'}>
-            {mixBoxes &&
-                mixBoxes.map((box) => {
+            {luxuryBoxes &&
+                luxuryBoxes.map((box) => {
                     return (
                         <div
                             key={box._id}
@@ -16,6 +16,9 @@ const MixBoxFilters = ({ mixBoxes, selectedBox, handleChange }) => {
                             onClick={() => handleChange(box)}
                         >
                             <p> {box.name}</p>
+                            <p style={{ fontSize: '1.4rem' }}>
+                                (EGP{box.price})
+                            </p>
                         </div>
                     );
                 })}
@@ -23,4 +26,4 @@ const MixBoxFilters = ({ mixBoxes, selectedBox, handleChange }) => {
     );
 };
 
-export default MixBoxFilters;
+export default LuxuryBoxFilters;
