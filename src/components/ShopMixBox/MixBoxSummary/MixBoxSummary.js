@@ -128,7 +128,7 @@ const MixBoxSummary = ({
                     }
                 >
                     <ButtonUI
-                        name={`Add to cart(EGP${selectedBox.price})`}
+                        name={`Add to cart (EGP${selectedBox.price})`}
                         is_disabled={itemsCount !== boxLimit}
                     />
                 </div>

@@ -62,7 +62,7 @@ const ConfirmDialog = ({ open, checkText, onClose, close }) => {
                 style={{ margin: '2rem', marginTop: 0 }}
                 onSubmit={(e) => confirm(e)}
             >
-                <h1>Please type '{checkText}'.</h1>
+                <h1>Please confirm by typing '{checkText}'.</h1>
                 <InputUI
                     error={inputData.has_error}
                     errorMessage={inputData.error_message}
