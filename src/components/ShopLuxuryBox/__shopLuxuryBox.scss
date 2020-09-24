@@ -1,14 +1,21 @@
 .luxuryBoxContainer {
   @include flex(column);
   align-items: center;
+  position: relative;
 
-  &__chooseBoxTitle {
-    margin-bottom: 1rem;
+
+  .shopFiltersContainer {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  &__title {
+    margin: 2rem 0;
   }
 
   &__luxuryBoxPackagesWrapper {
     @include flex(row);
-    margin-top: 2rem;
+    margin: 4rem 0;
 
     &__package {
       @include flex(column);
@@ -22,14 +29,15 @@
         box-shadow: 0 0 0.3rem 0.2rem $color1;
         border-radius: 0.5rem;
       }
-      &--active{
+
+      &--active {
         box-shadow: 0 0 0.3rem 0.2rem $color1;
         border-radius: 0.5rem;
       }
 
       img {
-        width: 15rem;
-        height: 15rem;
+        width: 20rem;
+        height: 14rem;
         border-radius: 0.5rem 0.5rem 0 0;
       }
 
@@ -38,6 +46,19 @@
         font-size: 1.6rem;
       }
 
+    }
+  }
+
+  &__productsWrapper {
+    @include flex(row);
+    width: 100%;
+    margin: 4rem 2rem;
+    align-items: flex-start;
+    position: relative;
+
+    &__products {
+      @include flex(row wrap);
+      width: 100%;
     }
   }
 }

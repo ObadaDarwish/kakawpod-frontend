@@ -17,7 +17,8 @@ const Product = ({
             <div className={'product__detailsWrapper'}>
                 <h1>{title}</h1>
                 <p> {`${weight}gm`}</p>
-                <p>{price}</p>
+                {price && <p>{price}</p>}
+
                 <div className={'product__detailsWrapper__buttonWrapper'}>
                     <ButtonUI
                         name={buttonText ? buttonText : 'Add to cart'}

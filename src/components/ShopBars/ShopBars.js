@@ -40,7 +40,7 @@ const ShopBars = ({ match, location }) => {
             />
             <div className={'shopBarsContainer__products'}>
                 {isLoading ? (
-                    <CircularLoadingIndicator height={'20rem'} />
+                    <CircularLoadingIndicator height={'40rem'} />
                 ) : products && products.length ? (
                     products.map((product) => {
                         return (

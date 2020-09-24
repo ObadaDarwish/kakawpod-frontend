@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
 import ShopFilters from '../ShopFilters/ShopFilters';
 import { useHistory } from 'react-router-dom';
-import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import Product from '../Product/Product';
 import DataPrompt from '../DataPrompt/DataPrompt';
-import MixBoxSummary from './MixBoxSummary/MixBoxSummary';
+import BoxSummary from '../BoxSummary/BoxSummary';
 import MixBoxFilters from './MixBoxFilters/MixBoxFilters';
 import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
-import {
-    errorNotification,
-    infoNotification,
-} from '../../utils/notification-utils';
-import useCallServer from '../../hooks/useCallServer';
-import { useDispatch } from 'react-redux';
-import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import { infoNotification } from '../../utils/notification-utils';
 import useFetchProducts from '../../hooks/useFetchProducts';
 import LoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
-import { parseJSON, stringfyJSON } from '../../utils/jsonConversion';
+import { stringfyJSON } from '../../utils/jsonConversion';
 import useFetchMixBox from '../../hooks/useFetchMixBox';
 
 const queryString = require('query-string');
@@ -156,6 +149,12 @@ const ShopMixBox = ({ match, location }) => {
             />
             {!isLoading ? (
                 <>
+                    <div className={'priceTag'}>
+                        <p>
+                            Total EGP
+                            {myMixBox.price}
+                        </p>
+                    </div>
                     <div className={'filtersWrapper'}>
                         <MixBoxFilters
                             mixBoxes={mixBoxes}
@@ -173,7 +172,9 @@ const ShopMixBox = ({ match, location }) => {
                             'shopMixBoxContainer__boxSummaryProductsWrapper'
                         }
                     >
-                        <MixBoxSummary
+                        <BoxSummary
+                            price={myMixBox.price}
+                            type={'Mix box'}
                             selectedBox={myMixBox}
                             boxItems={myMixBox.items}
                             itemsCount={getItemsCount()}
@@ -197,7 +198,7 @@ const ShopMixBox = ({ match, location }) => {
                                             title={product.name}
                                             description={product.description}
                                             weight={product.weight}
-                                            price={`EGP${product.price}`}
+                                            price={null}
                                             buttonText={'Add to box'}
                                             isAddButtonDisabled={
                                                 product.isAddButtonDisabled
@@ -217,7 +218,7 @@ const ShopMixBox = ({ match, location }) => {
                     </div>
                 </>
             ) : (
-                <LoadingIndicator />
+                <LoadingIndicator height={'40rem'} />
             )}
         </div>
     );

@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
-import InputUI from '../../UI/InputUI/InputUI';
-import ButtonUI from '../../UI/ButtonUI/ButtonUI';
+import InputUI from '../UI/InputUI/InputUI';
+import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import DataPrompt from '../../DataPrompt/DataPrompt';
+import DataPrompt from '../DataPrompt/DataPrompt';
 import { useMediaQuery } from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-const MixBoxSummary = ({
+const BoxSummary = ({
+    price,
+    type,
     selectedBox,
     boxItems,
     itemsCount,
@@ -22,22 +24,12 @@ const MixBoxSummary = ({
     };
 
     return (
-        <section
-            className={
-                'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary'
-            }
-        >
+        <section className={'boxSummary'}>
             {!matches && (
-                <div
-                    className={
-                        'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__header'
-                    }
-                >
-                    <p>Mix box</p>
+                <div className={'boxSummary__header'}>
+                    <p>{type}</p>
                     <div
-                        className={
-                            'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__header__clearBox'
-                        }
+                        className={'boxSummary__header__clearBox'}
                         onClick={clearMixBoxHandler}
                     >
                         <DeleteOutlinedIcon
@@ -47,19 +39,13 @@ const MixBoxSummary = ({
                     </div>
                 </div>
             )}
-            <div
-                className={
-                    'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__content'
-                }
-            >
+            <div className={'boxSummary__content'}>
                 {boxItems.length ? (
                     boxItems.map((item) => {
                         return (
                             <div
                                 key={item._id}
-                                className={
-                                    'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__content__item'
-                                }
+                                className={'boxSummary__content__item'}
                             >
                                 <p>{item.name}</p>
                                 <InputUI
@@ -69,7 +55,7 @@ const MixBoxSummary = ({
                                 />
                                 <div
                                     className={
-                                        'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__content__item__counterControls'
+                                        'boxSummary__content__item__counterControls'
                                     }
                                 >
                                     <ButtonUI
@@ -92,22 +78,16 @@ const MixBoxSummary = ({
                     <DataPrompt message={'No items were added'} margin={0} />
                 )}
             </div>
-            <div
-                className={
-                    'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__controlWrapper'
-                }
-            >
-                <div
-                    className={
-                        'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__controlWrapper__progressBar'
-                    }
-                >
+            <div className={'boxSummary__controlWrapper'}>
+                <div className={'boxSummary__controlWrapper__progressBar'}>
                     <div
                         className={
-                            'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__controlWrapper__progressBar__min'
+                            'boxSummary__controlWrapper__progressBar__min'
                         }
                     >
-                        <p>{`${itemsCount} bar${itemsCount > 1 ? 's' : ''}`}</p>
+                        <p>{`${itemsCount} ${
+                            type === 'Mix box' ? 'bar(s)' : 'g'
+                        }`}</p>
                     </div>
                     <LinearProgress
                         variant="determinate"
@@ -115,20 +95,20 @@ const MixBoxSummary = ({
                     />
                     <div
                         className={
-                            'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__controlWrapper__progressBar__max'
+                            'boxSummary__controlWrapper__progressBar__max'
                         }
                     >
-                        <p>{selectedBox.name}</p>
+                        <p>
+                            {type === 'Mix box'
+                                ? selectedBox.name
+                                : `${selectedBox.weight}g`}
+                        </p>
                     </div>
                 </div>
 
-                <div
-                    className={
-                        'shopMixBoxContainer__boxSummaryProductsWrapper__mixBoxSummary__controlWrapper__addToCart'
-                    }
-                >
+                <div className={'boxSummary__controlWrapper__addToCart'}>
                     <ButtonUI
-                        name={`Add to cart (EGP${selectedBox.price})`}
+                        name={`Add to cart (EGP${price})`}
                         is_disabled={itemsCount !== boxLimit}
                     />
                 </div>
@@ -137,4 +117,4 @@ const MixBoxSummary = ({
     );
 };
 
-export default MixBoxSummary;
+export default BoxSummary;

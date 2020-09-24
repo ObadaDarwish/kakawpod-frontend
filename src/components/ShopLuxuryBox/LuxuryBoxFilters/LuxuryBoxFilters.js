@@ -13,9 +13,10 @@ const LuxuryBoxFilters = ({ luxuryBoxes, selectedBox, handleChange }) => {
                                     ? 'filtersWrapper__mixBox__box--active'
                                     : ''
                             }`}
+                            style={{ padding: '1rem 6rem' }}
                             onClick={() => handleChange(box)}
                         >
-                            <p> {box.name}</p>
+                            <p> {box.weight}g box</p>
                             <p style={{ fontSize: '1.4rem' }}>
                                 (EGP{box.price})
                             </p>
