@@ -180,7 +180,7 @@ const ShopMixBox = ({ match, location }) => {
                             itemsCount={getItemsCount()}
                             boxLimit={myMixBox.limit}
                             handleItemUpdate={updateMixBoxItems}
-                            clearMixBoxHandler={confirmClearMixBox}
+                            clearBoxHandler={confirmClearMixBox}
                         />
                         <section
                             className={

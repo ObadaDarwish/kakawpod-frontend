@@ -12,7 +12,8 @@ const BoxSummary = ({
     boxItems,
     itemsCount,
     boxLimit,
-    clearMixBoxHandler,
+    clearBoxHandler,
+    handleInputChange,
     handleItemUpdate,
 }) => {
     const matches = useMediaQuery('(max-width:768px)');
@@ -30,7 +31,7 @@ const BoxSummary = ({
                     <p>{type}</p>
                     <div
                         className={'boxSummary__header__clearBox'}
-                        onClick={clearMixBoxHandler}
+                        onClick={clearBoxHandler}
                     >
                         <DeleteOutlinedIcon
                             fontSize={'large'}
@@ -52,6 +53,9 @@ const BoxSummary = ({
                                     width={'3rem'}
                                     type={'number'}
                                     defaultValue={item.count}
+                                    changeHandler={(e) =>
+                                        handleInputChange(e, item)
+                                    }
                                 />
                                 <div
                                     className={

@@ -23,6 +23,7 @@ const InputUI = ({
     reference,
     error,
     errorMessage,
+    changeHandler,
     ...props
 }) => {
     const matches = useMediaQuery('(max-width:768px)');
@@ -45,6 +46,7 @@ const InputUI = ({
             InputLabelProps={{
                 style: { fontSize: matches ? 16 : 20, color: '#7D5A5A' },
             }}
+            onChange={changeHandler}
         />
     );
 };

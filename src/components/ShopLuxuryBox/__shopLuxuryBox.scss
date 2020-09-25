@@ -59,6 +59,7 @@
     &__products {
       @include flex(row wrap);
       width: 100%;
+      min-height: 60rem;
     }
   }
 }

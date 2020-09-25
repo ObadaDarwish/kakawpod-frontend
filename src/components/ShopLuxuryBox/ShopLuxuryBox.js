@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LuxuryBoxFilters from './LuxuryBoxFilters/LuxuryBoxFilters';
 import { stringfyJSON } from '../../utils/jsonConversion';
 import { infoNotification } from '../../utils/notification-utils';
@@ -10,16 +10,19 @@ import BoxSummary from '../BoxSummary/BoxSummary';
 import Product from '../Product/Product';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import useFetchProducts from '../../hooks/useFetchProducts';
+import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
+
 const queryString = require('query-string');
 const ShopLuxuryBox = ({ match, location }) => {
     let queryParams = queryString.parse(location.search);
     let { type = 'milk' } = queryParams;
     const history = useHistory();
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [
         isLoading,
         error,
         myLuxuryBox,
-        setMLuxuryBox,
+        setMyLuxuryBox,
         luxuryBoxes,
         luxuryBoxesPackages,
     ] = useFetchLuxuryBox(
@@ -34,16 +37,14 @@ const ShopLuxuryBox = ({ match, location }) => {
     const getItemsCount = () => {
         let weight = 0;
         myLuxuryBox.items.forEach((item) => {
-            weight += item.weight * item.quantity;
+            weight += item.weight * item.count;
         });
-
         return weight;
     };
     const handleBoxChange = (box) => {
         let boxLimit = box.weight;
-        console.log(getItemsCount());
         if (getItemsCount() <= boxLimit) {
-            setMLuxuryBox((prevState) => {
+            setMyLuxuryBox((prevState) => {
                 let updatedLuxuryBox = {
                     ...prevState,
                     ...box,
@@ -62,7 +63,7 @@ const ShopLuxuryBox = ({ match, location }) => {
         }
     };
     const handlePackageChange = (packaging) => {
-        setMLuxuryBox((prevState) => {
+        setMyLuxuryBox((prevState) => {
             let updatedState = {
                 ...prevState,
                 package: packaging,
@@ -78,11 +79,113 @@ const ShopLuxuryBox = ({ match, location }) => {
             search: `?category=bar&type=${event.name}`,
         });
     };
-    const updateLuxuryBoxItems = () => {};
-    const confirmClearMixBox = () => {};
-    const handleAddToBox = (item) => {};
+    const updateLuxuryBoxItems = (type, bar) => {
+        if (getItemsCount() < myLuxuryBox.weight || type === 'subtract') {
+            let newCount = type === 'add' ? ++bar.count : --bar.count;
+
+            setMyLuxuryBox((prevState) => {
+                let items = [...prevState.items];
+                let index = items.findIndex((item) => item._id === bar._id);
+                if (newCount > 0) {
+                    items[index].count = newCount;
+                } else {
+                    items.splice(index, 1);
+                }
+                let updatedState = {
+                    ...prevState,
+                    items: items,
+                };
+                localStorage.setItem('luxuryBox', stringfyJSON(updatedState));
+                return updatedState;
+            });
+        } else {
+            infoNotification(
+                'Box is full, please upgrade your box.',
+                'Box limit'
+            );
+        }
+    };
+    const handleAddToBox = (product) => {
+        let items = [...myLuxuryBox.items];
+        const updateBoxState = (prevState) => {
+            let updatedState = {
+                ...prevState,
+                items: items,
+            };
+            localStorage.setItem('luxuryBox', stringfyJSON(updatedState));
+            return updatedState;
+        };
+        if (getItemsCount() < myLuxuryBox.weight) {
+            let isProdFound = -1;
+            isProdFound = items.findIndex((item) => item._id === product._id);
+            let newCount = 1;
+            if (isProdFound >= 0) {
+                newCount = items[isProdFound].count + 1;
+                items[isProdFound].count = newCount;
+                setMyLuxuryBox((prevState) => {
+                    return updateBoxState(prevState);
+                });
+            } else {
+                items.push({ ...product, count: 1 });
+                setMyLuxuryBox((prevState) => {
+                    return updateBoxState(prevState);
+                });
+            }
+        } else {
+            infoNotification(
+                'Box is full, please upgrade your box.',
+                'Box limit'
+            );
+        }
+    };
+    const countInputChangeHandler = (e, item) => {
+        let { value } = e.target;
+        value = value ? parseInt(value) : 0;
+        if (value * 10 < 1000 - getItemsCount()) {
+            setMyLuxuryBox((prevState) => {
+                let updatedItems = [...prevState.items];
+                let isFound = updatedItems.findIndex(
+                    (bar) => bar._id === item._id
+                );
+                updatedItems[isFound] = {
+                    ...updatedItems[isFound],
+                    count: value,
+                };
+
+                let updatedState = {
+                    ...prevState,
+                    items: updatedItems,
+                };
+                localStorage.setItem('luxuryBox', stringfyJSON(updatedState));
+                return updatedState;
+            });
+        }
+    };
+    const confirmClearLuxuryBox = () => {
+        setOpenConfirmDialog(true);
+    };
+    const closeConfirmDialog = () => {
+        setOpenConfirmDialog(false);
+    };
+    const clearLuxuryBox = () => {
+        closeConfirmDialog();
+        setMyLuxuryBox((prevState) => {
+            let updatedState = {
+                ...prevState,
+                items: [],
+            };
+            localStorage.setItem('luxuryBox', stringfyJSON(updatedState));
+            return updatedState;
+        });
+    };
     return (
         <div className={'luxuryBoxContainer'}>
+            <ConfirmDialog
+                open={openConfirmDialog}
+                checkText={'clear'}
+                onClose={clearLuxuryBox}
+                close={closeConfirmDialog}
+            />
             {!isLoading ? (
                 <>
                     <div className={'priceTag'}>
@@ -148,7 +251,8 @@ const ShopLuxuryBox = ({ match, location }) => {
                             itemsCount={getItemsCount()}
                             boxLimit={myLuxuryBox.weight}
                             handleItemUpdate={updateLuxuryBoxItems}
-                            clearMixBoxHandler={confirmClearMixBox}
+                            clearBoxHandler={confirmClearLuxuryBox}
+                            handleInputChange={countInputChangeHandler}
                             price={
                                 myLuxuryBox.price + myLuxuryBox.package.price
                             }
