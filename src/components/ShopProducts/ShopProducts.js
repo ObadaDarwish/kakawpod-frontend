@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const queryString = require('query-string');
 
-const ShopBars = ({ match, location }) => {
+const ShopProducts = ({ match, location, category }) => {
     const matches = useMediaQuery('(max-width:1024px)');
     let queryParams = queryString.parse(location.search);
     let { type } = queryParams;
@@ -18,9 +18,9 @@ const ShopBars = ({ match, location }) => {
     }
     const history = useHistory();
     const [isLoading, data] = useFetchData(
-        `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=bar&type=${
-            type ? type : 'milk'
-        }`
+        `${
+            process.env.REACT_APP_API_ENDPOINT
+        }/product/all?category=${category}&type=${type ? type : 'milk'}`
     );
 
     const { products, totalPages } = data || {};
@@ -61,4 +61,4 @@ const ShopBars = ({ match, location }) => {
     );
 };
 
-export default ShopBars;
+export default ShopProducts;

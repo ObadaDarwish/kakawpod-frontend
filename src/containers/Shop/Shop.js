@@ -3,7 +3,7 @@ import banner from '../../assets/images/banner.jpg';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-import ShopBars from '../../components/ShopBars/ShopBars';
+import ShopProducts from '../../components/ShopProducts/ShopProducts';
 import ShopMixBox from '../../components/ShopMixBox/ShopMixBox';
 import { NavLink, Route } from 'react-router-dom';
 import { Switch, Redirect } from 'react-router';
@@ -87,11 +87,22 @@ const Shop = ({ match }) => {
                         <Redirect to={`${match.path}/bars?type=milk`} />
                     )}
                 />
-                <Route path={`${match.path}/bars`} component={ShopBars} />
+                <Route
+                    path={`${match.path}/bars`}
+                    render={(props) => (
+                        <ShopProducts {...props} category={'bar'} />
+                    )}
+                />
                 <Route path={`${match.path}/mixBox`} component={ShopMixBox} />
                 <Route
                     path={`${match.path}/luxuryBox`}
                     component={ShopLuxuryBox}
+                />
+                <Route
+                    path={`${match.path}/cooking`}
+                    render={(props) => (
+                        <ShopProducts {...props} category={'cooking'} />
+                    )}
                 />
             </Switch>
         </div>

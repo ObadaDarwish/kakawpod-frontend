@@ -9,8 +9,22 @@
     justify-content: flex-end;
   }
 
+  .filtersWrapper {
+    &__mixBox {
+      &__box {
+        padding: 1rem 6rem;
+        @include media-breakpoint-down(xs) {
+          padding: 1rem 3rem;
+        }
+      }
+    }
+  }
+
   &__title {
-    margin: 2rem 0;
+    margin: 3rem 0;
+    @include media-breakpoint-down(sm) {
+      font-size: 1.8rem;
+    }
   }
 
   &__luxuryBoxPackagesWrapper {
@@ -23,6 +37,9 @@
       margin: 0 4rem;
       transition: all 0.5s ease-in-out;
       position: relative;
+      @include media-breakpoint-down(sm) {
+        margin: 0 1rem;
+      }
 
       &:hover {
         cursor: pointer;
@@ -39,6 +56,14 @@
         width: 20rem;
         height: 14rem;
         border-radius: 0.5rem 0.5rem 0 0;
+        @include media-breakpoint-down(sm) {
+          width: 15rem;
+          height: 10rem;
+        }
+        @include media-breakpoint-down(xs) {
+          width: 10rem;
+          height: 8rem;
+        }
       }
 
       p {
@@ -60,6 +85,7 @@
       @include flex(row wrap);
       width: 100%;
       min-height: 60rem;
+      align-items: flex-start;
     }
   }
 }

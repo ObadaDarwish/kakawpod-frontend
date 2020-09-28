@@ -26,20 +26,15 @@ const BoxSummary = ({
 
     return (
         <section className={'boxSummary'}>
-            {!matches && (
-                <div className={'boxSummary__header'}>
-                    <p>{type}</p>
-                    <div
-                        className={'boxSummary__header__clearBox'}
-                        onClick={clearBoxHandler}
-                    >
-                        <DeleteOutlinedIcon
-                            fontSize={'large'}
-                            color={'inherit'}
-                        />
-                    </div>
+            <div className={'boxSummary__header'}>
+                <p>{type}</p>
+                <div
+                    className={'boxSummary__header__clearBox'}
+                    onClick={clearBoxHandler}
+                >
+                    <DeleteOutlinedIcon fontSize={'large'} color={'inherit'} />
                 </div>
-            )}
+            </div>
             <div className={'boxSummary__content'}>
                 {boxItems.length ? (
                     boxItems.map((item) => {

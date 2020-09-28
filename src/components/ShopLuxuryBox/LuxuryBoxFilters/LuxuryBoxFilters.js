@@ -13,7 +13,6 @@ const LuxuryBoxFilters = ({ luxuryBoxes, selectedBox, handleChange }) => {
                                     ? 'filtersWrapper__mixBox__box--active'
                                     : ''
                             }`}
-                            style={{ padding: '1rem 6rem' }}
                             onClick={() => handleChange(box)}
                         >
                             <p> {box.weight}g box</p>

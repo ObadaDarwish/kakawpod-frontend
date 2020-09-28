@@ -16,6 +16,8 @@
     width: 100%;
     @include flex(row wrap);
     justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 60rem;
     .product{
       margin-top: 0;
     }
