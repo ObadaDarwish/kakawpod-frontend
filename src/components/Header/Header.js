@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../../assets/images/cocoaPlant.png';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import UserMenu from './User_menu/User_menu';
 import VerifyEmailPrompt from './VerifyEmailPrompt/VerifyEmailPrompt';
+import { toggleCart } from '../../store/actions/cart_actions';
 const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -4,
@@ -24,11 +25,16 @@ const StyledBadge = withStyles((theme) => ({
 const Header = () => {
     const isAuth = useSelector((state) => state.user);
     const isLoading = useSelector((state) => state.loadingIndicator);
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
     const [canShowEmailPrompt, setShowEmailPrompt] = useState(
         isAuth && !isAuth.email_verified
     );
     const closePrompt = () => {
         setShowEmailPrompt(false);
+    };
+    const showDropDownCart = () => {
+        dispatch(toggleCart());
     };
 
     return (
@@ -68,7 +74,15 @@ const Header = () => {
                 </section>
                 <section className={'headerOuterContainer__navigationTabs'}>
                     {isAuth && <UserMenu isAuth={isAuth} />}
-
+                    {cart.can_show_dropDown && (
+                        <div
+                            className={
+                                'headerOuterContainer__navigationTabs__dropDownCart'
+                            }
+                        >
+                            <h1>asd</h1>
+                        </div>
+                    )}
                     {!isAuth && (
                         <NavLink
                             className={
@@ -84,6 +98,7 @@ const Header = () => {
                         className={
                             'headerOuterContainer__navigationTabs__cartIcon'
                         }
+                        onClick={showDropDownCart}
                     >
                         <StyledBadge badgeContent={4} color="secondary">
                             <ShoppingCartOutlinedIcon fontSize={'large'} />

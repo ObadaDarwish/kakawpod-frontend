@@ -282,7 +282,10 @@
         &__min {
           position: absolute;
           left: 2rem;
-          top: 0;
+          top: -0.5rem;
+          @include media-breakpoint-down(md) {
+            top: 0;
+          }
 
           p {
             font-size: 1.6rem;
@@ -292,7 +295,10 @@
         &__max {
           position: absolute;
           right: 2rem;
-          top: 0;
+          top: -0.5rem;
+          @include media-breakpoint-down(md) {
+            top: 0;
+          }
 
           p {
             font-size: 1.6rem;
