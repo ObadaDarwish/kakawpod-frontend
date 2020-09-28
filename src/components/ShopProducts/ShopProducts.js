@@ -6,12 +6,15 @@ import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicat
 import DataPrompt from '../DataPrompt/DataPrompt';
 import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/actions/cart_actions';
 
 const queryString = require('query-string');
 
 const ShopProducts = ({ match, location, category }) => {
     const matches = useMediaQuery('(max-width:1024px)');
     let queryParams = queryString.parse(location.search);
+    const dispatch = useDispatch();
     let { type } = queryParams;
     if (!type) {
         type = 'milk';
@@ -31,6 +34,9 @@ const ShopProducts = ({ match, location, category }) => {
             search: `?category=bar&type=${event.name}`,
         });
     };
+    const addBar = (product) => {
+        dispatch(addToCart(product));
+    };
     return (
         <div className={'shopBarsContainer'}>
             <ShopFilters
@@ -49,7 +55,9 @@ const ShopProducts = ({ match, location, category }) => {
                                 image={product.images[0].url}
                                 title={product.name}
                                 description={product.description}
+                                weight={product.weight}
                                 price={`EGP${product.price}`}
+                                handleAddProduct={() => addBar(product)}
                             />
                         );
                     })

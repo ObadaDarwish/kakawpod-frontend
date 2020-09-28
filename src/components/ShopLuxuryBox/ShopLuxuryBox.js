@@ -138,10 +138,18 @@ const ShopLuxuryBox = ({ match, location }) => {
             );
         }
     };
+    const getBoxCount = (value, product) => {
+        let weight = 0;
+        myLuxuryBox.items.forEach((item) => {
+            let newCount = product._id === item._id ? value : item.count;
+            weight += item.weight * newCount;
+        });
+        return weight;
+    };
     const countInputChangeHandler = (e, item) => {
         let { value } = e.target;
         value = value ? parseInt(value) : 0;
-        if (value * 10 < 1000 - getItemsCount()) {
+        if (getBoxCount(value, item) <= myLuxuryBox.weight) {
             setMyLuxuryBox((prevState) => {
                 let updatedItems = [...prevState.items];
                 let isFound = updatedItems.findIndex(
@@ -159,6 +167,8 @@ const ShopLuxuryBox = ({ match, location }) => {
                 localStorage.setItem('luxuryBox', stringfyJSON(updatedState));
                 return updatedState;
             });
+        } else {
+            infoNotification('Exceeding box limit.', 'limit');
         }
     };
     const confirmClearLuxuryBox = () => {
@@ -278,7 +288,7 @@ const ShopLuxuryBox = ({ match, location }) => {
                                             isAddButtonDisabled={
                                                 product.isAddButtonDisabled
                                             }
-                                            addToBox={() =>
+                                            handleAddProduct={() =>
                                                 handleAddToBox(product)
                                             }
                                         />

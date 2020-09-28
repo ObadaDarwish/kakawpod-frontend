@@ -12,11 +12,14 @@ import useFetchProducts from '../../hooks/useFetchProducts';
 import LoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import { stringfyJSON } from '../../utils/jsonConversion';
 import useFetchMixBox from '../../hooks/useFetchMixBox';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/actions/cart_actions';
 
 const queryString = require('query-string');
 
 const ShopMixBox = ({ match, location }) => {
     let queryParams = queryString.parse(location.search);
+    const dispatch = useDispatch();
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     let { type = 'milk' } = queryParams;
     let [isLoading, error, myMixBox, setMyMixBox, mixBoxes] = useFetchMixBox(
@@ -138,7 +141,49 @@ const ShopMixBox = ({ match, location }) => {
             );
         }
     };
+    const addToCartHandler = () => {
+        dispatch(addToCart(myMixBox));
+        setMyMixBox((prevState) => {
+            localStorage.removeItem('mixBox');
+            return {
+                ...prevState,
+                items: [],
+            };
+        });
+    };
+    const getBoxCount = (value, product) => {
+        let weight = 0;
+        myMixBox.items.forEach((item) => {
+            let newCount = product._id === item._id ? value : item.count;
+            weight += newCount;
+        });
+        return weight;
+    };
+    const countInputChangeHandler = (e, item) => {
+        let { value } = e.target;
+        value = value ? parseInt(value) : 0;
+        if (getBoxCount(value, item) <= myMixBox.limit) {
+            setMyMixBox((prevState) => {
+                let updatedItems = [...prevState.items];
+                let isFound = updatedItems.findIndex(
+                    (bar) => bar._id === item._id
+                );
+                updatedItems[isFound] = {
+                    ...updatedItems[isFound],
+                    count: value,
+                };
 
+                let updatedState = {
+                    ...prevState,
+                    items: updatedItems,
+                };
+                localStorage.setItem('mixBox', stringfyJSON(updatedState));
+                return updatedState;
+            });
+        } else {
+            infoNotification('Exceeding box limit.', 'limit');
+        }
+    };
     return (
         <div className={'shopMixBoxContainer'}>
             <ConfirmDialog
@@ -181,6 +226,8 @@ const ShopMixBox = ({ match, location }) => {
                             boxLimit={myMixBox.limit}
                             handleItemUpdate={updateMixBoxItems}
                             clearBoxHandler={confirmClearMixBox}
+                            handleInputChange={countInputChangeHandler}
+                            handleAddToCart={addToCartHandler}
                         />
                         <section
                             className={
@@ -203,7 +250,7 @@ const ShopMixBox = ({ match, location }) => {
                                             isAddButtonDisabled={
                                                 product.isAddButtonDisabled
                                             }
-                                            addToBox={() =>
+                                            handleAddProduct={() =>
                                                 handleAddToBox(product)
                                             }
                                         />

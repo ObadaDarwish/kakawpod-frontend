@@ -8,7 +8,7 @@ const Product = ({
     weight,
     price,
     buttonText,
-    addToBox,
+    handleAddProduct,
     isAddButtonDisabled,
 }) => {
     return (
@@ -23,7 +23,7 @@ const Product = ({
                     <ButtonUI
                         name={buttonText ? buttonText : 'Add to cart'}
                         is_disabled={isAddButtonDisabled}
-                        clickHandler={addToBox}
+                        clickHandler={handleAddProduct}
                     />
                 </div>
             </div>

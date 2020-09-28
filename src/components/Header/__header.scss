@@ -122,8 +122,46 @@
       right: 3rem;
       width: 40rem;
       height: 30rem;
-      background: $color3;
+      background: $white;
       animation: fadeCart 0.5s ease-in-out;
+      border: 0.2rem solid $color3;
+      &__items{
+        @include flex(column);
+        overflow-y: auto;
+        height: 60%;
+        &__item{
+          @include flex(row);
+          margin: 1rem;
+          img{
+            width: 10rem;
+            height: 7rem;
+            margin-right: 1rem;
+          }
+          &__description{
+            @include flex(column);
+            justify-content: space-between;
+            p{
+              font-size: 1.6rem;
+            }
+
+          }
+        }
+      }
+      &__total{
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+        padding: 0.5rem 0;
+        background: $color3;
+      }
+      &__control{
+        @include flex(row);
+        justify-content: space-around;
+        margin: 1.5rem 0;
+        button{
+          flex-basis: 40% ;
+        }
+      }
     }
 
     @keyframes fadeCart {

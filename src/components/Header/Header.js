@@ -10,6 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import UserMenu from './User_menu/User_menu';
 import VerifyEmailPrompt from './VerifyEmailPrompt/VerifyEmailPrompt';
 import { toggleCart } from '../../store/actions/cart_actions';
+import CartDropDown from '../CartDropDown/CartDropDown';
+
 const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -4,
@@ -74,15 +76,7 @@ const Header = () => {
                 </section>
                 <section className={'headerOuterContainer__navigationTabs'}>
                     {isAuth && <UserMenu isAuth={isAuth} />}
-                    {cart.can_show_dropDown && (
-                        <div
-                            className={
-                                'headerOuterContainer__navigationTabs__dropDownCart'
-                            }
-                        >
-                            <h1>asd</h1>
-                        </div>
-                    )}
+                    {cart.can_show_dropDown && <CartDropDown cart={cart} />}
                     {!isAuth && (
                         <NavLink
                             className={
@@ -100,7 +94,10 @@ const Header = () => {
                         }
                         onClick={showDropDownCart}
                     >
-                        <StyledBadge badgeContent={4} color="secondary">
+                        <StyledBadge
+                            badgeContent={cart.items.length}
+                            color="secondary"
+                        >
                             <ShoppingCartOutlinedIcon fontSize={'large'} />
                         </StyledBadge>
                     </IconButton>
