@@ -8,7 +8,9 @@
     height: 69rem;
     position: relative;
     padding-top: 9rem;
-
+    @include media-breakpoint-down(xs) {
+      height: 49rem;
+    }
 
     &__videoOverlay {
       position: absolute;
@@ -19,6 +21,9 @@
       height: 60rem;
       width: 100%;
       @include flex(column);
+      @include media-breakpoint-down(xs) {
+        height: 40rem;
+      }
 
       &__slogan {
         font-size: 5rem;
@@ -176,6 +181,12 @@
       @include media-breakpoint-down(sm) {
         @include flex(column);
         height: 40rem;
+      }
+
+      &__product {
+        @include media-breakpoint-down(xs) {
+          margin: 1rem 0;
+        }
       }
     }
   }

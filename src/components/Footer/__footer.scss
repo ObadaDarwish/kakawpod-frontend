@@ -9,6 +9,9 @@
     @include media-breakpoint-down(sm) {
       @include flex(column);
     }
+    @include media-breakpoint-down(sm){
+      padding: 0 1rem;
+    }
 
     &__leftBlock {
       @include flex(column);
