@@ -1,4 +1,9 @@
-import { ADD_TO_CART, TOGGLE_CART } from '../action_types';
+import {
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    TOGGLE_CART,
+    UPDATE_CART,
+} from '../action_types';
 import { parseJSON, stringfyJSON } from '../../utils/jsonConversion';
 
 let defaultState = {
@@ -14,7 +19,6 @@ const cart_reducer = (
             ...state,
             can_show_dropDown: !state.can_show_dropDown,
         };
-        localStorage.setItem('cart', stringfyJSON(state));
         return state;
     }
     if (action.type === ADD_TO_CART) {
@@ -33,6 +37,32 @@ const cart_reducer = (
         state = {
             ...state,
             items: cartItems,
+        };
+        localStorage.setItem('cart', stringfyJSON(state));
+        return state;
+    }
+    if (action.type === UPDATE_CART) {
+        let currentCart = [...state.items];
+        let itemIndex = currentCart.findIndex(
+            (item) => item._id === action.item._id
+        );
+        currentCart.splice(itemIndex, 1, action.item);
+        state = {
+            ...state,
+            items: currentCart,
+        };
+        localStorage.setItem('cart', stringfyJSON(state));
+        return state;
+    }
+    if (action.type === REMOVE_FROM_CART) {
+        let currentItems = [...state.items];
+        let itemIndex = currentItems.findIndex(
+            (item) => item._id === action.item._id
+        );
+        currentItems.splice(itemIndex, 1);
+        state = {
+            ...state,
+            items: currentItems,
         };
         localStorage.setItem('cart', stringfyJSON(state));
         return state;

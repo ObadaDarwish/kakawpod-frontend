@@ -1,14 +1,18 @@
 import React from 'react';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
-
+import { useHistory } from 'react-router-dom';
 const CartDropDown = ({ cart }) => {
+    const history = useHistory();
     const getTotal = () => {
         let total = 0;
         cart.items.forEach((item) => {
             total += item.price * item.count;
         });
         return total;
+    };
+    const handleViewCart = () => {
+        history.push('/cart');
     };
     return (
         <div className={'headerOuterContainer__navigationTabs__dropDownCart'}>
@@ -57,7 +61,11 @@ const CartDropDown = ({ cart }) => {
                     'headerOuterContainer__navigationTabs__dropDownCart__control'
                 }
             >
-                <ButtonUI name={'view cart'} inverseBackground />
+                <ButtonUI
+                    name={'view cart'}
+                    inverseBackground
+                    clickHandler={handleViewCart}
+                />
                 <ButtonUI name={'checkout'} />
             </div>
         </div>

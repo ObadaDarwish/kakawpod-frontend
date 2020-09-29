@@ -1,0 +1,106 @@
+.cartContainer {
+  @include flex(column);
+  margin-top: 10rem;
+  padding: 6rem;
+  min-height: 60rem;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  &__cartWrapper {
+    @include flex(row);
+
+    &__cartDetails {
+      flex-basis: 70%;
+      padding: 2rem 0;
+
+      .table {
+        .MuiInput-input {
+          text-align: center;
+        }
+
+        .counterControlsWrapper {
+          width: 20rem;
+
+          &__counterControls {
+            @include flex(row);
+            justify-content: center;
+
+            .MuiButton-root {
+              margin: 0.3rem;
+              padding: 0.5rem;
+            }
+          }
+        }
+
+        thead {
+          background: $color4;
+        }
+
+        th,
+        td {
+          border: none;
+          font-size: 1.6rem;
+          color: $color1;
+          vertical-align: inherit;
+          text-align: center;
+          min-width: 15rem;
+        }
+
+        .productDetailsWrapper {
+          @include flex(row);
+
+          img {
+            width: 12rem;
+            height: 12rem;
+            margin-right: 1rem;
+          }
+
+          .details {
+            @include flex(column);
+            justify-content: center;
+
+            p {
+              margin: 1rem 0;
+              text-align: start;
+            }
+          }
+        }
+
+        .deletionIcon {
+          color: $color1;
+          padding: 0 2rem;
+
+          .MuiSvgIcon-root {
+            transition: color 0.5s ease-in-out;
+
+            &:hover {
+              cursor: pointer;
+              color: $text-hover;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+  &__continueShopping {
+    @include flex(row);
+    align-items: center;
+    .MuiSvgIcon-root{
+      font-size: 3rem;
+    }
+    a{
+      font-size: 1.6rem;
+      transition: color 0.5s ease-in-out;
+      &:hover{
+        color: $text-hover;
+        cursor: pointer;
+      }
+    }
+  }
+}

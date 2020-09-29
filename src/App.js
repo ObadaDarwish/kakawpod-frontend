@@ -23,6 +23,7 @@ import EmailVerification from './components/EmailVerification/EmailVerification'
 import Shop from './containers/Shop/Shop';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCart } from './store/actions/cart_actions';
+import Cart from './containers/Cart/Cart';
 
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
@@ -71,6 +72,7 @@ function App() {
                         />
                         <Route path={'/about'} component={About} />
                         <Route path={'/shop'} component={Shop} />
+                        <Route path={'/cart'} component={Cart} />
                         <Route component={Missing} />
                     </Switch>
                     <Footer />
