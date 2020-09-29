@@ -21,10 +21,12 @@ $grid-breakpoints: (
   font-family: 'lobster';
   src: url("../assets/fonts/Lobster-Regular.ttf");
 }
-.appContainer{
+
+.appContainer {
   @include flex(column);
   min-height: 100vh;
 }
+
 body {
   margin: 0;
   font-family: proza libre, sans-serif;
@@ -79,43 +81,64 @@ h1, h2, h3, h4, h5, h6, a, p {
     line-height: 1.8rem;
   }
 }
+
 .MuiMenu-paper {
   background: #f3e1e1 !important;
 
-  ul{
-    li{
+  ul {
+    li {
       font-size: 1.6rem !important;
     }
   }
 }
+
 .orderSummaryWrapper {
   flex-basis: 30%;
   padding: 2rem;
+  @media (max-width: 1366px) {
+    flex-basis: 100%;
+  }
+  @include media-breakpoint-down(md) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    z-index: 100;
+  }
 
   &__cartSummary {
     background: $color4;
     margin: 0 2rem;
     padding: 1rem 2rem;
-    &__sectionDetails{
+    @include media-breakpoint-down(md) {
+      margin: 0;
+    }
+
+    &__sectionDetails {
       @include flex(row);
       margin-top: 2rem;
       justify-content: space-between;
-      p{
+
+      p {
         font-size: 1.6rem;
       }
-      &__bold{
-        p{
+
+      &__bold {
+        p {
           font-weight: bold;
         }
       }
     }
+
     &__hr {
       height: 0.2rem;
       width: 100%;
       background: $color3;
       margin: 1rem 0;
     }
-    &__checkoutWrapper{
+
+    &__checkoutWrapper {
       width: 100%;
       padding-top: 2rem;
       padding-bottom: 1rem;
@@ -123,19 +146,23 @@ h1, h2, h3, h4, h5, h6, a, p {
   }
 
 }
+
 input:-webkit-autofill {
-  -webkit-box-shadow:0 0 0 50px #F1D1D1 inset; /* Change the color to your own background color */
+  -webkit-box-shadow: 0 0 0 50px #F1D1D1 inset; /* Change the color to your own background color */
   -webkit-text-fill-color: #333;
 }
+
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 50px #F1D1D1 inset;/*your box-shadow*/
+  -webkit-box-shadow: 0 0 0 50px #F1D1D1 inset; /*your box-shadow*/
   -webkit-text-fill-color: #333;
 }
+
 input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;
   margin: 0;
 }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;

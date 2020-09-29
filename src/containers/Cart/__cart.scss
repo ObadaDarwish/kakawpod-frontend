@@ -3,6 +3,9 @@
   margin-top: 10rem;
   padding: 6rem;
   min-height: 60rem;
+  @include media-breakpoint-down(md) {
+    padding: 6rem 2rem;
+  }
 
   &__title {
     font-size: 2rem;
@@ -10,30 +13,20 @@
   }
 
   &__cartWrapper {
-    @include flex(row);
+    @include flex(row wrap);
 
     &__cartDetails {
       flex-basis: 70%;
       padding: 2rem 0;
+      @include media-breakpoint-down(lg) {
+        flex-basis: 100%;
+      }
 
       .table {
         .MuiInput-input {
           text-align: center;
         }
 
-        .counterControlsWrapper {
-          width: 20rem;
-
-          &__counterControls {
-            @include flex(row);
-            justify-content: center;
-
-            .MuiButton-root {
-              margin: 0.3rem;
-              padding: 0.5rem;
-            }
-          }
-        }
 
         thead {
           background: $color4;
@@ -84,6 +77,71 @@
         }
       }
 
+      .counterControlsWrapper {
+        width: 20rem;
+
+        &__counterControls {
+          @include flex(row);
+          justify-content: center;
+
+          .MuiButton-root {
+            margin: 0.3rem;
+            padding: 0.5rem;
+          }
+        }
+      }
+
+
+      .block {
+        @include flex(row wrap);
+        background: $color4;
+        align-items: center;
+        margin-bottom: 1rem;
+        //@include media-breakpoint-down(xs) {
+        //  @include flex(row wrap);
+        //}
+
+        .counterControlsWrapper {
+          margin: 0 2rem;
+          margin-left: auto;
+          width: unset;
+          @include flex_center(column);
+
+          .MuiInput-input {
+            text-align: center;
+          }
+
+          &__counterControls {
+            @include flex(row);
+            margin: 0 0.5rem;
+          }
+        }
+
+        img {
+          width: 15rem;
+          height: 15rem;
+          margin-right: 2rem;
+          @include media-breakpoint-down(xs) {
+            width: 100%;
+            margin: 0;
+          }
+        }
+
+        &__details {
+          padding-top: 0.5rem;
+          @include media-breakpoint-down(xs) {
+            margin: 1rem;
+          }
+
+          p {
+            font-size: 1.6rem;
+            padding-bottom: 1rem;
+          }
+        }
+
+      }
+
+
     }
 
   }
@@ -91,13 +149,16 @@
   &__continueShopping {
     @include flex(row);
     align-items: center;
-    .MuiSvgIcon-root{
+
+    .MuiSvgIcon-root {
       font-size: 3rem;
     }
-    a{
+
+    a {
       font-size: 1.6rem;
       transition: color 0.5s ease-in-out;
-      &:hover{
+
+      &:hover {
         color: $text-hover;
         cursor: pointer;
       }

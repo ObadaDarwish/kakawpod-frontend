@@ -9,6 +9,7 @@ import DataPrompt from '../../components/DataPrompt/DataPrompt';
 import { useHistory } from 'react-router';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { NavLink } from 'react-router-dom';
+import CartItems from '../../components/CartItems/CartItems';
 const Cart = () => {
     window.scroll(0, 0);
     const cart = useSelector((state) => state.cart);
@@ -69,102 +70,13 @@ const Cart = () => {
         <div className={'cartContainer'}>
             <h1 className={'cartContainer__title'}>Shopping cart</h1>
             <section className={'cartContainer__cartWrapper'}>
-                <div className={'cartContainer__cartWrapper__cartDetails'}>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">product</th>
-                                <th scope="col">QTY</th>
-                                <th scope="col">price</th>
-                                <th scope="col">total</th>
-                                <th scope="col">remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cart.items.length ? (
-                                cart.items.map((item) => {
-                                    return (
-                                        <tr key={item._id}>
-                                            <td
-                                                className={
-                                                    'productDetailsWrapper'
-                                                }
-                                            >
-                                                <img
-                                                    src={item.images[0].url}
-                                                    alt={item.name}
-                                                />
-                                                <div className={'details'}>
-                                                    <p>{item.name}</p>
-                                                    <p>{item.weight}gm</p>
-                                                </div>
-                                            </td>
-                                            <td
-                                                className={
-                                                    'counterControlsWrapper'
-                                                }
-                                            >
-                                                <InputUI
-                                                    width={'5rem'}
-                                                    type={'number'}
-                                                    defaultValue={item.count}
-                                                    changeHandler={(e) =>
-                                                        handleInputChange(
-                                                            e,
-                                                            item
-                                                        )
-                                                    }
-                                                />
-                                                <div
-                                                    className={
-                                                        'counterControlsWrapper__counterControls'
-                                                    }
-                                                >
-                                                    <ButtonUI
-                                                        height={'2rem'}
-                                                        width={'2rem'}
-                                                        name={'-'}
-                                                        clickHandler={() =>
-                                                            minusButton(item)
-                                                        }
-                                                    />
-                                                    <ButtonUI
-                                                        height={'2rem'}
-                                                        width={'2rem'}
-                                                        name={'+'}
-                                                        clickHandler={() =>
-                                                            plusButton(item)
-                                                        }
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td>EGP{item.price}</td>
-                                            <td>
-                                                EGP{item.price * item.count}
-                                            </td>
-                                            <td className={'deletionIcon'}>
-                                                <DeleteOutlinedIcon
-                                                    fontSize={'large'}
-                                                    color={'inherit'}
-                                                    onClick={() =>
-                                                        handleDeletion(item)
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            ) : (
-                                <td colspan="6">
-                                    <DataPrompt
-                                        margin={'2rem 0'}
-                                        message={'No items were found.'}
-                                    />
-                                </td>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
+                <CartItems
+                    cart={cart}
+                    handleInputChange={handleInputChange}
+                    handleDeletion={handleDeletion}
+                    plusButton={plusButton}
+                    minusButton={minusButton}
+                />
                 <div className={'orderSummaryWrapper'}>
                     <div className={'orderSummaryWrapper__cartSummary'}>
                         <h1>order summary</h1>
