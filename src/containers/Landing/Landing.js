@@ -6,7 +6,7 @@ import Product from '../../components/Product/Product';
 import img from '../../assets/images/milkbar.jpg';
 import img1 from '../../assets/images/milkchocolate.jpg';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
+import background from '../../assets/images/waive.png';
 const Landing = () => {
     const sm = useMediaQuery('(max-width:768px)');
     return (
@@ -30,7 +30,15 @@ const Landing = () => {
                     >
                         Shop now
                     </NavLink>
+                    <img
+                        className={
+                            'landingContainer__videoContainer__videoOverlay__image'
+                        }
+                        src={background}
+                        alt="waive background"
+                    />
                 </div>
+
                 <video
                     className={'landingContainer__videoContainer__video'}
                     autoPlay
