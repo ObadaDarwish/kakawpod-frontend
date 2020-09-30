@@ -77,6 +77,12 @@ const Header = () => {
                 <section className={'headerOuterContainer__navigationTabs'}>
                     {isAuth && <UserMenu isAuth={isAuth} />}
                     {cart.can_show_dropDown && <CartDropDown cart={cart} />}
+                    <NavLink
+                        className={'headerOuterContainer__navigationTabs__tab'}
+                        to={'/shop'}
+                    >
+                        shop
+                    </NavLink>
                     {!isAuth && (
                         <NavLink
                             className={
