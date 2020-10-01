@@ -13,12 +13,15 @@
   }
 
   &__cartWrapper {
-    @include flex(row wrap);
-
+    @include flex(row);
+justify-content: space-between;
     &__cartDetails {
       flex-basis: 70%;
       padding: 2rem 0;
-      @include media-breakpoint-down(lg) {
+      @media (max-width: 1380px) {
+        flex-basis: 50%;
+      }
+      @include media-breakpoint-down(md) {
         flex-basis: 100%;
       }
 

@@ -2,15 +2,27 @@
   margin-top: 10rem;
   padding: 6rem;
   min-height: 60rem;
-  @include flex(row wrap);
+  @include flex(row);
+
+  justify-content: space-between;
+  @include media-breakpoint-down(sm) {
+    padding: 6rem 1rem;
+  }
 
   &__checkoutDataWrapper {
     flex-basis: 70%;
+    @media (max-width: 1380px) {
+      flex-basis: 45%;
+    }
+    @include media-breakpoint-down(md) {
+      flex-basis: 100%;
+    }
 
     &__paymentMethod {
       position: relative;
       @include flex(column);
-    padding: 2rem;
+      padding: 2rem;
+
       &__method {
         width: 100%;
         margin-top: 5rem;

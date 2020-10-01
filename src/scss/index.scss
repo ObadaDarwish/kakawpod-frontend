@@ -95,10 +95,8 @@ h1, h2, h3, h4, h5, h6, a, p {
 
 .orderSummaryWrapper {
   flex-basis: 30%;
-  padding: 0 2rem;
-
-  @media (max-width: 1366px) {
-    flex-basis: 100%;
+  @media (max-width: 1380px) {
+    flex-basis: 45%;
   }
   @include media-breakpoint-down(md) {
     position: fixed;
@@ -106,15 +104,37 @@ h1, h2, h3, h4, h5, h6, a, p {
     left: 0;
     width: 100%;
     padding: 0;
-    z-index: 100;
+    z-index: 1000;
   }
+  padding: 0 2rem;
+  .MuiAccordion-root{
+    position: sticky;
+    top: 10rem;
+  }
+  .MuiAccordionSummary-root.Mui-expanded{
+    min-height: 4rem;
+  }
+  .MuiAccordionSummary-root{
+    min-height: 4rem;
+    background-color: $color3;
+    .MuiAccordionSummary-content{
+      margin: 0;
+      h1{
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+    }
+  }
+  .MuiAccordionDetails-root{
+    padding: 0;
+  }
+
+
 
   &__cartSummary {
     background: $color4;
-    margin: 0 2rem;
     padding: 1rem 2rem;
-    position: sticky;
-    top: 10rem;
+    width: 100%;
     @include media-breakpoint-down(md) {
       margin: 0;
     }

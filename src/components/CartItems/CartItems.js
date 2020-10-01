@@ -12,7 +12,7 @@ const CartItems = ({
     handleDeletion,
     plusButton,
 }) => {
-    const matches = useMediaQuery('(max-width:1025px)');
+    const matches = useMediaQuery('(max-width:1380px)');
     return (
         <div className={'cartContainer__cartWrapper__cartDetails'}>
             {!matches ? (
@@ -102,7 +102,7 @@ const CartItems = ({
             ) : (
                 cart.items.map((item) => {
                     return (
-                        <div className={'block'}>
+                        <div className={'block'} key={item._id}>
                             <img src={item.images[0].url} alt={item.name} />
                             <div className={'block__details'}>
                                 <p>{item.name}</p>
