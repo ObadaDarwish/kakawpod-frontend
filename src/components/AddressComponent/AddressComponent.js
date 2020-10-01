@@ -12,7 +12,13 @@ import {
     successNotification,
 } from '../../utils/notification-utils';
 import { updateUser } from '../../store/actions/auth_actions';
-const AddressComponent = ({ user }) => {
+const AddressComponent = ({
+    user,
+    margin,
+    addressTitle,
+    handleChosenAddress,
+    background,
+}) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [selectedAddressData, setSelectedAddressData] = useState(null);
@@ -21,35 +27,39 @@ const AddressComponent = ({ user }) => {
     const dispatch = useDispatch();
     const handleAddressChange = (e, address) => {
         const event = e.target;
-        dispatch(setLoading(true));
-        callServer(
-            'PUT',
-            `${process.env.REACT_APP_API_ENDPOINT}/user/address/${address._id}`,
-            { primary: true }
-        )
-            .then(() => {
-                let newUser = { ...user };
-                let updatedAddress = [...user.addresses];
-                updatedAddress.forEach((item, index) => {
-                    if (item._id === address._id) {
-                        updatedAddress[index].primary = true;
-                    } else {
-                        updatedAddress[index].primary = false;
+        if (addressTitle !== 'Delivery') {
+            dispatch(setLoading(true));
+            callServer(
+                'PUT',
+                `${process.env.REACT_APP_API_ENDPOINT}/user/address/${address._id}`,
+                { primary: true }
+            )
+                .then(() => {
+                    let newUser = { ...user };
+                    let updatedAddress = [...user.addresses];
+                    updatedAddress.forEach((item, index) => {
+                        if (item._id === address._id) {
+                            updatedAddress[index].primary = true;
+                        } else {
+                            updatedAddress[index].primary = false;
+                        }
+                    });
+                    newUser.addresses = updatedAddress;
+                    dispatch(updateUser(newUser));
+                    successNotification(
+                        'Primary address has been successfully set',
+                        'Primary address'
+                    );
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        errorNotification(err.response.data.message, 'Address');
                     }
-                });
-                newUser.addresses = updatedAddress;
-                dispatch(updateUser(newUser));
-                successNotification(
-                    'Primary address has been successfully set',
-                    'Primary address'
-                );
-            })
-            .catch((err) => {
-                if (err.response) {
-                    errorNotification(err.response.data.message, 'Address');
-                }
-            })
-            .finally(() => dispatch(setLoading(false)));
+                })
+                .finally(() => dispatch(setLoading(false)));
+        } else {
+            console.log('address changed');
+        }
     };
     const addAddressDialog = () => {
         setDialogStatus('add');
@@ -118,7 +128,17 @@ const AddressComponent = ({ user }) => {
                 onClose={deleteAddressHandler}
                 close={closeConfirmDialog}
             />
-            <div className={'profileContainer__detailsWrapper__addressWrapper'}>
+            <div
+                className={`profileContainer__detailsWrapper__addressWrapper`}
+                style={{ margin: margin, background: background }}
+            >
+                <p
+                    className={
+                        'profileContainer__detailsWrapper__addressWrapper__title'
+                    }
+                >
+                    {addressTitle}
+                </p>
                 <div
                     className={
                         'profileContainer__detailsWrapper__addressWrapper__addressButton'

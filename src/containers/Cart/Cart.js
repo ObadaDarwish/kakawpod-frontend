@@ -1,15 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import InputUI from '../../components/UI/InputUI/InputUI';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import { removeFromCart, updateCart } from '../../store/actions/cart_actions';
 import { infoNotification } from '../../utils/notification-utils';
-import DataPrompt from '../../components/DataPrompt/DataPrompt';
 import { useHistory } from 'react-router';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { NavLink } from 'react-router-dom';
 import CartItems from '../../components/CartItems/CartItems';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 const Cart = () => {
     window.scroll(0, 0);
     const cart = useSelector((state) => state.cart);
@@ -77,32 +74,12 @@ const Cart = () => {
                     plusButton={plusButton}
                     minusButton={minusButton}
                 />
-                <div className={'orderSummaryWrapper'}>
-                    <div className={'orderSummaryWrapper__cartSummary'}>
-                        <h1>order summary</h1>
-                        <div
-                            className={
-                                'orderSummaryWrapper__cartSummary__sectionDetails'
-                            }
-                        >
-                            <p>{getItemsCount()} items</p>
-                            <p>EGP{getTotalPrice()}</p>
-                        </div>
-                        <div
-                            className={'orderSummaryWrapper__cartSummary__hr'}
-                        />
-                        <div
-                            className={
-                                'orderSummaryWrapper__cartSummary__checkoutWrapper'
-                            }
-                        >
-                            <ButtonUI
-                                name={'checkout'}
-                                clickHandler={handleCheckout}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <OrderSummary
+                    itemsCount={getItemsCount()}
+                    totalPrice={getTotalPrice()}
+                    handleClick={handleCheckout}
+                    buttonName={'checkout'}
+                />
             </section>
             <div className={'cartContainer__continueShopping'}>
                 <KeyboardArrowLeftIcon fontSize={'large'} />

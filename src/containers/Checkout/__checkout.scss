@@ -1,0 +1,51 @@
+.checkoutContainer {
+  margin-top: 10rem;
+  padding: 6rem;
+  min-height: 60rem;
+  @include flex(row wrap);
+
+  &__checkoutDataWrapper {
+    flex-basis: 70%;
+
+    &__paymentMethod {
+      position: relative;
+      @include flex(column);
+    padding: 2rem;
+      &__method {
+        width: 100%;
+        margin-top: 5rem;
+        padding: 1rem;
+        @include flex(row);
+        align-items: center;
+        border: 0.1rem solid $gray-200;
+
+        p {
+          font-size: 1.6rem;
+          position: relative;
+          margin-left: 5rem;
+
+          &::before {
+            position: absolute;
+            content: '';
+            left: -2rem;
+            width: 0.2rem;
+            height: 100%;
+            background: $color1;
+          }
+        }
+      }
+
+      &__title {
+        background: $color3;
+        font-size: 1.4rem;
+        text-align: center;
+        padding: 0.5rem 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+      }
+    }
+  }
+}

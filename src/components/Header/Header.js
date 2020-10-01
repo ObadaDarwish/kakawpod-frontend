@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../../assets/images/cocoaPlant.png';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
@@ -11,7 +11,7 @@ import UserMenu from './User_menu/User_menu';
 import VerifyEmailPrompt from './VerifyEmailPrompt/VerifyEmailPrompt';
 import { toggleCart } from '../../store/actions/cart_actions';
 import CartDropDown from '../CartDropDown/CartDropDown';
-
+import { useHistory } from 'react-router-dom';
 const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -4,
@@ -25,6 +25,7 @@ const StyledBadge = withStyles((theme) => ({
     },
 }))(Badge);
 const Header = () => {
+    const history = useHistory();
     const isAuth = useSelector((state) => state.user);
     const isLoading = useSelector((state) => state.loadingIndicator);
     const cart = useSelector((state) => state.cart);
@@ -32,11 +33,25 @@ const Header = () => {
     const [canShowEmailPrompt, setShowEmailPrompt] = useState(
         isAuth && !isAuth.email_verified
     );
+    useEffect(() => {
+        let canUpdate = true;
+        if (cart.can_show_dropDown && canUpdate) {
+            dispatch(toggleCart());
+        }
+        return () => {
+            canUpdate = false;
+        };
+    }, []);
     const closePrompt = () => {
         setShowEmailPrompt(false);
     };
     const showDropDownCart = () => {
-        dispatch(toggleCart());
+        if (
+            !history.location.pathname.includes('/cart') &&
+            !history.location.pathname.includes('/checkout')
+        ) {
+            dispatch(toggleCart());
+        }
     };
 
     return (

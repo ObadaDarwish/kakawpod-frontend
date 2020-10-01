@@ -50,7 +50,7 @@ const Login = () => {
                 .then((response) => {
                     localStorage.setItem('token', response.data.token);
                     dispatch(updateUser(response.data.user));
-                    history.push('/shop');
+                    history.goBack();
                 })
                 .catch((err) => {
                     if (err.response) {

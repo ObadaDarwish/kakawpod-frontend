@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useFetchData from '../../hooks/useFetchData';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/actions/auth_actions';
@@ -8,7 +8,10 @@ const Auth = (props) => {
         `${process.env.REACT_APP_API_ENDPOINT}/user`
     );
     const dispatch = useDispatch();
-    dispatch(updateUser(auth));
+
+    useEffect(() => {
+        dispatch(updateUser(auth));
+    }, [auth]);
     return <>{isLoading ? <CircularLoadingIndicator /> : props.children}</>;
 };
 

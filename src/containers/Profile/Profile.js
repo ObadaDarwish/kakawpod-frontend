@@ -120,7 +120,10 @@ const Profile = () => {
                                 />
                             </div>
                         </div>
-                        <AddressComponent user={User} />
+                        <AddressComponent
+                            user={User}
+                            addressTitle={'Addresses'}
+                        />
                     </section>
                 </div>
                 <div className={'profileContainer__buttonWrapper'}>

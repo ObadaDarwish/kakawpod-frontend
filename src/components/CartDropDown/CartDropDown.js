@@ -2,6 +2,7 @@ import React from 'react';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import { useHistory } from 'react-router-dom';
+import { infoNotification } from '../../utils/notification-utils';
 const CartDropDown = ({ cart }) => {
     const history = useHistory();
     const getTotal = () => {
@@ -13,6 +14,16 @@ const CartDropDown = ({ cart }) => {
     };
     const handleViewCart = () => {
         history.push('/cart');
+    };
+    const handleCheckout = () => {
+        if (cart.items.length) {
+            history.push('/checkout');
+        } else {
+            infoNotification(
+                'cart is empty, please add items in cart to checkout',
+                'checkout'
+            );
+        }
     };
     return (
         <div className={'headerOuterContainer__navigationTabs__dropDownCart'}>
@@ -66,7 +77,7 @@ const CartDropDown = ({ cart }) => {
                     inverseBackground
                     clickHandler={handleViewCart}
                 />
-                <ButtonUI name={'checkout'} />
+                <ButtonUI name={'checkout'} clickHandler={handleCheckout} />
             </div>
         </div>
     );

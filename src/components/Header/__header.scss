@@ -178,23 +178,15 @@
 
       @include flex(row);
       align-items: center;
-      margin-right: 3rem;
+      margin-right: 1rem;
       cursor: pointer;
       position: relative;
       height: 7rem;
 
-      &::after {
-        content: '';
-        position: absolute;
-        right: -2rem;
-        height: 4rem;
-        width: 0.2rem;
-        background: $color4;
-      }
-
       p {
         margin-left: 0.8rem;
         font-size: 1.6rem;
+        font-weight: bold;
       }
     }
 
@@ -216,6 +208,15 @@
       &:focus {
         outline: none;
       }
+      &::before {
+        content: '';
+        position: absolute;
+        left:0 ;
+        height: 4rem;
+        width: 0.2rem;
+        background: $color4;
+      }
+
     }
   }
 }
