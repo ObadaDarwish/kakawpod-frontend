@@ -71,6 +71,7 @@ const Header = () => {
                 </section>
             </div>
             <div className={'headerOuterContainer__headerContainer'}>
+                {cart.can_show_dropDown && <CartDropDown cart={cart} />}
                 <section
                     className={'headerOuterContainer__headerContainer__logo'}
                 >
@@ -91,7 +92,7 @@ const Header = () => {
                 </section>
                 <section className={'headerOuterContainer__navigationTabs'}>
                     {isAuth && <UserMenu isAuth={isAuth} />}
-                    {cart.can_show_dropDown && <CartDropDown cart={cart} />}
+
                     <NavLink
                         className={'headerOuterContainer__navigationTabs__tab'}
                         to={'/shop'}

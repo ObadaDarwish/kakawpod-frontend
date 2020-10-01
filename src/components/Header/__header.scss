@@ -52,7 +52,7 @@
     width: 100%;
     @include flex(row);
     height: 7rem;
-
+    position: relative;
     &__logo {
       flex-basis: 50%;
       @include flex(row);
@@ -104,17 +104,6 @@
 
 
     }
-
-  }
-
-  &__navigationTabs {
-    flex-basis: 50%;
-    @include flex(row);
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 3rem;
-    position: relative;
-
     &__dropDownCart {
       position: absolute;
       content: '';
@@ -125,44 +114,74 @@
       background: $white;
       animation: fadeCart 0.5s ease-in-out;
       border: 0.2rem solid $color3;
-      &__items{
+      @include media-breakpoint-down(sm) {
+        right: 0;
+        width: 100%;
+        z-index: 1;
+      }
+
+      &__items {
         @include flex(column);
         overflow-y: auto;
         height: 60%;
-        &__item{
+
+        &__item {
           @include flex(row);
           margin: 1rem;
-          img{
+          @include media-breakpoint-down(sm) {
+            margin: 1rem 0;
+          }
+
+          img {
             width: 10rem;
             height: 7rem;
             margin-right: 1rem;
           }
-          &__description{
+
+          &__description {
             @include flex(column);
             justify-content: space-between;
-            p{
+
+            p {
               font-size: 1.6rem;
             }
 
           }
         }
       }
-      &__total{
+
+      &__total {
         display: flex;
         justify-content: center;
         margin: 1rem 0;
         padding: 0.5rem 0;
         background: $color3;
       }
-      &__control{
+
+      &__control {
         @include flex(row);
         justify-content: space-around;
         margin: 1.5rem 0;
-        button{
-          flex-basis: 40% ;
+
+        button {
+          flex-basis: 40%;
         }
       }
     }
+  }
+
+  &__navigationTabs {
+    flex-basis: 50%;
+    @include flex(row);
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 3rem;
+    position: relative;
+    @include media-breakpoint-down(xs) {
+      padding: 0 0.5rem;
+    }
+
+
 
     @keyframes fadeCart {
       from {
@@ -192,7 +211,7 @@
 
     &__tab {
       font-size: 1.8rem;
-      margin-right: 1rem;
+      margin-right: 1.5rem;
       transition: color 0.5s ease;
 
       &:hover {
@@ -208,10 +227,11 @@
       &:focus {
         outline: none;
       }
+
       &::before {
         content: '';
         position: absolute;
-        left:0 ;
+        left: -0.5rem;
         height: 4rem;
         width: 0.2rem;
         background: $color4;

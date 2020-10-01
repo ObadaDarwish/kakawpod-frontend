@@ -99,18 +99,6 @@
         margin: 0;
       }
 
-      //&:after {
-      //  position: absolute;
-      //  height: 3rem;
-      //  width: 100%;
-      //  content: 'Addresses';
-      //  top: 0;
-      //  left: 0;
-      //  background: $color3;
-      //  color: $color1;
-      //  font-size: 1.4rem;
-      //  @include flex_center(row);
-      //}
 
       &__addressButton {
         align-self: flex-end;
@@ -124,7 +112,7 @@
           background: $white;
           padding: 0 2rem;
           border: 0.1rem solid $gray-200;
-          margin-bottom: 1rem;
+          margin: 1.5rem 0;
           @include media-breakpoint-down(xs) {
             @include flex(column)
           }

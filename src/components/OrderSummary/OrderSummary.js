@@ -1,5 +1,6 @@
 import React from 'react';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
+import InputUI from '../UI/InputUI/InputUI';
 
 const OrderSummary = ({
     itemsCount,
@@ -12,6 +13,50 @@ const OrderSummary = ({
         <div className={'orderSummaryWrapper'}>
             <div className={'orderSummaryWrapper__cartSummary'}>
                 <h1>order summary</h1>
+                {cart && (
+                    <>
+                        <div
+                            className={
+                                'orderSummaryWrapper__cartSummary__cartItemsWrapper'
+                            }
+                        >
+                            {cart.items.map((item) => {
+                                return (
+                                    <div
+                                        key={item._id}
+                                        className={
+                                            'orderSummaryWrapper__cartSummary__sectionDetails'
+                                        }
+                                    >
+                                        <p>
+                                            {item.name}
+                                            <br />
+                                            <span
+                                                style={{
+                                                    fontWeight: 'bold',
+                                                    margin: '0 0.5rem',
+                                                }}
+                                            >
+                                                x
+                                            </span>
+                                            {item.count}
+                                        </p>
+                                        <p>EGP{item.price * item.count}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div
+                            className={
+                                'orderSummaryWrapper__cartSummary__promoWrapper'
+                            }
+                        >
+                            <InputUI label={'promo code'} />
+                            <ButtonUI name={'apply'} width={'9rem'} />
+                        </div>
+                    </>
+                )}
+
                 <div
                     className={
                         'orderSummaryWrapper__cartSummary__sectionDetails'
@@ -23,42 +68,6 @@ const OrderSummary = ({
                 <div className={'orderSummaryWrapper__cartSummary__hr'} />
                 {cart && (
                     <>
-                        {
-                            <div
-                                className={
-                                    'orderSummaryWrapper__cartSummary__cartItemsWrapper'
-                                }
-                            >
-                                {cart.items.map((item) => {
-                                    return (
-                                        <div
-                                            key={item._id}
-                                            className={
-                                                'orderSummaryWrapper__cartSummary__sectionDetails'
-                                            }
-                                        >
-                                            <p>
-                                                {item.name}
-                                                <br />
-                                                <span
-                                                    style={{
-                                                        fontWeight: 'bold',
-                                                        margin: '0 0.5rem',
-                                                    }}
-                                                >
-                                                    x
-                                                </span>
-                                                {item.count}
-                                            </p>
-                                            <p>EGP{item.price * item.count}</p>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        }
-                        <div
-                            className={'orderSummaryWrapper__cartSummary__hr'}
-                        />
                         <div
                             className={
                                 'orderSummaryWrapper__cartSummary__sectionDetails'

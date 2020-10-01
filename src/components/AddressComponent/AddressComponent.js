@@ -139,16 +139,18 @@ const AddressComponent = ({
                 >
                     {addressTitle}
                 </p>
-                <div
-                    className={
-                        'profileContainer__detailsWrapper__addressWrapper__addressButton'
-                    }
-                >
-                    <ButtonUI
-                        clickHandler={addAddressDialog}
-                        name={'Add address'}
-                    />
-                </div>
+                {user.addresses && user.addresses.length < 2 && (
+                    <div
+                        className={
+                            'profileContainer__detailsWrapper__addressWrapper__addressButton'
+                        }
+                    >
+                        <ButtonUI
+                            clickHandler={addAddressDialog}
+                            name={'Add address'}
+                        />
+                    </div>
+                )}
                 <div
                     className={
                         'profileContainer__detailsWrapper__addressWrapper__address'

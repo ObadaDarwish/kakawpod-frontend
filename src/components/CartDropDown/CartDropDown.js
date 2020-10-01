@@ -26,10 +26,10 @@ const CartDropDown = ({ cart }) => {
         }
     };
     return (
-        <div className={'headerOuterContainer__navigationTabs__dropDownCart'}>
+        <div className={'headerOuterContainer__headerContainer__dropDownCart'}>
             <section
                 className={
-                    'headerOuterContainer__navigationTabs__dropDownCart__items'
+                    'headerOuterContainer__headerContainer__dropDownCart__items'
                 }
             >
                 {cart.items.length ? (
@@ -38,13 +38,13 @@ const CartDropDown = ({ cart }) => {
                             <div
                                 key={item._id}
                                 className={
-                                    'headerOuterContainer__navigationTabs__dropDownCart__items__item'
+                                    'headerOuterContainer__headerContainer__dropDownCart__items__item'
                                 }
                             >
                                 <img src={item.images[0].url} alt={item.name} />
                                 <div
                                     className={
-                                        'headerOuterContainer__navigationTabs__dropDownCart__items__item__description'
+                                        'headerOuterContainer__headerContainer__dropDownCart__items__item__description'
                                     }
                                 >
                                     <p>{item.name}</p>
@@ -62,14 +62,14 @@ const CartDropDown = ({ cart }) => {
             </section>
             <div
                 className={
-                    'headerOuterContainer__navigationTabs__dropDownCart__total'
+                    'headerOuterContainer__headerContainer__dropDownCart__total'
                 }
             >
                 <h1>Total: {getTotal()}</h1>
             </div>
             <div
                 className={
-                    'headerOuterContainer__navigationTabs__dropDownCart__control'
+                    'headerOuterContainer__headerContainer__dropDownCart__control'
                 }
             >
                 <ButtonUI
