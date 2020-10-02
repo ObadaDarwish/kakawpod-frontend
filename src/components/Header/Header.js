@@ -92,13 +92,6 @@ const Header = () => {
                 </section>
                 <section className={'headerOuterContainer__navigationTabs'}>
                     {isAuth && <UserMenu isAuth={isAuth} />}
-
-                    <NavLink
-                        className={'headerOuterContainer__navigationTabs__tab'}
-                        to={'/shop'}
-                    >
-                        shop
-                    </NavLink>
                     {!isAuth && (
                         <NavLink
                             className={
@@ -109,6 +102,13 @@ const Header = () => {
                             login
                         </NavLink>
                     )}
+                    <NavLink
+                        className={'headerOuterContainer__navigationTabs__tab'}
+                        to={'/shop'}
+                    >
+                        shop
+                    </NavLink>
+
                     <IconButton
                         aria-label="cart"
                         className={
