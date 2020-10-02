@@ -7,6 +7,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 const OrderSummary = ({
+    deliveryFee,
     itemsCount,
     totalPrice,
     buttonName,
@@ -95,7 +96,7 @@ const OrderSummary = ({
                                     }
                                 >
                                     <p>Delivery fee</p>
-                                    <p>EGP25</p>
+                                    <p>EGP{deliveryFee}</p>
                                 </div>
                                 <div
                                     className={
@@ -106,7 +107,7 @@ const OrderSummary = ({
                                     }}
                                 >
                                     <p>GrandTotal</p>
-                                    <p>EGP{totalPrice + 25}</p>
+                                    <p>EGP{totalPrice + deliveryFee}</p>
                                 </div>
                             </>
                         )}

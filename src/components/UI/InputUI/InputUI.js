@@ -30,7 +30,6 @@ const InputUI = ({
     const classes = useStyles(props);
     return (
         <TextField
-            id="standard-basic"
             required={required}
             className={classes.inputField}
             label={label}

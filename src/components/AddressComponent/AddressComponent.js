@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import RadioButtonUi from '../UI/RadioButtonUI/RadioButtonUI';
 import DataPrompt from '../DataPrompt/DataPrompt';
@@ -16,15 +16,20 @@ const AddressComponent = ({
     user,
     margin,
     addressTitle,
-    handleChosenAddress,
+    handleCheckoutAddressChange,
     background,
 }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-    const [selectedAddressData, setSelectedAddressData] = useState(null);
+    const [selectedAddressData, setSelectedAddressData] = useState(undefined);
     const [dialogStatus, setDialogStatus] = useState('add');
     const [, , , , callServer] = useCallServer();
     const dispatch = useDispatch();
+    const getIsAddressChecked = (address) => {
+        return selectedAddressData
+            ? address._id === selectedAddressData._id
+            : address.primary;
+    };
     const handleAddressChange = (e, address) => {
         const event = e.target;
         if (addressTitle !== 'Delivery') {
@@ -58,7 +63,8 @@ const AddressComponent = ({
                 })
                 .finally(() => dispatch(setLoading(false)));
         } else {
-            console.log('address changed');
+            setSelectedAddressData(address);
+            handleCheckoutAddressChange(address);
         }
     };
     const addAddressDialog = () => {
@@ -166,8 +172,16 @@ const AddressComponent = ({
                                     }
                                 >
                                     <RadioButtonUi
-                                        value={address.primary}
-                                        isChecked={address.primary}
+                                        value={
+                                            addressTitle !== 'Delivery'
+                                                ? address.primary
+                                                : getIsAddressChecked(address)
+                                        }
+                                        isChecked={
+                                            addressTitle !== 'Delivery'
+                                                ? address.primary
+                                                : getIsAddressChecked(address)
+                                        }
                                         handleChange={(e) =>
                                             handleAddressChange(e, address)
                                         }

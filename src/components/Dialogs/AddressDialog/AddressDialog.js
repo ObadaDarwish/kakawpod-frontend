@@ -51,7 +51,9 @@ const AddressDialog = ({
     const buildingRef = createRef();
     const apartmentRef = createRef();
     const landmarkRef = createRef();
-    let [, areas] = useFetchData(`${process.env.REACT_APP_API_ENDPOINT}/areas`);
+    let [, areas] = useFetchData(
+        `${process.env.REACT_APP_API_ENDPOINT}/areas?city=${selectedCity}`
+    );
     useEffect(() => {
         if (selectedAddress) {
             setSelectedArea(selectedAddress.area);
@@ -126,7 +128,7 @@ const AddressDialog = ({
             })
             .finally(() => dispatch(setLoading(false)));
     };
-    const cities = ['Cairo'];
+    const cities = ['Cairo', 'Giza'];
     areas =
         areas &&
         areas.map((item) => {
@@ -135,6 +137,10 @@ const AddressDialog = ({
     const areaChangeHandler = (area) => {
         setSelectedArea(area.target.value);
     };
+    const handleCityChange = (city) => {
+        setSelectedCity(city.target.value);
+    };
+
     return (
         <Dialog
             aria-labelledby="simple-dialog-title"
@@ -161,20 +167,19 @@ const AddressDialog = ({
                         // error={formData.password.has_error}
                         // errorMessage={formData.password.error_message}
                         reference={countryRef}
-                        defaultValue={
-                            selectedAddress && selectedAddress.country
-                        }
+                        defaultValue={'Egypt'}
                         label={'country'}
                         required={true}
+                        disabled={true}
                     />
                 </div>
                 <div className={'formWrapper__inputWrapper'}>
                     <SelectUi
                         label={'city'}
                         list={cities}
+                        handleChange={handleCityChange}
                         value={selectedCity}
                         required={true}
-                        disabled={true}
                     />
                 </div>
                 <div className={'formWrapper__inputWrapper'}>
