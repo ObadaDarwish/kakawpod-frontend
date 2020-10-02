@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
@@ -57,8 +57,8 @@ const UserMenu = ({ isAuth }) => {
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-                <AccountCircleOutlinedIcon fontSize={'large'} />
                 <p>{getName()}</p>
+                <ArrowDropDownIcon fontSize={'large'} />
             </div>
             <Menu
                 className={classes.root}
