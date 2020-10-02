@@ -3,6 +3,7 @@ import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import { useSelector } from 'react-redux';
 import AddressComponent from '../../components/AddressComponent/AddressComponent';
 import RadioButtonUi from '../../components/UI/RadioButtonUI/RadioButtonUI';
+import { getTotal } from '../../utils/shop';
 
 const Checkout = () => {
     window.scroll(0, 0);
@@ -21,13 +22,6 @@ const Checkout = () => {
             count += item.count;
         });
         return count;
-    };
-    const getTotalPrice = () => {
-        let total = 0;
-        cart.items.forEach((item) => {
-            total += item.price * item.count;
-        });
-        return total;
     };
 
     const handlePlaceOrder = () => {};
@@ -73,7 +67,7 @@ const Checkout = () => {
             <OrderSummary
                 deliveryFee={deliveryFee}
                 itemsCount={getItemsCount()}
-                totalPrice={getTotalPrice()}
+                totalPrice={getTotal(cart.items)}
                 handleClick={handlePlaceOrder}
                 buttonName={'place order'}
                 cart={cart}

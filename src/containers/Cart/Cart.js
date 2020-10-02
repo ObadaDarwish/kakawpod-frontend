@@ -7,6 +7,7 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { NavLink } from 'react-router-dom';
 import CartItems from '../../components/CartItems/CartItems';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import { getTotal } from '../../utils/shop';
 const Cart = () => {
     window.scroll(0, 0);
     const cart = useSelector((state) => state.cart);
@@ -46,13 +47,7 @@ const Cart = () => {
         });
         return count;
     };
-    const getTotalPrice = () => {
-        let total = 0;
-        cart.items.forEach((item) => {
-            total += item.price * item.count;
-        });
-        return total;
-    };
+
     const handleCheckout = () => {
         if (cart.items.length) {
             history.push('/checkout');
@@ -76,7 +71,7 @@ const Cart = () => {
                 />
                 <OrderSummary
                     itemsCount={getItemsCount()}
-                    totalPrice={getTotalPrice()}
+                    totalPrice={getTotal(cart.items)}
                     handleClick={handleCheckout}
                     buttonName={'checkout'}
                 />

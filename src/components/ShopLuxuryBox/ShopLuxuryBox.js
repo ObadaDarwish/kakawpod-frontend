@@ -11,12 +11,15 @@ import Product from '../Product/Product';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import useFetchProducts from '../../hooks/useFetchProducts';
 import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
+import { addToCart } from '../../store/actions/cart_actions';
+import { useDispatch } from 'react-redux';
 
 const queryString = require('query-string');
 const ShopLuxuryBox = ({ match, location }) => {
     let queryParams = queryString.parse(location.search);
     let { type = 'milk' } = queryParams;
     const history = useHistory();
+    const dispatch = useDispatch();
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [
         isLoading,
@@ -29,6 +32,7 @@ const ShopLuxuryBox = ({ match, location }) => {
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=luxuryBox`,
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=packageBox`
     );
+    console.log(myLuxuryBox);
     let [areLoadingBars, bars] = useFetchProducts(
         `${
             process.env.REACT_APP_API_ENDPOINT
@@ -48,6 +52,7 @@ const ShopLuxuryBox = ({ match, location }) => {
                 let updatedLuxuryBox = {
                     ...prevState,
                     ...box,
+                    total: box.price + prevState.package.price,
                 };
                 localStorage.setItem(
                     'luxuryBox',
@@ -67,6 +72,7 @@ const ShopLuxuryBox = ({ match, location }) => {
             let updatedState = {
                 ...prevState,
                 package: packaging,
+                total: prevState.price + packaging.price,
             };
             localStorage.setItem('luxuryBox', stringfyJSON(updatedState));
             return updatedState;
@@ -188,6 +194,16 @@ const ShopLuxuryBox = ({ match, location }) => {
             return updatedState;
         });
     };
+    const addLuxuryBoxToCart = () => {
+        dispatch(addToCart(myLuxuryBox));
+        setMyLuxuryBox((prevState) => {
+            localStorage.removeItem('luxuryBox');
+            return {
+                ...prevState,
+                items: [],
+            };
+        });
+    };
     return (
         <div className={'luxuryBoxContainer'}>
             <ConfirmDialog
@@ -201,7 +217,7 @@ const ShopLuxuryBox = ({ match, location }) => {
                     <div className={'priceTag'}>
                         <p>
                             Total EGP
-                            {myLuxuryBox.price + myLuxuryBox.package.price}
+                            {myLuxuryBox.total}
                         </p>
                     </div>
                     <h1 className={'luxuryBoxContainer__title'}>
@@ -263,9 +279,8 @@ const ShopLuxuryBox = ({ match, location }) => {
                             handleItemUpdate={updateLuxuryBoxItems}
                             clearBoxHandler={confirmClearLuxuryBox}
                             handleInputChange={countInputChangeHandler}
-                            price={
-                                myLuxuryBox.price + myLuxuryBox.package.price
-                            }
+                            handleAddToCart={addLuxuryBoxToCart}
+                            price={myLuxuryBox.total}
                         />
                         <section
                             className={

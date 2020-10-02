@@ -14,6 +14,7 @@ const useFetchLuxuryBox = (url1, url2) => {
         package: {
             _id: 0,
         },
+        total: 0,
     };
     let [myLuxuryBox, setMLuxuryBox] = useState(
         parseJSON(localStorage.getItem('luxuryBox')) || defaultMixBox
@@ -49,6 +50,8 @@ const useFetchLuxuryBox = (url1, url2) => {
                                             isLuxuryBoxPackageFound
                                         ],
                                     },
+                                    total:
+                                        tempLuxuryBoxes[isLuxuryBoxFound].price,
                                 };
                             });
                         }

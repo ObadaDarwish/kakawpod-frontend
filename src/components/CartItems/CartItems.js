@@ -76,7 +76,12 @@ const CartItems = ({
                                             </div>
                                         </td>
                                         <td>EGP{item.price}</td>
-                                        <td>EGP{item.price * item.count}</td>
+                                        <td>
+                                            EGP
+                                            {item.category === 'luxuryBox'
+                                                ? item.total
+                                                : item.price * item.count}
+                                        </td>
                                         <td className={'deletionIcon'}>
                                             <DeleteOutlinedIcon
                                                 fontSize={'large'}
@@ -107,7 +112,12 @@ const CartItems = ({
                             <div className={'block__details'}>
                                 <p>{item.name}</p>
                                 <p>{item.weight}gm</p>
-                                <p>EGP{item.price}</p>
+                                <p>
+                                    EGP
+                                    {item.category === 'luxuryBox'
+                                        ? item.total
+                                        : item.price * item.count}
+                                </p>
                             </div>
                             <div className={'counterControlsWrapper'}>
                                 <InputUI
