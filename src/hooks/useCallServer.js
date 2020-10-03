@@ -4,6 +4,7 @@ import axios from 'axios';
 const useCallServer = () => {
     const [error, setError] = useState(false);
     const [response, setResponse] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const callServer = async (method, url, data) => {
         let repsonse = await axios({
@@ -14,6 +15,14 @@ const useCallServer = () => {
         return repsonse;
     };
 
-    return [response, setResponse, error, setError, callServer];
+    return [
+        response,
+        setResponse,
+        error,
+        setError,
+        callServer,
+        loading,
+        setLoading,
+    ];
 };
 export default useCallServer;

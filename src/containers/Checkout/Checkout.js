@@ -36,11 +36,12 @@ const Checkout = () => {
         return count;
     };
 
-    const handlePlaceOrder = () => {
+    const handlePlaceOrder = (promo) => {
         dispatch(setLoading(true));
         callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/shop/order`, {
             address_id: deliveryAddress._id,
             cart: cart.items,
+            promo_code: promo,
         })
             .then(() => {
                 dispatch(clearCart());

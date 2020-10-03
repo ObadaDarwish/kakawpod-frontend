@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import InputUI from '../UI/InputUI/InputUI';
 import Accordion from '@material-ui/core/Accordion';
@@ -7,6 +7,12 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { v4 as uuidv4 } from 'uuid';
+import useCallServer from '../../hooks/useCallServer';
+import {
+    errorNotification,
+    infoNotification,
+} from '../../utils/notification-utils';
+
 const OrderSummary = ({
     deliveryFee,
     itemsCount,
@@ -17,8 +23,43 @@ const OrderSummary = ({
 }) => {
     const matches = useMediaQuery('(max-width:768px)');
     const [expanded, setExpanded] = useState(true);
+    const [hasDiscount, setHasDiscount] = useState(false);
+    const [, , , , callServer, loadPromo, setLoadPromo] = useCallServer();
+    const promoRef = useRef();
     const handleChange = (event, newExpanded) => {
         setExpanded((prevState) => (matches ? !prevState : true));
+    };
+    const validatePromoCode = () => {
+        let promoCode = promoRef.current.value;
+        if (promoCode) {
+            setLoadPromo(true);
+            callServer(
+                'POST',
+                `${process.env.REACT_APP_API_ENDPOINT}/shop/promo`,
+                {
+                    code: promoCode,
+                }
+            )
+                .then((response) => {
+                    setHasDiscount(response.data);
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        errorNotification(err.response.data.message, 'Promo');
+                    }
+                })
+                .finally(() => setLoadPromo(false));
+        } else {
+            infoNotification('please add code to validate', 'Promo');
+        }
+    };
+    const getPriceAfterDiscount = () => {
+        let { percentage, max_discount } = hasDiscount;
+        let waived = totalPrice * (percentage / 100);
+        if (waived > max_discount) {
+            waived = max_discount;
+        }
+        return Math.floor(totalPrice - waived);
     };
     return (
         <div className={'orderSummaryWrapper'}>
@@ -78,8 +119,16 @@ const OrderSummary = ({
                                         'orderSummaryWrapper__cartSummary__promoWrapper'
                                     }
                                 >
-                                    <InputUI label={'promo code'} />
-                                    <ButtonUI name={'apply'} width={'9rem'} />
+                                    <InputUI
+                                        reference={promoRef}
+                                        label={'promo code'}
+                                    />
+                                    <ButtonUI
+                                        name={'apply'}
+                                        width={'9rem'}
+                                        is_disabled={loadPromo}
+                                        clickHandler={validatePromoCode}
+                                    />
                                 </div>
                             </>
                         )}
@@ -90,7 +139,26 @@ const OrderSummary = ({
                             }
                         >
                             <p>Total: {itemsCount} items</p>
-                            <p>EGP{totalPrice}</p>
+                            {hasDiscount && (
+                                <p
+                                    className={
+                                        'orderSummaryWrapper__cartSummary__sectionDetails__discount'
+                                    }
+                                >
+                                    EGP{getPriceAfterDiscount()}
+                                </p>
+                            )}
+
+                            <p>
+                                {hasDiscount && (
+                                    <span
+                                        className={
+                                            'orderSummaryWrapper__cartSummary__sectionDetails__discountWaiver'
+                                        }
+                                    />
+                                )}
+                                EGP{totalPrice}
+                            </p>
                         </div>
                         <div
                             className={'orderSummaryWrapper__cartSummary__hr'}
@@ -114,7 +182,12 @@ const OrderSummary = ({
                                     }}
                                 >
                                     <p>GrandTotal</p>
-                                    <p>EGP{totalPrice + deliveryFee}</p>
+                                    <p>
+                                        EGP
+                                        {(hasDiscount
+                                            ? getPriceAfterDiscount()
+                                            : totalPrice) + deliveryFee}
+                                    </p>
                                 </div>
                             </>
                         )}
@@ -126,7 +199,13 @@ const OrderSummary = ({
                         >
                             <ButtonUI
                                 name={buttonName}
-                                clickHandler={handleClick}
+                                clickHandler={() => {
+                                    let promoCode = null;
+                                    if (promoRef.current) {
+                                        promoCode = promoRef.current.value;
+                                    }
+                                    handleClick(promoCode);
+                                }}
                             />
                         </div>
                     </div>
