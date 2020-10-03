@@ -7,8 +7,19 @@ import img from '../../assets/images/milkbar.jpg';
 import img1 from '../../assets/images/milkchocolate.jpg';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import background from '../../assets/images/waive.png';
+import { addToCart } from '../../store/actions/cart_actions';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 const Landing = () => {
     const sm = useMediaQuery('(max-width:768px)');
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const addBar = (product) => {
+        dispatch(addToCart(product));
+    };
+    const cookingNavigation = () => {
+        history.push('/shop/cooking');
+    };
     return (
         <div className={'landingContainer'}>
             <section className={'landingContainer__videoContainer'}>
@@ -76,6 +87,7 @@ const Landing = () => {
                         title={'milk chocolate'}
                         weight={80}
                         price={'EGP45'}
+                        handleAddProduct={() => addBar({})}
                     />
                     <Product
                         image={img1}
@@ -115,13 +127,14 @@ const Landing = () => {
                         <p>50%</p>
                         <p>Get the chocolate box</p>
                     </div>
-                    <div
+                    <NavLink
                         className={
                             'landingContainer__chocolateBoxPromo__promoWrapper__knowMoreButton'
                         }
+                        to={'/shop/mixBox'}
                     >
                         Know more
-                    </div>
+                    </NavLink>
                 </div>
             </section>
             <section className={'landingContainer__megaWeightContainer'}>
@@ -146,6 +159,7 @@ const Landing = () => {
                             width={sm ? '60%' : '40%'}
                             height={'4.5rem'}
                             inverseBackground
+                            clickHandler={cookingNavigation}
                         />
                     </div>
                 </div>

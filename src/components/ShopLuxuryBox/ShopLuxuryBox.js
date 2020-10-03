@@ -13,6 +13,7 @@ import useFetchProducts from '../../hooks/useFetchProducts';
 import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
 import { addToCart } from '../../store/actions/cart_actions';
 import { useDispatch } from 'react-redux';
+import { setLoading } from '../../store/actions/loadingIndicator_actions';
 
 const queryString = require('query-string');
 const ShopLuxuryBox = ({ match, location }) => {
@@ -32,7 +33,6 @@ const ShopLuxuryBox = ({ match, location }) => {
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=luxuryBox`,
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=packageBox`
     );
-    console.log(myLuxuryBox);
     let [areLoadingBars, bars] = useFetchProducts(
         `${
             process.env.REACT_APP_API_ENDPOINT
@@ -195,6 +195,7 @@ const ShopLuxuryBox = ({ match, location }) => {
         });
     };
     const addLuxuryBoxToCart = () => {
+        dispatch(setLoading(true));
         dispatch(addToCart(myLuxuryBox));
         setMyLuxuryBox((prevState) => {
             localStorage.removeItem('luxuryBox');
@@ -203,6 +204,9 @@ const ShopLuxuryBox = ({ match, location }) => {
                 items: [],
             };
         });
+        setInterval(() => {
+            dispatch(setLoading(false));
+        }, 500);
     };
     return (
         <div className={'luxuryBoxContainer'}>

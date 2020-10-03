@@ -3,6 +3,7 @@ import {
     ADD_TO_CART,
     UPDATE_CART,
     REMOVE_FROM_CART,
+    CLEAR_CART,
 } from '../action_types';
 
 export const toggleCart = () => {
@@ -26,5 +27,10 @@ export const removeFromCart = (item) => {
     return {
         type: REMOVE_FROM_CART,
         item: item,
+    };
+};
+export const clearCart = () => {
+    return {
+        type: CLEAR_CART,
     };
 };

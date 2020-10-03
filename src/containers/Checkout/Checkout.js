@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddressComponent from '../../components/AddressComponent/AddressComponent';
 import RadioButtonUi from '../../components/UI/RadioButtonUI/RadioButtonUI';
 import { getTotal } from '../../utils/shop';
+import useCallServer from '../../hooks/useCallServer';
+import { useHistory } from 'react-router-dom';
+import {
+    errorNotification,
+    successNotification,
+} from '../../utils/notification-utils';
+import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import { clearCart } from '../../store/actions/cart_actions';
 
 const Checkout = () => {
-    window.scroll(0, 0);
     const cart = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user);
-    const getDeliveryFee = () => {
+    const history = useHistory();
+    const [, , , , callServer] = useCallServer();
+    const dispatch = useDispatch();
+    const getDeliveryAddress = () => {
         let { addresses } = user;
         let addressesList = [...addresses];
         let isFound = addressesList.findIndex((address) => address.primary);
-        return addressesList[isFound].delivery_fees_id.fee;
+        return addressesList[isFound];
     };
-    const [deliveryFee, setDeliveryFee] = useState(getDeliveryFee());
+    const [deliveryAddress, setDeliveryAddress] = useState(
+        getDeliveryAddress()
+    );
     const getItemsCount = () => {
         let count = 0;
         cart.items.forEach((item) => {
@@ -24,9 +36,29 @@ const Checkout = () => {
         return count;
     };
 
-    const handlePlaceOrder = () => {};
+    const handlePlaceOrder = () => {
+        dispatch(setLoading(true));
+        callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/shop/order`, {
+            address_id: deliveryAddress._id,
+            cart: cart.items,
+        })
+            .then(() => {
+                dispatch(clearCart());
+                successNotification(
+                    'Order has been placed successfully',
+                    'Order'
+                );
+                history.push('/shop');
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(err.response.data.message, 'Order');
+                }
+            })
+            .finally(() => dispatch(setLoading(false)));
+    };
     const checkoutAddressChange = (address) => {
-        setDeliveryFee(address.delivery_fees_id.fee);
+        setDeliveryAddress(address);
     };
     return (
         <div className={'checkoutContainer'}>
@@ -65,7 +97,7 @@ const Checkout = () => {
                 </div>
             </div>
             <OrderSummary
-                deliveryFee={deliveryFee}
+                deliveryFee={deliveryAddress.delivery_fees_id.fee}
                 itemsCount={getItemsCount()}
                 totalPrice={getTotal(cart.items)}
                 handleClick={handlePlaceOrder}

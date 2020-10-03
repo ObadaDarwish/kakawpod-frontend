@@ -6,6 +6,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { v4 as uuidv4 } from 'uuid';
 const OrderSummary = ({
     deliveryFee,
     itemsCount,
@@ -39,9 +40,10 @@ const OrderSummary = ({
                                     }
                                 >
                                     {cart.items.map((item) => {
+                                        let KeyId = uuidv4();
                                         return (
                                             <div
-                                                key={item._id}
+                                                key={KeyId}
                                                 className={
                                                     'orderSummaryWrapper__cartSummary__sectionDetails'
                                                 }
@@ -60,7 +62,12 @@ const OrderSummary = ({
                                                     {item.count}
                                                 </p>
                                                 <p>
-                                                    EGP{item.price * item.count}
+                                                    EGP
+                                                    {item.category ===
+                                                    'luxuryBox'
+                                                        ? item.total
+                                                        : item.price *
+                                                          item.count}
                                                 </p>
                                             </div>
                                         );

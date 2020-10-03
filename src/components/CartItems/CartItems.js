@@ -4,7 +4,7 @@ import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
+import { v4 as uuidv4 } from 'uuid';
 const CartItems = ({
     cart,
     handleInputChange,
@@ -29,8 +29,9 @@ const CartItems = ({
                     <tbody>
                         {cart.items.length ? (
                             cart.items.map((item) => {
+                                let keyId = uuidv4();
                                 return (
-                                    <tr key={item._id}>
+                                    <tr key={keyId}>
                                         <td className={'productDetailsWrapper'}>
                                             <img
                                                 src={item.images[0].url}
@@ -95,19 +96,22 @@ const CartItems = ({
                                 );
                             })
                         ) : (
-                            <td colSpan="6">
-                                <DataPrompt
-                                    margin={'2rem 0'}
-                                    message={'No items were found.'}
-                                />
-                            </td>
+                            <tr>
+                                <td colSpan="6">
+                                    <DataPrompt
+                                        margin={'2rem 0'}
+                                        message={'No items were found.'}
+                                    />
+                                </td>
+                            </tr>
                         )}
                     </tbody>
                 </table>
             ) : (
                 cart.items.map((item) => {
+                    let keyId = uuidv4();
                     return (
-                        <div className={'block'} key={item._id}>
+                        <div className={'block'} key={keyId}>
                             <img src={item.images[0].url} alt={item.name} />
                             <div className={'block__details'}>
                                 <p>{item.name}</p>

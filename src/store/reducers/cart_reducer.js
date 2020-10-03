@@ -1,5 +1,6 @@
 import {
     ADD_TO_CART,
+    CLEAR_CART,
     REMOVE_FROM_CART,
     TOGGLE_CART,
     UPDATE_CART,
@@ -28,11 +29,15 @@ const cart_reducer = (
             (item) => item._id === action.item._id
         );
         let newCount = 1;
-        if (isProdFound >= 0) {
+        if (
+            isProdFound >= 0 &&
+            action.item.category !== 'mixBox' &&
+            action.item.category !== 'luxuryBox'
+        ) {
             newCount = cartItems[isProdFound].count + 1;
             cartItems[isProdFound].count = newCount;
         } else {
-            cartItems.push({ ...action.item, count: 1 });
+            cartItems.unshift({ ...action.item, count: 1 });
         }
         state = {
             ...state,
@@ -63,6 +68,14 @@ const cart_reducer = (
         state = {
             ...state,
             items: currentItems,
+        };
+        localStorage.setItem('cart', stringfyJSON(state));
+        return state;
+    }
+    if (action.type === CLEAR_CART) {
+        state = {
+            ...state,
+            items: [],
         };
         localStorage.setItem('cart', stringfyJSON(state));
         return state;

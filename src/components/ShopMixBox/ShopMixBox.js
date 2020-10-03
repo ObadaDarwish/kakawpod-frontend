@@ -14,6 +14,7 @@ import { stringfyJSON } from '../../utils/jsonConversion';
 import useFetchMixBox from '../../hooks/useFetchMixBox';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../store/actions/cart_actions';
+import { setLoading } from '../../store/actions/loadingIndicator_actions';
 
 const queryString = require('query-string');
 
@@ -142,6 +143,7 @@ const ShopMixBox = ({ match, location }) => {
         }
     };
     const addToCartHandler = () => {
+        dispatch(setLoading(true));
         dispatch(addToCart(myMixBox));
         setMyMixBox((prevState) => {
             localStorage.removeItem('mixBox');
@@ -150,6 +152,9 @@ const ShopMixBox = ({ match, location }) => {
                 items: [],
             };
         });
+        setInterval(() => {
+            dispatch(setLoading(false));
+        }, 500);
     };
     const getBoxCount = (value, product) => {
         let weight = 0;

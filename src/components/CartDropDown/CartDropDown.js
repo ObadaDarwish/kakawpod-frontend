@@ -4,6 +4,7 @@ import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import { useHistory } from 'react-router-dom';
 import { infoNotification } from '../../utils/notification-utils';
 import { getTotal } from '../../utils/shop';
+import { v4 as uuidv4 } from 'uuid';
 const CartDropDown = ({ cart }) => {
     const history = useHistory();
     const handleViewCart = () => {
@@ -28,9 +29,10 @@ const CartDropDown = ({ cart }) => {
             >
                 {cart.items.length ? (
                     cart.items.map((item) => {
+                        let keyId = uuidv4();
                         return (
                             <div
-                                key={item._id}
+                                key={keyId}
                                 className={
                                     'headerOuterContainer__headerContainer__dropDownCart__items__item'
                                 }

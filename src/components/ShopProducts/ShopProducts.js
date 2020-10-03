@@ -7,7 +7,8 @@ import DataPrompt from '../DataPrompt/DataPrompt';
 import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../store/actions/cart_actions';
+import { addToCart, toggleCart } from '../../store/actions/cart_actions';
+import { setLoading } from '../../store/actions/loadingIndicator_actions';
 
 const queryString = require('query-string');
 
@@ -35,7 +36,11 @@ const ShopProducts = ({ match, location, category }) => {
         });
     };
     const addBar = (product) => {
+        dispatch(setLoading(true));
         dispatch(addToCart(product));
+        setInterval(() => {
+            dispatch(setLoading(false));
+        }, 500);
     };
     return (
         <div className={'shopBarsContainer'}>
