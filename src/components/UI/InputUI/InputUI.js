@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const InputUI = ({
     defaultValue,
+    value,
     label,
     type,
     required,
@@ -37,8 +38,8 @@ const InputUI = ({
             inputRef={reference}
             helperText={errorMessage}
             error={error}
-            // defaultValue={defaultValue}
-            value={defaultValue}
+            defaultValue={defaultValue}
+            value={value}
             inputProps={{
                 style: { fontSize: matches ? 16 : 20, color: '#7D5A5A' },
             }}

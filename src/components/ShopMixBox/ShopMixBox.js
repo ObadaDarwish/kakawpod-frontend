@@ -152,7 +152,7 @@ const ShopMixBox = ({ match, location }) => {
                 items: [],
             };
         });
-        setInterval(() => {
+        setTimeout(() => {
             dispatch(setLoading(false));
         }, 500);
     };

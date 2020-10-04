@@ -38,7 +38,7 @@ const ShopProducts = ({ match, location, category }) => {
     const addBar = (product) => {
         dispatch(setLoading(true));
         dispatch(addToCart(product));
-        setInterval(() => {
+        setTimeout(() => {
             dispatch(setLoading(false));
         }, 500);
     };

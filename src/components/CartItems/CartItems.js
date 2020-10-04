@@ -107,7 +107,7 @@ const CartItems = ({
                         )}
                     </tbody>
                 </table>
-            ) : (
+            ) : cart.items.length ? (
                 cart.items.map((item) => {
                     let keyId = uuidv4();
                     return (
@@ -154,6 +154,11 @@ const CartItems = ({
                         </div>
                     );
                 })
+            ) : (
+                <DataPrompt
+                    margin={'2rem 0'}
+                    message={'No items were found.'}
+                />
             )}
         </div>
     );

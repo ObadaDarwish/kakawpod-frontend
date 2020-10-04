@@ -6,6 +6,10 @@ const useValidateInputs = () => {
             error_message: '',
             has_error: false,
         },
+        phone: {
+            error_message: '',
+            has_error: false,
+        },
         email: {
             error_message: '',
             has_error: false,
@@ -21,9 +25,11 @@ const useValidateInputs = () => {
         is_form_valid: false,
     });
 
-    const validateForm = (name, email, password, confirmPassword) => {
+    const validateForm = (name, email, password, confirmPassword, phone) => {
         let nameHasError = name && !(name.length >= 6);
         let emailHasError = email && !validator.isEmail(email);
+        let phoneNumberHasError =
+            phone && !validator.isMobilePhone(phone, 'ar-EG');
         let passwordHasError = password && !(password.length >= 6);
         let passwordMatchHasError =
             confirmPassword && !validator.equals(password, confirmPassword);
@@ -31,7 +37,8 @@ const useValidateInputs = () => {
             !nameHasError &&
             !emailHasError &&
             !passwordHasError &&
-            !passwordMatchHasError;
+            !passwordMatchHasError &&
+            !phoneNumberHasError;
         setFormData((prevState) => {
             let prevData = { ...prevState };
 
@@ -57,6 +64,12 @@ const useValidateInputs = () => {
                 has_error: passwordMatchHasError,
                 error_message: passwordMatchHasError
                     ? 'Password does not match'
+                    : '',
+            };
+            prevData.phone = {
+                has_error: phoneNumberHasError,
+                error_message: phoneNumberHasError
+                    ? 'Invalid phone number'
                     : '',
             };
             prevData.is_form_valid = is_form_valid;

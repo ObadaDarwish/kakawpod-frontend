@@ -54,9 +54,10 @@ const PasswordDialog = ({ onClose, open, close }) => {
             </IconButton>
             <form
                 className={`formWrapper`}
-                style={{ margin: '2rem' }}
+                style={{ margin: '0 2rem', marginBottom: '2rem' }}
                 onSubmit={(e) => submitPassword(e)}
             >
+                <h1>Please insert your password</h1>
                 <InputUI
                     error={formData.password.has_error}
                     errorMessage={formData.password.error_message}

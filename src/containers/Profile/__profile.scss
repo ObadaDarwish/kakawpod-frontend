@@ -63,6 +63,12 @@
 
       &__inputWrapper {
         flex-basis: 45%;
+        @include flex(row);
+        align-items: center;
+        .MuiButton-root{
+          margin-left: 1rem;
+          margin-bottom: -1rem;
+        }
       }
 
       &:after {

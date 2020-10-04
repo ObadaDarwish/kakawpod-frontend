@@ -12,6 +12,8 @@ import VerifyEmailPrompt from './VerifyEmailPrompt/VerifyEmailPrompt';
 import { toggleCart } from '../../store/actions/cart_actions';
 import CartDropDown from '../CartDropDown/CartDropDown';
 import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -4,
@@ -30,9 +32,8 @@ const Header = () => {
     const isLoading = useSelector((state) => state.loadingIndicator);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-    const [canShowEmailPrompt, setShowEmailPrompt] = useState(
-        isAuth && !isAuth.email_verified
-    );
+    const sm = useMediaQuery('(max-width:768px)');
+    const [canShowEmailPrompt, setShowEmailPrompt] = useState(true);
     useEffect(() => {
         let canUpdate = true;
         if (cart.can_show_dropDown && canUpdate) {
@@ -50,7 +51,11 @@ const Header = () => {
             !history.location.pathname.includes('/cart') &&
             !history.location.pathname.includes('/checkout')
         ) {
-            dispatch(toggleCart());
+            if (sm) {
+                history.push('/cart');
+            } else {
+                dispatch(toggleCart());
+            }
         }
     };
 
@@ -86,7 +91,7 @@ const Header = () => {
                             name="ODs chocolate logo"
                             alt="ODs chocolate logo"
                         />
-                        <p>ODs</p>
+                        <p>D&H</p>
                         <span>Chocolate</span>
                     </Link>
                 </section>

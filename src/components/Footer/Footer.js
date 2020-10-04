@@ -58,7 +58,7 @@ const Footer = () => {
             </section>
             <section className={'footerContainer__bottomSection'}>
                 <CopyrightIcon />
-                <p>2020 ODs chocolate</p>
+                <p>2020 D&H chocolate</p>
             </section>
         </div>
     );

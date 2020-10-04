@@ -4,18 +4,27 @@ import cocoaVideo from '../../assets/videos/cocoa.mp4';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import Product from '../../components/Product/Product';
 import img from '../../assets/images/milkbar.jpg';
-import img1 from '../../assets/images/milkchocolate.jpg';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import background from '../../assets/images/waive.png';
 import { addToCart } from '../../store/actions/cart_actions';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import useFetchData from '../../hooks/useFetchData';
+import CircularLoadingIndicator from '../../components/LoadingIndicator/CircularLoadingIndicator';
+import { setLoading } from '../../store/actions/loadingIndicator_actions';
 const Landing = () => {
     const sm = useMediaQuery('(max-width:768px)');
     const dispatch = useDispatch();
     const history = useHistory();
+    const [isLoadingTopSelling, topSelling] = useFetchData(
+        `${process.env.REACT_APP_API_ENDPOINT}/product/topSelling`
+    );
     const addBar = (product) => {
+        dispatch(setLoading(true));
         dispatch(addToCart(product));
+        setTimeout(() => {
+            dispatch(setLoading(false));
+        }, 500);
     };
     const cookingNavigation = () => {
         history.push('/shop/cooking');
@@ -82,31 +91,22 @@ const Landing = () => {
                         'landingContainer__topSellingContainer__products'
                     }
                 >
-                    <Product
-                        image={img}
-                        title={'milk chocolate'}
-                        weight={80}
-                        price={'EGP45'}
-                        handleAddProduct={() => addBar({})}
-                    />
-                    <Product
-                        image={img1}
-                        title={'milk chocolate'}
-                        weight={80}
-                        price={'EGP45'}
-                    />
-                    <Product
-                        image={img}
-                        title={'milk chocolate'}
-                        weight={80}
-                        price={'EGP45'}
-                    />
-                    <Product
-                        image={img1}
-                        title={'milk chocolate'}
-                        weight={80}
-                        price={'EGP45'}
-                    />
+                    {!isLoadingTopSelling ? (
+                        topSelling.map((product) => {
+                            return (
+                                <Product
+                                    key={product._id}
+                                    image={product.images[0].url}
+                                    title={product.name}
+                                    weight={product.weight}
+                                    price={product.price}
+                                    handleAddProduct={() => addBar(product)}
+                                />
+                            );
+                        })
+                    ) : (
+                        <CircularLoadingIndicator />
+                    )}
                 </div>
             </section>
             <section className={'landingContainer__chocolateBoxPromo'}>

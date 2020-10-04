@@ -23,7 +23,7 @@ const Checkout = () => {
         let { addresses } = user;
         let addressesList = [...addresses];
         let isFound = addressesList.findIndex((address) => address.primary);
-        return addressesList[isFound];
+        return isFound > 0 ? addressesList[isFound] : {};
     };
     const [deliveryAddress, setDeliveryAddress] = useState(
         getDeliveryAddress()
@@ -98,7 +98,10 @@ const Checkout = () => {
                 </div>
             </div>
             <OrderSummary
-                deliveryFee={deliveryAddress.delivery_fees_id.fee}
+                deliveryFee={
+                    deliveryAddress.delivery_fees_id &&
+                    deliveryAddress.delivery_fees_id.fee
+                }
                 itemsCount={getItemsCount()}
                 totalPrice={getTotal(cart.items)}
                 handleClick={handlePlaceOrder}
