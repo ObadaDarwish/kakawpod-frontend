@@ -32,21 +32,30 @@ const useStyles = makeStyles((theme) => ({
 const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
     const classes = useStyles();
     const confirmInputRef = createRef();
+    const phoneRef = createRef();
     const [, , , , callServer, loadingCode, setLoadingCode] = useCallServer();
+    const [phoneValue, setPhoneValue] = useState();
     const [inputData, setInputData] = useState({
         error_message: '',
         has_error: false,
     });
+
+    const sendCode = (phoneNumber) => {
+        setLoadingCode(true);
+        return callServer(
+            'POST',
+            `${process.env.REACT_APP_API_ENDPOINT}/user/requestVerifyPhone`,
+            {
+                phone: phoneNumber,
+            }
+        );
+    };
     useEffect(() => {
-        const sendCode = () => {
-            setLoadingCode(true);
-            callServer(
-                'POST',
-                `${process.env.REACT_APP_API_ENDPOINT}/user/requestVerifyPhone`,
-                {
-                    phone: phone,
-                }
-            )
+        setPhoneValue(phone);
+    }, [phone]);
+    useEffect(() => {
+        if (open && phoneValue) {
+            sendCode(phoneValue)
                 .then(() => {})
                 .catch((err) => {
                     if (err.response) {
@@ -54,39 +63,89 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
                     }
                 })
                 .finally(() => setLoadingCode(false));
-        };
-        if (open) {
-            sendCode();
         }
-    }, [open]);
+    }, [open, phoneValue]);
     const confirm = (e) => {
         e.preventDefault();
-        if (confirmInputRef.current.value.length <= 6) {
-            setLoadingCode(true);
-            callServer(
-                'POST',
-                `${process.env.REACT_APP_API_ENDPOINT}/user/verifyPhone`,
-                {
-                    code: confirmInputRef.current.value,
-                }
-            )
-                .then(() => {
-                    onClose();
-                    successNotification('phone verified.', 'Phone');
-                })
-                .catch((err) => {
-                    if (err.response) {
-                        errorNotification(err.response.data.message, 'Code');
+        if (phoneValue) {
+            if (confirmInputRef.current.value.length <= 6) {
+                setLoadingCode(true);
+                callServer(
+                    'POST',
+                    `${process.env.REACT_APP_API_ENDPOINT}/user/verifyPhone`,
+                    {
+                        code: confirmInputRef.current.value,
                     }
-                })
-                .finally(() => setLoadingCode(false));
+                )
+                    .then(() => {
+                        onClose();
+                        successNotification('phone verified.', 'Phone');
+                    })
+                    .catch((err) => {
+                        if (err.response) {
+                            errorNotification(
+                                err.response.data.message,
+                                'Code'
+                            );
+                        }
+                    })
+                    .finally(() => setLoadingCode(false));
+            } else {
+                setInputData({
+                    has_error: true,
+                    error_message: 'code has to be 6 digits long',
+                });
+            }
         } else {
-            setInputData({
-                has_error: true,
-                error_message: 'code has to be 6 digits long',
-            });
+            requestCode();
         }
     };
+    const requestCode = () => {
+        let { value } = phoneRef.current;
+        sendCode(value)
+            .then(() => {
+                setPhoneValue(value);
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(err.response.data.message, 'Code');
+                }
+            })
+            .finally(() => {
+                setLoadingCode(false);
+            });
+    };
+    const codeTemplate = (
+        <>
+            <h1>
+                please check your phone for the 6 digits verification code,
+                <span>resend code</span>.
+            </h1>
+            <InputUI
+                error={inputData.has_error}
+                errorMessage={inputData.error_message}
+                label={'Code'}
+                reference={confirmInputRef}
+                required={true}
+            />
+            <ButtonUI
+                name={'Verify'}
+                type={'submit'}
+                is_disabled={loadingCode}
+            />
+        </>
+    );
+    const phoneTemplate = (
+        <>
+            <h1>please add your phone to place order</h1>
+            <InputUI label={'phone'} reference={phoneRef} required={true} />
+            <ButtonUI
+                name={'Request Code'}
+                type={'submit'}
+                is_disabled={loadingCode}
+            />
+        </>
+    );
     return (
         <Dialog
             aria-labelledby="simple-dialog-title"
@@ -110,26 +169,11 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
             >
                 {loadingCode ? (
                     <CircularLoadingIndicator height={'5rem'} />
+                ) : phoneValue ? (
+                    codeTemplate
                 ) : (
-                    <h1>
-                        please check your phone for the 6 digits verification
-                        code,
-                        <span>resend code</span>.
-                    </h1>
+                    phoneTemplate
                 )}
-
-                <InputUI
-                    error={inputData.has_error}
-                    errorMessage={inputData.error_message}
-                    label={'Code'}
-                    reference={confirmInputRef}
-                    required={true}
-                />
-                <ButtonUI
-                    name={'Verify'}
-                    type={'submit'}
-                    is_disabled={loadingCode}
-                />
             </form>
         </Dialog>
     );

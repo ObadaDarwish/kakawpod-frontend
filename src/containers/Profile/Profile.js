@@ -97,8 +97,9 @@ const Profile = () => {
     };
     const verifyPhoneNumber = () => {
         if (validateForm(null, null, null, null, phoneRef.current.value)) {
+            let { value } = phoneRef.current;
             setOpenPhoneDialog({
-                phone: phoneRef.current.value,
+                phone: value,
                 canOpen: true,
             });
         }
