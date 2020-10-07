@@ -59,6 +59,7 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
                 .then(() => {})
                 .catch((err) => {
                     if (err.response) {
+                        close();
                         errorNotification(err.response.data.message, 'Code');
                     }
                 })
@@ -100,6 +101,17 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
             requestCode();
         }
     };
+    const resendCode = () => {
+        sendCode(phoneValue)
+            .then(() => {})
+            .catch((err) => {
+                if (err.response) {
+                    close();
+                    errorNotification(err.response.data.message, 'Code');
+                }
+            })
+            .finally(() => setLoadingCode(false));
+    };
     const requestCode = () => {
         let { value } = phoneRef.current;
         sendCode(value)
@@ -119,7 +131,10 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
         <>
             <h1>
                 please check your phone for the 6 digits verification code,
-                <span>resend code</span>.
+                <span onClick={resendCode} className={'resendCode'}>
+                    resend code
+                </span>
+                .
             </h1>
             <InputUI
                 error={inputData.has_error}

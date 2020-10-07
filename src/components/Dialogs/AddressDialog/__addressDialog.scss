@@ -11,4 +11,12 @@ justify-content: space-between;
       width: 100%;
     }
   }
+  .resendCode{
+    margin-left: 1rem;
+    transition: color 0.3s ease-in-out;
+    &:hover{
+      cursor: pointer;
+      color: $text-hover;
+    }
+  }
 }
