@@ -96,6 +96,7 @@ const AddressDialog = ({
                     newAddressesList.push({
                         ...newAddress,
                         _id: response.data.address_id,
+                        delivery_fees_id: response.data.area,
                     });
                 } else {
                     let isFound = newAddressesList.findIndex(
@@ -164,8 +165,6 @@ const AddressDialog = ({
                     }
                 >
                     <InputUI
-                        // error={formData.password.has_error}
-                        // errorMessage={formData.password.error_message}
                         reference={countryRef}
                         defaultValue={'Egypt'}
                         label={'country'}
@@ -193,8 +192,6 @@ const AddressDialog = ({
                 </div>
                 <div className={'formWrapper__inputWrapper'}>
                     <InputUI
-                        // error={formData.password.has_error}
-                        // errorMessage={formData.password.error_message}
                         defaultValue={selectedAddress && selectedAddress.street}
                         reference={streetRef}
                         label={'street'}
@@ -203,8 +200,6 @@ const AddressDialog = ({
                 </div>
                 <div className={'formWrapper__inputWrapper'}>
                     <InputUI
-                        // error={formData.password.has_error}
-                        // errorMessage={formData.password.error_message}
                         defaultValue={
                             selectedAddress && selectedAddress.building
                         }
@@ -215,8 +210,6 @@ const AddressDialog = ({
                 </div>
                 <div className={'formWrapper__inputWrapper'}>
                     <InputUI
-                        // error={formData.password.has_error}
-                        // errorMessage={formData.password.error_message}
                         defaultValue={selectedAddress && selectedAddress.floor}
                         reference={floorRef}
                         label={'floor number (optional)'}
@@ -224,8 +217,6 @@ const AddressDialog = ({
                 </div>
                 <div className={'formWrapper__inputWrapper'}>
                     <InputUI
-                        // error={formData.password.has_error}
-                        // errorMessage={formData.password.error_message}
                         defaultValue={
                             selectedAddress && selectedAddress.apartment
                         }
@@ -239,8 +230,6 @@ const AddressDialog = ({
                     }
                 >
                     <InputUI
-                        // error={formData.password.has_error}
-                        // errorMessage={formData.password.error_message}
                         defaultValue={
                             selectedAddress && selectedAddress.landmark
                         }

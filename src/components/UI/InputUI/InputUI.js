@@ -24,6 +24,7 @@ const InputUI = ({
     reference,
     error,
     errorMessage,
+    disabled,
     changeHandler,
     ...props
 }) => {
@@ -47,6 +48,7 @@ const InputUI = ({
                 style: { fontSize: matches ? 16 : 20, color: '#7D5A5A' },
             }}
             onChange={changeHandler}
+            disabled={disabled}
         />
     );
 };
