@@ -69,8 +69,12 @@ const UserMenu = ({ isAuth }) => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}>
+                    <NavLink to={'/my-orders'}>Orders</NavLink>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
                     <NavLink to={'/profile'}>Profile</NavLink>
                 </MenuItem>
+
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </>

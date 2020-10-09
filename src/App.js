@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleCart } from './store/actions/cart_actions';
 import Cart from './containers/Cart/Cart';
 import Checkout from './containers/Checkout/Checkout';
+import MyOrders from './containers/MyOrders/MyOrders';
 
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
@@ -68,6 +69,10 @@ function App() {
                             component={EmailVerification}
                         />
                         <PrivateRoute path={'/checkout'} component={Checkout} />
+                        <PrivateRoute
+                            path={'/my-orders'}
+                            component={MyOrders}
+                        />
                         <Route
                             path={'/forgotPassword'}
                             component={ResetPassword}

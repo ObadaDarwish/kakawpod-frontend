@@ -28,7 +28,8 @@ const useValidateInputs = () => {
     const validateForm = (name, email, password, confirmPassword, phone) => {
         let nameHasError = name && !(name.length >= 6);
         let emailHasError = email && !validator.isEmail(email);
-        let phoneNumberHasError = !validator.isMobilePhone(phone, 'ar-EG');
+        let phoneNumberHasError =
+            !!phone && !validator.isMobilePhone(phone, 'ar-EG');
         let passwordHasError = password && !(password.length >= 6);
         let passwordMatchHasError =
             confirmPassword && !validator.equals(password, confirmPassword);

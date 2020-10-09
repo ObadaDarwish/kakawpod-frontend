@@ -60,7 +60,7 @@ const Checkout = () => {
                         'Order has been placed successfully',
                         'Order'
                     );
-                    history.push('/shop');
+                    history.push('/my-orders');
                 })
                 .catch((err) => {
                     if (err.response) {
