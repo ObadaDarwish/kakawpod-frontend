@@ -5,8 +5,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import ButtonUI from '../UI/ButtonUI/ButtonUI';
 const moment = require('moment');
-const Order = ({ order, user }) => {
+const Order = ({ order, user, handleCancelOrder }) => {
     const getStatusColor = (status) => {
         let color = 'red';
         switch (status) {
@@ -84,6 +85,7 @@ const Order = ({ order, user }) => {
                 </section>
             </section>
             <section className={'orderWrapper__orderItems'}>
+                <h1 className={'orderWrapper__orderItems__title'}>Details</h1>
                 <ul className={'orderWrapper__orderItems__itemsWrapper'}>
                     {order.items.map((item) => {
                         return (
@@ -106,10 +108,15 @@ const Order = ({ order, user }) => {
                                         {item.sub_items.map((subItem) => {
                                             return (
                                                 <li key={subItem._id}>
-                                                    {subItem.sub_item_id.name}
-                                                    <span>
-                                                        X {subItem.quantity}
-                                                    </span>
+                                                    <p>
+                                                        {
+                                                            subItem.sub_item_id
+                                                                .name
+                                                        }
+                                                        <span>
+                                                            X {subItem.quantity}
+                                                        </span>
+                                                    </p>
                                                 </li>
                                             );
                                         })}
@@ -119,6 +126,14 @@ const Order = ({ order, user }) => {
                         );
                     })}
                 </ul>
+                {order.status === 'pending' && (
+                    <div className={'orderWrapper__orderItems__control'}>
+                        <ButtonUI
+                            name={'cancel'}
+                            clickHandler={() => handleCancelOrder(order)}
+                        />
+                    </div>
+                )}
             </section>
         </div>
     );

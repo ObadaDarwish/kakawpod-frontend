@@ -2,6 +2,12 @@
   margin-top: 10rem;
   padding: 6rem;
   min-height: 60rem;
+  @include media-breakpoint-down(md){
+    padding: 6rem 3rem;
+  }
+  @include media-breakpoint-down(sm){
+    padding: 6rem 1rem;
+  }
   &__title{
     font-size: 1.8rem;
     margin: 3rem 0;

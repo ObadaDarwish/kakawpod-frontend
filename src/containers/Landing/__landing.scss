@@ -1,11 +1,10 @@
 .landingContainer {
-  width: 100%;
   min-height: 100vh;
 
   &__videoContainer {
     width: 100%;
     object-fit: fill;
-    height: 69rem;
+    height: 60rem;
     position: relative;
     padding-top: 9rem;
     @include media-breakpoint-down(xs) {
@@ -22,7 +21,7 @@
       width: 100%;
       @include flex(column);
       @include media-breakpoint-down(xs) {
-        height: 40rem;
+        height: 49rem;
       }
 
       &__slogan {
@@ -52,7 +51,7 @@
         @include media-breakpoint-down(sm) {
           font-size: 3rem;
           padding: 5rem 3rem;
-          width: 100%;
+          width: auto;
           &:before {
             left: 1.5rem;
           }
@@ -107,7 +106,6 @@
   }
 
   &__sampleContainer {
-    width: 100%;
     @include flex(row);
     justify-content: space-between;
     align-items: center;
