@@ -24,9 +24,8 @@
       padding: 2rem;
 
       &__method {
-        width: 100%;
         margin-top: 5rem;
-        padding: 1rem;
+        padding: 1rem 2rem;
         @include flex(row);
         align-items: center;
         border: 0.1rem solid $gray-200;

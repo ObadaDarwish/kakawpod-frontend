@@ -12,7 +12,7 @@ import { setLoading } from '../../store/actions/loadingIndicator_actions';
 
 const queryString = require('query-string');
 
-const ShopProducts = ({ match, location, category }) => {
+const ShopProducts = ({ match, location, category, sample }) => {
     const matches = useMediaQuery('(max-width:1024px)');
     let queryParams = queryString.parse(location.search);
     const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const ShopProducts = ({ match, location, category }) => {
             search: `?category=bar&type=${event.name}`,
         });
     };
-    const addBar = (product) => {
+    const addProduct = (product) => {
         dispatch(setLoading(true));
         dispatch(addToCart(product));
         setTimeout(() => {
@@ -43,34 +43,39 @@ const ShopProducts = ({ match, location, category }) => {
         }, 500);
     };
     return (
-        <div className={'shopBarsContainer'}>
-            <ShopFilters
-                handleChange={handleFilterChange}
-                filter={type}
-                direction={matches ? 'row' : 'column'}
-            />
-            <div className={'shopBarsContainer__products'}>
-                {isLoading ? (
-                    <CircularLoadingIndicator height={'40rem'} />
-                ) : products && products.length ? (
-                    products.map((product) => {
-                        return (
-                            <Product
-                                key={product._id}
-                                image={product.images[0].url}
-                                title={product.name}
-                                description={product.description}
-                                weight={product.weight}
-                                price={`EGP${product.price}`}
-                                handleAddProduct={() => addBar(product)}
-                            />
-                        );
-                    })
-                ) : (
-                    <DataPrompt message={'No products were found'} />
-                )}
+        <>
+            {sample && (
+                <p className={'sample'}>one sample of each type is allowed.</p>
+            )}
+            <div className={'shopBarsContainer'}>
+                <ShopFilters
+                    handleChange={handleFilterChange}
+                    filter={type}
+                    direction={matches ? 'row' : 'column'}
+                />
+                <div className={'shopBarsContainer__products'}>
+                    {isLoading ? (
+                        <CircularLoadingIndicator height={'40rem'} />
+                    ) : products && products.length ? (
+                        products.map((product) => {
+                            return (
+                                <Product
+                                    key={product._id}
+                                    image={product.images[0].url}
+                                    title={product.name}
+                                    description={product.description}
+                                    weight={product.weight}
+                                    price={`EGP${product.price}`}
+                                    handleAddProduct={() => addProduct(product)}
+                                />
+                            );
+                        })
+                    ) : (
+                        <DataPrompt message={'No products were found'} />
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -60,7 +60,6 @@ const MyOrders = () => {
         setOpenConfirmDialog(true);
     };
     const pageChange = (e, value) => {
-        console.log(value);
         setPage(value);
     };
     return (
@@ -94,7 +93,7 @@ const MyOrders = () => {
                         count={Math.ceil(data.total / 10)}
                         size={'large'}
                         page={page}
-                        onClick={pageChange}
+                        onChange={pageChange}
                     />
                 </div>
             )}

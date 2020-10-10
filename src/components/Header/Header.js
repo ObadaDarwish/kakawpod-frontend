@@ -47,10 +47,7 @@ const Header = () => {
         setShowEmailPrompt(false);
     };
     const showDropDownCart = () => {
-        if (
-            !history.location.pathname.includes('/cart') &&
-            !history.location.pathname.includes('/checkout')
-        ) {
+        if (!history.location.pathname.includes('/cart')) {
             if (sm) {
                 history.push('/cart');
             } else {
@@ -67,6 +64,9 @@ const Header = () => {
 
             <div className={'headerOuterContainer__headerTopContainer'}>
                 <section className={'headerOuterContainer__navigationTabs'}>
+                    <a className={'headerOuterContainer__navigationTabs__tab'}>
+                        contact us
+                    </a>
                     <NavLink
                         className={'headerOuterContainer__navigationTabs__tab'}
                         to={'/about'}

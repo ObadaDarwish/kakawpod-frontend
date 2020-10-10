@@ -104,6 +104,12 @@ const Shop = ({ match }) => {
                         <ShopProducts {...props} category={'cooking'} />
                     )}
                 />
+                <Route
+                    path={`${match.path}/samples`}
+                    render={(props) => (
+                        <ShopProducts {...props} category={'sample'} sample />
+                    )}
+                />
             </Switch>
         </div>
     );

@@ -29,6 +29,9 @@ const Landing = () => {
     const cookingNavigation = () => {
         history.push('/shop/cooking');
     };
+    const getSample = () => {
+        history.push('/shop/samples');
+    };
     return (
         <div className={'landingContainer'}>
             <section className={'landingContainer__videoContainer'}>
@@ -79,6 +82,7 @@ const Landing = () => {
                     <ButtonUI
                         name={'Get free sample'}
                         height={sm ? '4rem' : '6rem'}
+                        clickHandler={getSample}
                     />
                 </div>
             </section>
