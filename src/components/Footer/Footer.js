@@ -26,6 +26,7 @@ const Footer = () => {
                             }
                             href={'http://www.facebook.com'}
                             target={'_blank'}
+                            rel="noopener noreferrer"
                         >
                             <FacebookIcon
                                 color={'inherit'}
@@ -39,6 +40,7 @@ const Footer = () => {
                             }
                             href={'http://www.instagram.com'}
                             target={'_blank'}
+                            rel="noopener noreferrer"
                         >
                             <InstagramIcon fontSize={'inherit'} />
                         </a>

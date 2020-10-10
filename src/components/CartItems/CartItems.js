@@ -48,7 +48,7 @@ const CartItems = ({
                                             <InputUI
                                                 width={'5rem'}
                                                 type={'number'}
-                                                defaultValue={item.count}
+                                                value={item.count}
                                                 changeHandler={(e) =>
                                                     handleInputChange(e, item)
                                                 }
@@ -127,7 +127,7 @@ const CartItems = ({
                                 <InputUI
                                     width={'4rem'}
                                     type={'number'}
-                                    defaultValue={item.count}
+                                    value={item.count}
                                     changeHandler={(e) =>
                                         handleInputChange(e, item)
                                     }

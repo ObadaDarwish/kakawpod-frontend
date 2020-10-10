@@ -48,7 +48,7 @@ const BoxSummary = ({
                                 <InputUI
                                     width={'3rem'}
                                     type={'number'}
-                                    defaultValue={item.count}
+                                    value={item.count}
                                     changeHandler={(e) =>
                                         handleInputChange(e, item)
                                     }

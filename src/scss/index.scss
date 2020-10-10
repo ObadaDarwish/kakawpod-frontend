@@ -157,6 +157,16 @@ h1, h2, h3, h4, h5, h6, a, p {
         font-size: 1.6rem;
         position: relative;
       }
+      &__quantity
+      {
+        font-weight: bold;
+        margin: 0 0.5rem;
+      }
+      &__outOfStock{
+        margin: 0 0.5rem;
+        color: $red;
+
+      }
       &__discountWaiver{
         position: absolute;
         width: 0.25rem;

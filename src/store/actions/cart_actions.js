@@ -4,6 +4,7 @@ import {
     UPDATE_CART,
     REMOVE_FROM_CART,
     CLEAR_CART,
+    OUT_OF_STOCK,
 } from '../action_types';
 
 export const toggleCart = () => {
@@ -32,5 +33,11 @@ export const removeFromCart = (item) => {
 export const clearCart = () => {
     return {
         type: CLEAR_CART,
+    };
+};
+export const outOfStock = (items) => {
+    return {
+        type: OUT_OF_STOCK,
+        items: items,
     };
 };

@@ -4,6 +4,7 @@ import {
     REMOVE_FROM_CART,
     TOGGLE_CART,
     UPDATE_CART,
+    OUT_OF_STOCK,
 } from '../action_types';
 import { parseJSON, stringfyJSON } from '../../utils/jsonConversion';
 
@@ -76,6 +77,23 @@ const cart_reducer = (
         state = {
             ...state,
             items: [],
+        };
+        localStorage.setItem('cart', stringfyJSON(state));
+        return state;
+    }
+    if (action.type === OUT_OF_STOCK) {
+        let currentItems = [...state.items];
+        action.items.forEach((product) => {
+            let itemIndex = currentItems.findIndex(
+                (item) => item._id === product._id
+            );
+            if (itemIndex >= 0) {
+                currentItems[itemIndex].outOfStock = true;
+            }
+        });
+        state = {
+            ...state,
+            items: currentItems,
         };
         localStorage.setItem('cart', stringfyJSON(state));
         return state;

@@ -11,15 +11,17 @@ import {
     errorNotification,
     successNotification,
 } from '../../utils/notification-utils';
+import Pagination from '@material-ui/lab/Pagination';
 
 const MyOrders = () => {
     const user = useSelector((state) => state.user);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+    const [page, setPage] = useState(1);
     const [selectedOrder, setselectedOrder] = useState();
     const dispatch = useDispatch();
     const [, , , , callServer] = useCallServer();
     const [isLoading, data, setData] = useFetchData(
-        `${process.env.REACT_APP_API_ENDPOINT}/user/orders`
+        `${process.env.REACT_APP_API_ENDPOINT}/user/orders?page=${page}`
     );
     const closeConfirmDialog = () => {
         setOpenConfirmDialog(false);
@@ -57,6 +59,10 @@ const MyOrders = () => {
         setselectedOrder(order);
         setOpenConfirmDialog(true);
     };
+    const pageChange = (e, value) => {
+        console.log(value);
+        setPage(value);
+    };
     return (
         <div className={'myOrdersContainer'}>
             <ConfirmDialog
@@ -81,6 +87,16 @@ const MyOrders = () => {
                 })
             ) : (
                 <DataPrompt message={'No orders found.'} />
+            )}
+            {data && data.total > 10 && (
+                <div className={'myOrdersContainer__pagination'}>
+                    <Pagination
+                        count={Math.ceil(data.total / 10)}
+                        size={'large'}
+                        page={page}
+                        onClick={pageChange}
+                    />
+                </div>
             )}
         </div>
     );

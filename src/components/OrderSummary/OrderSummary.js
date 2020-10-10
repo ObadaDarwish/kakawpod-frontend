@@ -93,14 +93,22 @@ const OrderSummary = ({
                                                     {item.name}
                                                     <br />
                                                     <span
-                                                        style={{
-                                                            fontWeight: 'bold',
-                                                            margin: '0 0.5rem',
-                                                        }}
+                                                        className={
+                                                            'orderSummaryWrapper__cartSummary__sectionDetails__quantity'
+                                                        }
                                                     >
                                                         x
                                                     </span>
                                                     {item.count}
+                                                    {item.outOfStock && (
+                                                        <span
+                                                            className={
+                                                                'orderSummaryWrapper__cartSummary__sectionDetails__outOfStock'
+                                                            }
+                                                        >
+                                                            Out of stock
+                                                        </span>
+                                                    )}
                                                 </p>
                                                 <p>
                                                     EGP

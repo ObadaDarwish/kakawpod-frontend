@@ -119,7 +119,6 @@ const ShopMixBox = ({ match, location }) => {
     const updateMixBoxItems = (type, bar) => {
         if (getItemsCount() < myMixBox.limit || type === 'subtract') {
             let newCount = type === 'add' ? ++bar.count : --bar.count;
-
             setMyMixBox((prevState) => {
                 let items = [...prevState.items];
                 let index = items.findIndex((item) => item._id === bar._id);

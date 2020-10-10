@@ -11,7 +11,7 @@ import {
     successNotification,
 } from '../../utils/notification-utils';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
-import { clearCart } from '../../store/actions/cart_actions';
+import { clearCart, outOfStock } from '../../store/actions/cart_actions';
 import VerifyPhoneDialog from '../../components/Dialogs/VerifyPhoneDialog/VerifyPhoneDialog';
 import { updateUser } from '../../store/actions/auth_actions';
 
@@ -64,7 +64,11 @@ const Checkout = () => {
                 })
                 .catch((err) => {
                     if (err.response) {
-                        errorNotification(err.response.data.message, 'Order');
+                        let { message, data } = err.response.data;
+                        errorNotification(message, 'Order');
+                        if (message === 'Out of stock') {
+                            dispatch(outOfStock(data));
+                        }
                     }
                 })
                 .finally(() => dispatch(setLoading(false)));
