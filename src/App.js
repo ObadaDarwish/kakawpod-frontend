@@ -26,6 +26,7 @@ import { toggleCart } from './store/actions/cart_actions';
 import Cart from './containers/Cart/Cart';
 import Checkout from './containers/Checkout/Checkout';
 import MyOrders from './containers/MyOrders/MyOrders';
+import Product from './containers/Product/Product';
 
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
@@ -79,6 +80,7 @@ function App() {
                         />
                         <Route path={'/about'} component={About} />
                         <Route path={'/shop'} component={Shop} />
+                        <Route path={'/product/:code'} component={Product} />
                         <Route path={'/cart'} component={Cart} />
                         <Route component={Missing} />
                     </Switch>

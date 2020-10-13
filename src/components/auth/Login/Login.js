@@ -74,7 +74,6 @@ const Login = () => {
                 <form
                     className={classes.root}
                     noValidate
-                    autoComplete="off"
                     onSubmit={(e) => submitLogin(e)}
                 >
                     <InputUI

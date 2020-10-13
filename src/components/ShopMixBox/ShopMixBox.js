@@ -143,7 +143,7 @@ const ShopMixBox = ({ match, location }) => {
     };
     const addToCartHandler = () => {
         dispatch(setLoading(true));
-        dispatch(addToCart(myMixBox));
+        dispatch(addToCart({ ...myMixBox, count: 1 }));
         setMyMixBox((prevState) => {
             localStorage.removeItem('mixBox');
             return {
@@ -250,6 +250,7 @@ const ShopMixBox = ({ match, location }) => {
                                             description={product.description}
                                             weight={product.weight}
                                             price={null}
+                                            productId={product._id}
                                             buttonText={'Add to box'}
                                             isAddButtonDisabled={
                                                 product.isAddButtonDisabled

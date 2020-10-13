@@ -21,7 +21,7 @@ const Landing = () => {
     );
     const addBar = (product) => {
         dispatch(setLoading(true));
-        dispatch(addToCart(product));
+        dispatch(addToCart({ ...product, count: 1 }));
         setTimeout(() => {
             dispatch(setLoading(false));
         }, 500);
@@ -104,6 +104,7 @@ const Landing = () => {
                                     title={product.name}
                                     weight={product.weight}
                                     price={product.price}
+                                    productId={product._id}
                                     handleAddProduct={() => addBar(product)}
                                 />
                             );

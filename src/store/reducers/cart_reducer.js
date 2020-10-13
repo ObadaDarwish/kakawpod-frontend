@@ -35,10 +35,10 @@ const cart_reducer = (
             action.item.category !== 'mixBox' &&
             action.item.category !== 'luxuryBox'
         ) {
-            newCount = cartItems[isProdFound].count + 1;
+            newCount = cartItems[isProdFound].count + action.item.count;
             cartItems[isProdFound].count = newCount;
         } else {
-            cartItems.unshift({ ...action.item, count: 1 });
+            cartItems.unshift({ ...action.item });
         }
         state = {
             ...state,

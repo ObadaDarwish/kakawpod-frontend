@@ -22,6 +22,9 @@
   &__img {
     width: 23.5rem;
     height: 23.5rem;
+    &:hover{
+      cursor: pointer;
+    }
     @include media-breakpoint-down(md) {
       width: 22rem;
       height: 22rem;

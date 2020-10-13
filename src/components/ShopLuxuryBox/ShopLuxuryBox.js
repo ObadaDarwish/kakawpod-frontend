@@ -196,7 +196,7 @@ const ShopLuxuryBox = ({ match, location }) => {
     };
     const addLuxuryBoxToCart = () => {
         dispatch(setLoading(true));
-        dispatch(addToCart(myLuxuryBox));
+        dispatch(addToCart({ ...myLuxuryBox, count: 1 }));
         setMyLuxuryBox((prevState) => {
             localStorage.removeItem('luxuryBox');
             return {
@@ -304,6 +304,7 @@ const ShopLuxuryBox = ({ match, location }) => {
                                             weight={product.weight}
                                             price={null}
                                             buttonText={'Add to box'}
+                                            productId={product._id}
                                             isAddButtonDisabled={
                                                 product.isAddButtonDisabled
                                             }

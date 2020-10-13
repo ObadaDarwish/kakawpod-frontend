@@ -1,0 +1,90 @@
+.productContainer {
+  margin-top: 10rem;
+  padding: 6rem 10rem;
+  min-height: 60rem;
+  @include flex(row);
+  justify-content: space-between;
+
+  &__imageSection {
+    flex-basis: 45%;
+
+    .carousel {
+      .slide {
+        img {
+          height: 45rem;
+        }
+      }
+    }
+
+    &__carousel-item {
+      position: relative;
+
+      &__image {
+        width: 100%;
+        @include media-breakpoint-down(sm) {
+          height: 20rem;
+        }
+      }
+
+      &__button {
+        width: 25rem;
+        position: absolute;
+        top: 70%;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  &__detailsSection {
+    @include flex(column);
+    flex-basis: 50%;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    &__item {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+
+      &:nth-child(2) {
+        height: 6rem;
+      }
+
+    }
+
+
+    &__inputWrapper {
+      @include flex(row);
+      align-items: center;
+      margin: 4rem 0;
+
+      .MuiTextField-root {
+        margin: 0 2rem;
+      }
+
+      .MuiInputBase-input {
+        text-align: center;
+      }
+
+      &__totalPrice {
+        margin-left: 20rem;
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+    }
+
+    &__buttonWrapper {
+      @include flex(row);
+      justify-content: center;
+
+      .MuiButton-root {
+        width: 70%;
+      }
+    }
+  }
+}

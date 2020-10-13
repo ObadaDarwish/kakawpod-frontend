@@ -37,7 +37,7 @@ const ShopProducts = ({ match, location, category, sample }) => {
     };
     const addProduct = (product) => {
         dispatch(setLoading(true));
-        dispatch(addToCart(product));
+        dispatch(addToCart({ ...product, count: 1 }));
         setTimeout(() => {
             dispatch(setLoading(false));
         }, 500);
@@ -66,6 +66,7 @@ const ShopProducts = ({ match, location, category, sample }) => {
                                     description={product.description}
                                     weight={product.weight}
                                     price={`EGP${product.price}`}
+                                    productId={product._id}
                                     handleAddProduct={() => addProduct(product)}
                                 />
                             );
