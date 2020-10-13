@@ -2,7 +2,7 @@
   @include flex(column);
   margin-top: 10rem;
   padding: 6rem;
-  min-height: 60rem;
+  min-height: 50rem;
   @include media-breakpoint-down(md) {
     padding: 6rem 2rem;
   }
@@ -14,7 +14,8 @@
 
   &__cartWrapper {
     @include flex(row);
-justify-content: space-between;
+    justify-content: space-between;
+
     &__cartDetails {
       flex-basis: 70%;
       padding: 2rem 0;
@@ -42,7 +43,7 @@ justify-content: space-between;
           color: $color1;
           vertical-align: inherit;
           text-align: center;
-          min-width: 15rem;
+          min-width: 10rem;
           padding: 1rem;
         }
 
@@ -153,6 +154,7 @@ justify-content: space-between;
   &__continueShopping {
     @include flex(row);
     align-items: center;
+    margin-top: auto;
 
     .MuiSvgIcon-root {
       font-size: 3rem;

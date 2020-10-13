@@ -27,6 +27,7 @@ import Cart from './containers/Cart/Cart';
 import Checkout from './containers/Checkout/Checkout';
 import MyOrders from './containers/MyOrders/MyOrders';
 import Product from './containers/Product/Product';
+import ScrollToTop from './HOC/ScrollToTop/ScrollToTop';
 
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
@@ -53,41 +54,52 @@ function App() {
     };
     return (
         <Router>
-            <Helmet>
-                <title>{'ODs chocolate'}</title>
-                <meta name="description" content="Nested component" />
-            </Helmet>
-            <div className={'appContainer'} onClick={checkDropDownCart}>
-                <Auth>
-                    <Header />
-                    <Switch>
-                        <Route exact path={'/'} component={Landing} />
-                        <BlockRoute path={'/signup'} component={Signup} />
-                        <BlockRoute path={'/login'} component={Login} />
-                        <PrivateRoute path={'/profile'} component={Profile} />
-                        <PrivateRoute
-                            path={'/verifyEmail'}
-                            component={EmailVerification}
-                        />
-                        <PrivateRoute path={'/checkout'} component={Checkout} />
-                        <PrivateRoute
-                            path={'/my-orders'}
-                            component={MyOrders}
-                        />
-                        <Route
-                            path={'/forgotPassword'}
-                            component={ResetPassword}
-                        />
-                        <Route path={'/about'} component={About} />
-                        <Route path={'/shop'} component={Shop} />
-                        <Route path={'/product/:code'} component={Product} />
-                        <Route path={'/cart'} component={Cart} />
-                        <Route component={Missing} />
-                    </Switch>
-                    <Footer />
-                </Auth>
-            </div>
-            <NotificationContainer />
+            <ScrollToTop>
+                <Helmet>
+                    <title>{'ODs chocolate'}</title>
+                    <meta name="description" content="Nested component" />
+                </Helmet>
+                <div className={'appContainer'} onClick={checkDropDownCart}>
+                    <Auth>
+                        <Header />
+                        <Switch>
+                            <Route exact path={'/'} component={Landing} />
+                            <BlockRoute path={'/signup'} component={Signup} />
+                            <BlockRoute path={'/login'} component={Login} />
+                            <PrivateRoute
+                                path={'/profile'}
+                                component={Profile}
+                            />
+                            <PrivateRoute
+                                path={'/verifyEmail'}
+                                component={EmailVerification}
+                            />
+                            <PrivateRoute
+                                path={'/checkout'}
+                                component={Checkout}
+                            />
+                            <PrivateRoute
+                                path={'/my-orders'}
+                                component={MyOrders}
+                            />
+                            <Route
+                                path={'/forgotPassword'}
+                                component={ResetPassword}
+                            />
+                            <Route path={'/about'} component={About} />
+                            <Route path={'/shop'} component={Shop} />
+                            <Route
+                                path={'/product/:code'}
+                                component={Product}
+                            />
+                            <Route path={'/cart'} component={Cart} />
+                            <Route component={Missing} />
+                        </Switch>
+                        <Footer />
+                    </Auth>
+                </div>
+                <NotificationContainer />
+            </ScrollToTop>
         </Router>
     );
 }

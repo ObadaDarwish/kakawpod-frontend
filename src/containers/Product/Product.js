@@ -7,6 +7,8 @@ import InputUI from '../../components/UI/InputUI/InputUI';
 import { addToCart } from '../../store/actions/cart_actions';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
 import { useDispatch } from 'react-redux';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import { NavLink } from 'react-router-dom';
 
 const Product = ({ match }) => {
     const { code } = match.params;
@@ -42,6 +44,26 @@ const Product = ({ match }) => {
             dispatch(setLoading(false));
         }, 500);
     };
+    const handleClick = () => {
+        console.log(match);
+    };
+    const getProductBackLink = (category) => {
+        let link = '';
+        switch (category) {
+            case 'bar':
+                link = '/shop/bars';
+                break;
+            case 'cooking':
+                link = '/shop/cooking';
+                break;
+            case 'miniBar':
+                link = '/shop/luxuryBox';
+                break;
+            default:
+                link = '/shop';
+        }
+        return link;
+    };
     return (
         <div className={'productContainer'}>
             {isLoadingProduct ? (
@@ -49,6 +71,19 @@ const Product = ({ match }) => {
             ) : (
                 product && (
                     <>
+                        <div className={'productContainer__breadCrumbsWrapper'}>
+                            <Breadcrumbs aria-label="breadcrumb">
+                                <NavLink
+                                    color="inherit"
+                                    to={getProductBackLink(product.category)}
+                                    onClick={handleClick}
+                                >
+                                    {product.category}
+                                </NavLink>
+                                <p color="inherit">{product.name}</p>
+                            </Breadcrumbs>
+                        </div>
+
                         <section className={'productContainer__imageSection'}>
                             <Carousel
                                 autoPlay={true}
@@ -90,21 +125,21 @@ const Product = ({ match }) => {
                                     'productContainer__detailsSection__item'
                                 }
                             >
-                                Description: {product.description}
+                                <span>Description:</span> {product.description}
                             </p>
                             <p
                                 className={
                                     'productContainer__detailsSection__item'
                                 }
                             >
-                                Weight: {product.weight}gm
+                                <span>Weight:</span> {product.weight}gm
                             </p>
                             <p
                                 className={
                                     'productContainer__detailsSection__item productContainer__detailsSection__ingredients'
                                 }
                             >
-                                Ingredients: {product.ingredients}
+                                <span>Ingredients:</span> {product.ingredients}
                             </p>
 
                             {product.price ? (
@@ -114,7 +149,7 @@ const Product = ({ match }) => {
                                             'productContainer__detailsSection__item productContainer__detailsSection__price'
                                         }
                                     >
-                                        Price: EGP{product.price}
+                                        <span>Price:</span> EGP{product.price}
                                     </p>
                                     <div
                                         className={

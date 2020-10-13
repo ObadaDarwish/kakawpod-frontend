@@ -2,8 +2,32 @@
   margin-top: 10rem;
   padding: 6rem 10rem;
   min-height: 60rem;
-  @include flex(row);
+  @include flex(row wrap);
   justify-content: space-between;
+
+  @include media-breakpoint-down(md) {
+    @include flex(column);
+    padding: 6rem 5rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding: 6rem 3rem;
+  }
+  @include media-breakpoint-down(xs) {
+    padding: 6rem 1rem;
+  }
+
+  &__breadCrumbsWrapper {
+    width: 100%;
+    margin-bottom: 1rem;
+    @include media-breakpoint-down(md) {
+      margin-bottom: 2rem;
+    }
+
+    a, p {
+      font-size: 1.6rem;
+    }
+  }
 
   &__imageSection {
     flex-basis: 45%;
@@ -11,9 +35,13 @@
     .carousel {
       .slide {
         img {
-          height: 45rem;
+          height: 40rem;
+          @include media-breakpoint-down(xs) {
+            height: 25rem;
+          }
         }
       }
+
     }
 
     &__carousel-item {
@@ -21,9 +49,9 @@
 
       &__image {
         width: 100%;
-        @include media-breakpoint-down(sm) {
-          height: 20rem;
-        }
+        //@include media-breakpoint-down(sm) {
+        //  height: 20rem;
+        //}
       }
 
       &__button {
@@ -41,6 +69,9 @@
   &__detailsSection {
     @include flex(column);
     flex-basis: 50%;
+    @include media-breakpoint-down(md) {
+      align-items: center;
+    }
 
     h1 {
       font-size: 2rem;
@@ -50,9 +81,22 @@
     &__item {
       font-size: 1.8rem;
       margin-bottom: 2rem;
+      @include media-breakpoint-down(sm) {
+        font-size: 1.6rem;
+      }
+
+      span {
+        font-size: 2rem;
+        @include media-breakpoint-down(sm) {
+          font-size: 1.8rem;
+        }
+      }
 
       &:nth-child(2) {
         height: 6rem;
+        @include media-breakpoint-down(xs) {
+          height: 10rem;
+        }
       }
 
     }
@@ -61,7 +105,8 @@
     &__inputWrapper {
       @include flex(row);
       align-items: center;
-      margin: 4rem 0;
+      margin-top: 2rem;
+      margin-bottom: 4rem;
 
       .MuiTextField-root {
         margin: 0 2rem;
@@ -75,15 +120,27 @@
         margin-left: 20rem;
         font-size: 1.8rem;
         font-weight: bold;
+        @include media-breakpoint-down(sm) {
+          margin-left: 5rem;
+        }
       }
     }
 
     &__buttonWrapper {
       @include flex(row);
       justify-content: center;
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
 
       .MuiButton-root {
         width: 70%;
+        @include media-breakpoint-down(md) {
+          width: 50%;
+        }
+        @include media-breakpoint-down(xs) {
+          width: 80%;
+        }
       }
     }
   }
