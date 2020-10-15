@@ -4,12 +4,10 @@ import { Switch } from 'react-router';
 import Header from './components/Header/Header';
 import Signup from './components/auth/Signup/Signup';
 import Login from './components/auth/Login/Login';
-import About from './components/About/About';
 import Profile from './containers/Profile/Profile';
 import PrivateRoute from './HOC/PrivateRoute/PrivateRoute';
 import Auth from './HOC/Auth/Auth';
 import { BrowserRouter as Router } from 'react-router-dom';
-
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import axios from 'axios';
@@ -86,7 +84,6 @@ function App() {
                                 path={'/forgotPassword'}
                                 component={ResetPassword}
                             />
-                            <Route path={'/about'} component={About} />
                             <Route path={'/shop'} component={Shop} />
                             <Route
                                 path={'/product/:code'}

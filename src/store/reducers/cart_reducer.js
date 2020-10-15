@@ -84,12 +84,28 @@ const cart_reducer = (
     if (action.type === OUT_OF_STOCK) {
         let currentItems = [...state.items];
         action.items.forEach((product) => {
-            let itemIndex = currentItems.findIndex(
-                (item) => item._id === product._id
-            );
-            if (itemIndex >= 0) {
-                currentItems[itemIndex].outOfStock = true;
-            }
+            const updateCurrentItems = (index) => {
+                if (currentItems[index]._id === product._id) {
+                    currentItems[index].outOfStock = true;
+                }
+                if (
+                    currentItems[index].items &&
+                    currentItems[index].items.length
+                ) {
+                    let isSubItemFound = currentItems[index].items.findIndex(
+                        (item) => item._id === product._id
+                    );
+                    if (isSubItemFound >= 0) {
+                        currentItems[index].items[
+                            isSubItemFound
+                        ].outOfStock = true;
+                    }
+                }
+                return index < currentItems.length - 1
+                    ? updateCurrentItems(index + 1)
+                    : null;
+            };
+            updateCurrentItems(0);
         });
         state = {
             ...state,

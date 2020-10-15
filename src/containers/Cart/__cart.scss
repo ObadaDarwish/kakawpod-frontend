@@ -27,6 +27,7 @@
       }
 
       .table {
+        width: 100%;
         .MuiInput-input {
           text-align: center;
         }
@@ -43,7 +44,6 @@
           color: $color1;
           vertical-align: inherit;
           text-align: center;
-          min-width: 10rem;
           padding: 1rem;
         }
 
@@ -58,10 +58,19 @@
 
           .details {
             @include flex(column);
-            justify-content: center;
+            height: 12rem;
+            overflow-y: auto;
 
             p {
               margin: 1rem 0;
+              text-align: start;
+
+            }
+
+            span {
+              font-size: 1.3rem;
+              margin: 0.5rem 0;
+              margin-left: 0.8rem;
               text-align: start;
             }
           }
@@ -134,6 +143,7 @@
 
         &__details {
           padding-top: 0.5rem;
+          flex-grow: 1;
           @include media-breakpoint-down(xs) {
             margin: 1rem;
           }
@@ -142,6 +152,18 @@
             font-size: 1.6rem;
             padding-bottom: 1rem;
           }
+
+          &__subItemsWrapper {
+            height: 8rem;
+            flex-grow: 1;
+            overflow-y: auto;
+
+            &__subItem {
+              font-size: 1.3rem !important;
+              margin-left: 1rem;
+            }
+          }
+
         }
 
       }

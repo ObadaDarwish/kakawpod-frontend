@@ -61,6 +61,68 @@ const OrderSummary = ({
         }
         return Math.floor(totalPrice - waived);
     };
+    const mainItem = (item) => {
+        return (
+            <div className={'orderSummaryWrapper__cartSummary__sectionDetails'}>
+                <p>
+                    {item.name}
+                    <span
+                        className={
+                            'orderSummaryWrapper__cartSummary__sectionDetails__quantity'
+                        }
+                    >
+                        x
+                    </span>
+                    {item.count}
+                    {item.outOfStock && (
+                        <span
+                            className={
+                                'orderSummaryWrapper__cartSummary__sectionDetails__outOfStock'
+                            }
+                        >
+                            Out of stock
+                        </span>
+                    )}
+                </p>
+                <p>
+                    EGP
+                    {item.category === 'luxuryBox'
+                        ? item.total
+                        : item.price * item.count}
+                </p>
+            </div>
+        );
+    };
+    const subItem = (sub_item, subKeyId) => {
+        return (
+            <div
+                key={subKeyId}
+                className={`orderSummaryWrapper__cartSummary__sectionDetails
+                 orderSummaryWrapper__cartSummary__sectionDetails__subItem`}
+            >
+                <p>
+                    {sub_item.name}
+                    <span
+                        className={
+                            'orderSummaryWrapper__cartSummary__sectionDetails__quantity'
+                        }
+                    >
+                        x
+                    </span>
+                    {sub_item.count}
+                    {sub_item.outOfStock && (
+                        <span
+                            className={
+                                'orderSummaryWrapper__cartSummary__sectionDetails__outOfStock'
+                            }
+                        >
+                            Out of stock
+                        </span>
+                    )}
+                </p>
+            </div>
+        );
+    };
     return (
         <div className={'orderSummaryWrapper'}>
             <Accordion expanded={expanded} onChange={handleChange}>
@@ -83,41 +145,19 @@ const OrderSummary = ({
                                     {cart.items.map((item) => {
                                         let KeyId = uuidv4();
                                         return (
-                                            <div
-                                                key={KeyId}
-                                                className={
-                                                    'orderSummaryWrapper__cartSummary__sectionDetails'
-                                                }
-                                            >
-                                                <p>
-                                                    {item.name}
-                                                    <br />
-                                                    <span
-                                                        className={
-                                                            'orderSummaryWrapper__cartSummary__sectionDetails__quantity'
+                                            <div key={KeyId}>
+                                                {mainItem(item)}
+
+                                                {item.items &&
+                                                    item.items.map(
+                                                        (sub_item) => {
+                                                            let subKeyId = uuidv4();
+                                                            return subItem(
+                                                                sub_item,
+                                                                subKeyId
+                                                            );
                                                         }
-                                                    >
-                                                        x
-                                                    </span>
-                                                    {item.count}
-                                                    {item.outOfStock && (
-                                                        <span
-                                                            className={
-                                                                'orderSummaryWrapper__cartSummary__sectionDetails__outOfStock'
-                                                            }
-                                                        >
-                                                            Out of stock
-                                                        </span>
                                                     )}
-                                                </p>
-                                                <p>
-                                                    EGP
-                                                    {item.category ===
-                                                    'luxuryBox'
-                                                        ? item.total
-                                                        : item.price *
-                                                          item.count}
-                                                </p>
                                             </div>
                                         );
                                     })}

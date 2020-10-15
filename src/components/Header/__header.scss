@@ -42,6 +42,7 @@
     padding: 0.3rem 0;
     position: relative;
 
+
     a {
       font-size: 1.4rem;
       margin-right: 1rem;
@@ -53,7 +54,10 @@
     @include flex(row);
     height: 7rem;
     position: relative;
-
+    transition: all 0.5s;
+    &__animateHeader {
+      transform: scaleX(0.98);
+    }
     &__logo {
       flex-basis: 50%;
       @include flex(row);

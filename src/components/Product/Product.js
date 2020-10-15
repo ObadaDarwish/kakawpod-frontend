@@ -17,7 +17,6 @@ const Product = ({
             <NavLink to={`/product/${productId}`}>
                 <img className={'product__img'} src={image} alt={title} />
             </NavLink>
-            a
             <div className={'product__detailsWrapper'}>
                 <h1>{title}</h1>
                 <p> {`${weight}gm`}</p>

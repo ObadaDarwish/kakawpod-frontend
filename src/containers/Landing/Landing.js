@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import cocoaVideo from '../../assets/videos/cocoa.mp4';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
@@ -12,6 +12,10 @@ import { useHistory } from 'react-router-dom';
 import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../../components/LoadingIndicator/CircularLoadingIndicator';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import Quality from '../../assets/images/quality.svg';
+import Farming from '../../assets/images/farming.svg';
+import Standard from '../../assets/images/standard.svg';
+
 const Landing = () => {
     const sm = useMediaQuery('(max-width:768px)');
     const dispatch = useDispatch();
@@ -19,6 +23,25 @@ const Landing = () => {
     const [isLoadingTopSelling, topSelling] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/product/topSelling`
     );
+    const valuesWrapperRef = useRef();
+    const firstValueRef = useRef();
+    const secondValueRef = useRef();
+    useEffect(() => {
+        window.addEventListener('scroll', windowScroll);
+        return () => {
+            window.removeEventListener('scroll');
+        };
+    }, []);
+    const windowScroll = () => {
+        if (valuesWrapperRef.current.offsetTop < window.pageYOffset + 500) {
+            firstValueRef.current.classList.add(
+                'landingContainer__valuesContainer__valuesWrapper__value__firstValueAnimation'
+            );
+            secondValueRef.current.classList.add(
+                'landingContainer__valuesContainer__valuesWrapper__value__secondValueAnimation'
+            );
+        }
+    };
     const addBar = (product) => {
         dispatch(setLoading(true));
         dispatch(addToCart({ ...product, count: 1 }));
@@ -145,6 +168,11 @@ const Landing = () => {
             <section className={'landingContainer__megaWeightContainer'}>
                 <div
                     className={
+                        'landingContainer__megaWeightContainer__bottomFade'
+                    }
+                />
+                <div
+                    className={
                         'landingContainer__megaWeightContainer__cookingChocolateContainer'
                     }
                 >
@@ -189,6 +217,65 @@ const Landing = () => {
                         </div>
                     </div>
                 </div>
+            </section>
+            <section className={'landingContainer__valuesContainer'}>
+                <h1 className={'landingContainer__valuesContainer__title'}>
+                    Values
+                </h1>
+                <div
+                    ref={valuesWrapperRef}
+                    className={
+                        'landingContainer__valuesContainer__valuesWrapper'
+                    }
+                >
+                    <div
+                        className={
+                            'landingContainer__valuesContainer__valuesWrapper__value'
+                        }
+                        ref={firstValueRef}
+                    >
+                        <img src={Quality} alt="Quality" />
+                        <h1>Quality</h1>
+                        <p>
+                            our passion for chocolate making translates to the
+                            finest chocolate you deserve
+                        </p>
+                    </div>
+                    <div
+                        className={
+                            'landingContainer__valuesContainer__valuesWrapper__value'
+                        }
+                    >
+                        <img src={Farming} alt="cocoa beans" />
+                        <h1>Cocoa beans</h1>
+                        <p>
+                            our cocoa beans are carefully picked from the
+                            highest quality farms
+                        </p>
+                    </div>
+                    <div
+                        className={
+                            'landingContainer__valuesContainer__valuesWrapper__value'
+                        }
+                        ref={secondValueRef}
+                    >
+                        <img src={Standard} alt="standards" />
+                        <h1>Standards</h1>
+                        <p>
+                            we are committed to follow the highest standards and
+                            procedures in chocolate making
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section className={'landingContainer__ourCompanyContainer'}>
+                <h1>Our Company</h1>
+                <p>
+                    <span>H&D</span> is an elite chocolate making company, we
+                    manufacture high quality chocolate which reflects our
+                    passion for chocolate, starting from picking the perfect
+                    cocoa beans all the way to a flavourful chocolate bar
+                </p>
             </section>
         </div>
     );

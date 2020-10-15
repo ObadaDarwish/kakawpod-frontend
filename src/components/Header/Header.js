@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../../assets/images/cocoaPlant.png';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
@@ -34,6 +34,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const sm = useMediaQuery('(max-width:768px)');
     const [canShowEmailPrompt, setShowEmailPrompt] = useState(true);
+    const headerRef = useRef();
     useEffect(() => {
         let canUpdate = true;
         if (cart.can_show_dropDown && canUpdate) {
@@ -43,6 +44,23 @@ const Header = () => {
             canUpdate = false;
         };
     }, []);
+    useEffect(() => {
+        window.addEventListener('scroll', windowScroll);
+        return () => {
+            window.removeEventListener('scroll');
+        };
+    }, []);
+    const windowScroll = () => {
+        if (window.pageYOffset > 60) {
+            headerRef.current.classList.add(
+                'headerOuterContainer__headerContainer__animateHeader'
+            );
+        } else {
+            headerRef.current.classList.remove(
+                'headerOuterContainer__headerContainer__animateHeader'
+            );
+        }
+    };
     const closePrompt = () => {
         setShowEmailPrompt(false);
     };
@@ -67,15 +85,15 @@ const Header = () => {
                     <a className={'headerOuterContainer__navigationTabs__tab'}>
                         contact us
                     </a>
-                    <NavLink
-                        className={'headerOuterContainer__navigationTabs__tab'}
-                        to={'/about'}
-                    >
+                    <a className={'headerOuterContainer__navigationTabs__tab'}>
                         about
-                    </NavLink>
+                    </a>
                 </section>
             </div>
-            <div className={'headerOuterContainer__headerContainer'}>
+            <div
+                className={'headerOuterContainer__headerContainer'}
+                ref={headerRef}
+            >
                 {cart.can_show_dropDown && <CartDropDown cart={cart} />}
                 <section
                     className={'headerOuterContainer__headerContainer__logo'}

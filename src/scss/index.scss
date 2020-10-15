@@ -107,28 +107,33 @@ h1, h2, h3, h4, h5, h6, a, p {
     z-index: 1000;
   }
   padding: 0 2rem;
-  .MuiAccordion-root{
+
+  .MuiAccordion-root {
     position: sticky;
     top: 10rem;
   }
-  .MuiAccordionSummary-root.Mui-expanded{
+
+  .MuiAccordionSummary-root.Mui-expanded {
     min-height: 4rem;
   }
-  .MuiAccordionSummary-root{
+
+  .MuiAccordionSummary-root {
     min-height: 4rem;
     background-color: $color3;
-    .MuiAccordionSummary-content{
+
+    .MuiAccordionSummary-content {
       margin: 0;
-      h1{
+
+      h1 {
         font-size: 1.8rem;
         font-weight: bold;
       }
     }
   }
-  .MuiAccordionDetails-root{
+
+  .MuiAccordionDetails-root {
     padding: 0;
   }
-
 
 
   &__cartSummary {
@@ -142,7 +147,8 @@ h1, h2, h3, h4, h5, h6, a, p {
     &__promoWrapper {
       @include flex(row);
       align-items: center;
-      .MuiButton-root{
+
+      .MuiButton-root {
         margin-bottom: -1.5rem;
         margin-left: 0.5rem;
       }
@@ -157,17 +163,29 @@ h1, h2, h3, h4, h5, h6, a, p {
         font-size: 1.6rem;
         position: relative;
       }
-      &__quantity
-      {
+
+      &__subItem {
+        p {
+          font-size: 1.3rem;
+        }
+
+        margin: 0.5rem 0;
+        margin-left: 2rem;
+      }
+
+      &__quantity {
         font-weight: bold;
         margin: 0 0.5rem;
+        margin-left: 1rem;
       }
-      &__outOfStock{
+
+      &__outOfStock {
         margin: 0 0.5rem;
         color: $red;
-
+        font-size: 1.4rem;
       }
-      &__discountWaiver{
+
+      &__discountWaiver {
         position: absolute;
         width: 0.25rem;
         height: 4rem;
@@ -179,12 +197,14 @@ h1, h2, h3, h4, h5, h6, a, p {
         transform: rotate(45deg);
         background: $red;
       }
+
       &__bold {
         p {
           font-weight: bold;
         }
       }
-      &__discount{
+
+      &__discount {
         color: $green;
         margin-left: auto;
         margin-right: 0.3rem;
