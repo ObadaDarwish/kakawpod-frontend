@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import validator from 'validator/es';
+
 const useValidateInputs = () => {
     const [formData, setFormData] = useState({
         name: {
@@ -25,14 +26,23 @@ const useValidateInputs = () => {
         is_form_valid: false,
     });
 
-    const validateForm = (name, email, password, confirmPassword, phone) => {
-        let nameHasError = name && !(name.length >= 6);
-        let emailHasError = email && !validator.isEmail(email);
+    const validateForm = (
+        name = null,
+        email = null,
+        password = null,
+        confirmPassword = null,
+        phone = null
+    ) => {
+        let nameHasError = name !== null ? !(name.length >= 6) : false;
+        let emailHasError = email !== null ? !validator.isEmail(email) : false;
         let phoneNumberHasError =
-            !!phone && !validator.isMobilePhone(phone, 'ar-EG');
-        let passwordHasError = password && !(password.length >= 6);
+            phone !== null ? !validator.isMobilePhone(phone, 'ar-EG') : false;
+        let passwordHasError =
+            password !== null ? !(password.length >= 6) : false;
         let passwordMatchHasError =
-            confirmPassword && !validator.equals(password, confirmPassword);
+            confirmPassword !== null
+                ? !validator.equals(password, confirmPassword)
+                : false;
         let is_form_valid =
             !nameHasError &&
             !emailHasError &&

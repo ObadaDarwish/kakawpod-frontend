@@ -15,6 +15,16 @@ import { setLoading } from '../../store/actions/loadingIndicator_actions';
 import Quality from '../../assets/images/quality.svg';
 import Farming from '../../assets/images/farming.svg';
 import Standard from '../../assets/images/standard.svg';
+import InputUI from '../../components/UI/InputUI/InputUI';
+import GoogleMapReact from 'google-map-react';
+import RoomIcon from '@material-ui/icons/Room';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import useCallServer from '../../hooks/useCallServer';
+import {
+    errorNotification,
+    successNotification,
+} from '../../utils/notification-utils';
+import useValidateInputs from '../../hooks/useValidateInputs';
 
 const Landing = () => {
     const sm = useMediaQuery('(max-width:768px)');
@@ -23,13 +33,18 @@ const Landing = () => {
     const [isLoadingTopSelling, topSelling] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/product/topSelling`
     );
+    const [, , , , callServer, loadContact, setLoadContact] = useCallServer();
     const valuesWrapperRef = useRef();
     const firstValueRef = useRef();
     const secondValueRef = useRef();
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const messageRef = useRef();
+    const [formData, validateForm] = useValidateInputs();
     useEffect(() => {
         window.addEventListener('scroll', windowScroll);
         return () => {
-            window.removeEventListener('scroll');
+            window.removeEventListener('scroll', windowScroll);
         };
     }, []);
     const windowScroll = () => {
@@ -54,6 +69,43 @@ const Landing = () => {
     };
     const getSample = () => {
         history.push('/shop/samples');
+    };
+    let defaultProps = {
+        center: {
+            lat: 30.090709,
+            lng: 31.32599,
+        },
+        zoom: 18,
+    };
+    const Marker = () => {
+        return <RoomIcon style={{ color: '#cd9292', fontSize: '2.5rem' }} />;
+    };
+    const getGoogleAPIKey = () => {
+        return process.env.REACT_APP_MAPS_API_KEY;
+    };
+    const handleContact = (e) => {
+        e.preventDefault();
+        if (validateForm(nameRef.current.value, emailRef.current.value)) {
+            setLoadContact(true);
+            callServer(
+                'POST',
+                `${process.env.REACT_APP_API_ENDPOINT}/contact`,
+                {
+                    name: nameRef.current.value,
+                    email: emailRef.current.value,
+                    message: messageRef.current.value,
+                }
+            )
+                .then(() => {
+                    successNotification('Message was successfully received');
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        errorNotification(err.response.data.message, 'Address');
+                    }
+                })
+                .finally(() => setLoadContact(false));
+        }
     };
     return (
         <div className={'landingContainer'}>
@@ -276,6 +328,57 @@ const Landing = () => {
                     passion for chocolate, starting from picking the perfect
                     cocoa beans all the way to a flavourful chocolate bar
                 </p>
+            </section>
+            <section className={'landingContainer__contactFormContainer'}>
+                <div className={'landingContainer__contactFormContainer__map'}>
+                    <GoogleMapReact
+                        bootstrapURLKeys={{
+                            key: getGoogleAPIKey(),
+                        }}
+                        defaultCenter={defaultProps.center}
+                        defaultZoom={defaultProps.zoom}
+                    >
+                        <Marker lat={30.090709} lng={31.32599} />
+                    </GoogleMapReact>
+                </div>
+                <form
+                    className={'landingContainer__contactFormContainer__form'}
+                    onSubmit={handleContact}
+                >
+                    {loadContact && (
+                        <div
+                            className={
+                                'landingContainer__contactFormContainer__form__loader'
+                            }
+                        >
+                            <CircularLoadingIndicator height={'10rem'} />
+                        </div>
+                    )}
+                    <h1>We love making new friends,say hello</h1>
+                    <InputUI
+                        label={'name'}
+                        reference={nameRef}
+                        error={formData.name.has_error}
+                        errorMessage={formData.name.error_message}
+                    />
+                    <InputUI
+                        label={'email'}
+                        reference={emailRef}
+                        error={formData.email.has_error}
+                        errorMessage={formData.email.error_message}
+                    />
+                    <TextareaAutosize
+                        rowsMin={10}
+                        rowsMax={10}
+                        className={
+                            'landingContainer__contactFormContainer__form__TextArea'
+                        }
+                        aria-label="contact us message"
+                        placeholder="Message"
+                        ref={messageRef}
+                    />
+                    <ButtonUI name={'send message'} type={'submit'} />
+                </form>
             </section>
         </div>
     );

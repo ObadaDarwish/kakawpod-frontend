@@ -6,6 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const useStyles = makeStyles((theme) => ({
     inputField: {
         width: (props) => props.width || '100%',
+        height: (props) => props.height,
         margin: '1rem 0',
         [theme.breakpoints.down('sm')]: {
             margin: '0.2rem 0',
