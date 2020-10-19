@@ -5,8 +5,12 @@
   transition: all 0.5s ease;
 
   &:hover {
-    box-shadow: 0 0 0.2rem 0.3rem $color4;
-    transform: scale(0.95);
+    box-shadow: 0 0 0.2rem 0.3rem $color3;
+    //transform: scale(0.95);
+  }
+
+  a {
+    overflow: hidden;
   }
 
   @include media-breakpoint-down(sm) {
@@ -14,7 +18,7 @@
     width: 100%;
 
   }
-  @include media-breakpoint-down(xs){
+  @include media-breakpoint-down(xs) {
     @include flex(column);
     width: 100%;
     margin: 1rem 0;
@@ -23,9 +27,13 @@
   &__img {
     width: 23.5rem;
     height: 23.5rem;
-    &:hover{
+    transition: all 0.5s ease;
+
+    &:hover {
       cursor: pointer;
+      transform: scale(1.1);
     }
+
     @include media-breakpoint-down(md) {
       width: 22rem;
       height: 22rem;

@@ -192,7 +192,7 @@ const Landing = React.forwardRef((props, ref) => {
                                     image={product.images[0].url}
                                     title={product.name}
                                     weight={product.weight}
-                                    price={product.price}
+                                    price={`EGP${product.price}`}
                                     productId={product._id}
                                     handleAddProduct={() => addBar(product)}
                                 />
