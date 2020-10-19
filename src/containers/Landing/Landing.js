@@ -57,6 +57,11 @@ const Landing = React.forwardRef((props, ref) => {
                 'landingContainer__valuesContainer__valuesWrapper__value__secondValueAnimation'
             );
         }
+        if (aboutRef.current.offsetTop < window.pageYOffset + 500) {
+            aboutRef.current.classList.add(
+                'landingContainer__ourCompanyContainer__animateText'
+            );
+        }
     };
     const addBar = (product) => {
         dispatch(setLoading(true));

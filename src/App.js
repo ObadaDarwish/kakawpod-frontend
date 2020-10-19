@@ -7,7 +7,7 @@ import Login from './components/auth/Login/Login';
 import Profile from './containers/Profile/Profile';
 import PrivateRoute from './HOC/PrivateRoute/PrivateRoute';
 import Auth from './HOC/Auth/Auth';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import axios from 'axios';
@@ -39,6 +39,7 @@ function App() {
     const cart = useSelector((state) => state.cart);
     const contactsRef = useRef();
     const aboutRef = useRef();
+    const history = useHistory();
     const checkDropDownCart = (e) => {
         let value = e.target;
         const checkString = (string) => {
@@ -53,19 +54,33 @@ function App() {
         }
     };
     const handleScrollToContact = () => {
-        window.scrollTo({
-            behavior: 'smooth',
-            top: contactsRef.current.offsetTop - 100,
-        });
+        const scrollFunc = () => {
+            window.scrollTo({
+                behavior: 'smooth',
+                top: contactsRef.current.offsetTop - 100,
+            });
+        };
+        if (contactsRef.current) {
+            scrollFunc();
+        } else {
+            history.push('/');
+        }
     };
     const handleScrollToAbout = () => {
-        window.scrollTo({
-            behavior: 'smooth',
-            top: aboutRef.current.offsetTop - 100,
-        });
+        const scrollFunc = () => {
+            window.scrollTo({
+                behavior: 'smooth',
+                top: aboutRef.current.offsetTop - 100,
+            });
+        };
+        if (aboutRef.current) {
+            scrollFunc();
+        } else {
+            history.push('/');
+        }
     };
     return (
-        <Router>
+        <>
             {/*<ScrollToTop>*/}
             <Helmet>
                 <title>{'ODs chocolate'}</title>
@@ -119,7 +134,7 @@ function App() {
             </div>
             <NotificationContainer />
             {/*</ScrollToTop>*/}
-        </Router>
+        </>
     );
 }
 

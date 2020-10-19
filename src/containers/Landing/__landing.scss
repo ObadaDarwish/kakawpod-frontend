@@ -508,10 +508,13 @@
     background-color: $color1;
     @include flex_center(column);
     justify-content: space-around;
+    overflow-y: hidden;
+
 
     h1 {
       color: $white;
       font-size: 3rem;
+      transform: translateY(500px);
       @include media-breakpoint-down(sm) {
         font-size: 2.5rem;
       }
@@ -526,6 +529,7 @@
       width: 55%;
       text-align: center;
       line-height: 3rem;
+      transform: translateY(500px);
       @include media-breakpoint-down(sm) {
         font-size: 1.8rem;
         width: 80%;
@@ -538,6 +542,14 @@
       span {
         font-weight: bold;
       }
+    }
+
+    &__animateText {
+      h1, p {
+        transition: all 1s ease-in-out;
+        transform: translateY(0);
+      }
+
     }
   }
 

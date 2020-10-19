@@ -16,13 +16,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const StyledBadge = withStyles((theme) => ({
     badge: {
-        right: -4,
-        top: 15,
         border: `2px solid #F3E1E1`,
-        fontSize: '1.2rem',
+        fontSize: '1rem',
         width: '2.4rem',
         height: '2.4rem',
-        borderRadius: '10rem',
+        borderRadius: '20rem',
         background: '#7D5A5A',
     },
 }))(Badge);
