@@ -26,7 +26,7 @@ const StyledBadge = withStyles((theme) => ({
         background: '#7D5A5A',
     },
 }))(Badge);
-const Header = () => {
+const Header = ({ scrollToContact, scrollToAbout }) => {
     const history = useHistory();
     const isAuth = useSelector((state) => state.user);
     const isLoading = useSelector((state) => state.loadingIndicator);
@@ -73,7 +73,6 @@ const Header = () => {
             }
         }
     };
-
     return (
         <div className={'headerOuterContainer'}>
             {canShowEmailPrompt && isAuth && !isAuth.email_verified && (
@@ -82,10 +81,16 @@ const Header = () => {
 
             <div className={'headerOuterContainer__headerTopContainer'}>
                 <section className={'headerOuterContainer__navigationTabs'}>
-                    <a className={'headerOuterContainer__navigationTabs__tab'}>
+                    <a
+                        onClick={scrollToContact}
+                        className={'headerOuterContainer__navigationTabs__tab'}
+                    >
                         contact us
                     </a>
-                    <a className={'headerOuterContainer__navigationTabs__tab'}>
+                    <a
+                        onClick={scrollToAbout}
+                        className={'headerOuterContainer__navigationTabs__tab'}
+                    >
                         about
                     </a>
                 </section>

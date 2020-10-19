@@ -7,7 +7,7 @@ import img from '../../assets/images/milkbar.jpg';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import background from '../../assets/images/waive.png';
 import { addToCart } from '../../store/actions/cart_actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../../components/LoadingIndicator/CircularLoadingIndicator';
@@ -26,7 +26,8 @@ import {
 } from '../../utils/notification-utils';
 import useValidateInputs from '../../hooks/useValidateInputs';
 
-const Landing = () => {
+const Landing = React.forwardRef((props, ref) => {
+    const { contactRef, aboutRef } = ref;
     const sm = useMediaQuery('(max-width:768px)');
     const dispatch = useDispatch();
     const history = useHistory();
@@ -106,6 +107,14 @@ const Landing = () => {
                 })
                 .finally(() => setLoadContact(false));
         }
+    };
+    const getDirections = () => {
+        window.open(
+            'https://maps.google.com?q=' +
+                defaultProps.center.lat +
+                ',' +
+                defaultProps.center.lng
+        );
     };
     return (
         <div className={'landingContainer'}>
@@ -320,7 +329,10 @@ const Landing = () => {
                     </div>
                 </div>
             </section>
-            <section className={'landingContainer__ourCompanyContainer'}>
+            <section
+                className={'landingContainer__ourCompanyContainer'}
+                ref={aboutRef}
+            >
                 <h1>Our Company</h1>
                 <p>
                     <span>H&D</span> is an elite chocolate making company, we
@@ -329,7 +341,10 @@ const Landing = () => {
                     cocoa beans all the way to a flavourful chocolate bar
                 </p>
             </section>
-            <section className={'landingContainer__contactFormContainer'}>
+            <section
+                className={'landingContainer__contactFormContainer'}
+                ref={contactRef}
+            >
                 <div className={'landingContainer__contactFormContainer__map'}>
                     <GoogleMapReact
                         bootstrapURLKeys={{
@@ -340,6 +355,26 @@ const Landing = () => {
                     >
                         <Marker lat={30.090709} lng={31.32599} />
                     </GoogleMapReact>
+                    <p
+                        className={
+                            'landingContainer__contactFormContainer__map__contact'
+                        }
+                    >
+                        <span>Adress: </span>16 El Nozha st., Masr El Gdida,
+                        Cairo, Egypt
+                    </p>
+                    <a
+                        className={
+                            'landingContainer__contactFormContainer__map__contact'
+                        }
+                        href="tel:+201004789487"
+                    >
+                        <span>Number: </span>01004789487
+                    </a>
+                    <ButtonUI
+                        name={'Get directions'}
+                        clickHandler={getDirections}
+                    />
                 </div>
                 <form
                     className={'landingContainer__contactFormContainer__form'}
@@ -354,7 +389,7 @@ const Landing = () => {
                             <CircularLoadingIndicator height={'10rem'} />
                         </div>
                     )}
-                    <h1>We love making new friends,say hello</h1>
+                    <h1>We love making new friends,say Hello</h1>
                     <InputUI
                         label={'name'}
                         reference={nameRef}
@@ -382,6 +417,6 @@ const Landing = () => {
             </section>
         </div>
     );
-};
+});
 
 export default Landing;

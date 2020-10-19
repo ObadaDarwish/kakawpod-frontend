@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router';
 import Header from './components/Header/Header';
@@ -37,6 +37,8 @@ axios.interceptors.request.use(function (config) {
 function App() {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
+    const contactsRef = useRef();
+    const aboutRef = useRef();
     const checkDropDownCart = (e) => {
         let value = e.target;
         const checkString = (string) => {
@@ -50,6 +52,18 @@ function App() {
             dispatch(toggleCart(false));
         }
     };
+    const handleScrollToContact = () => {
+        window.scrollTo({
+            behavior: 'smooth',
+            top: contactsRef.current.offsetTop - 100,
+        });
+    };
+    const handleScrollToAbout = () => {
+        window.scrollTo({
+            behavior: 'smooth',
+            top: aboutRef.current.offsetTop - 100,
+        });
+    };
     return (
         <Router>
             {/*<ScrollToTop>*/}
@@ -59,9 +73,26 @@ function App() {
             </Helmet>
             <div className={'appContainer'} onClick={checkDropDownCart}>
                 <Auth>
-                    <Header />
+                    <Header
+                        scrollToContact={handleScrollToContact}
+                        scrollToAbout={handleScrollToAbout}
+                    />
                     <Switch>
-                        <Route exact path={'/'} component={Landing} />
+                        <Route
+                            exact
+                            path={'/'}
+                            render={(props) => {
+                                return (
+                                    <Landing
+                                        {...props}
+                                        ref={{
+                                            contactRef: contactsRef,
+                                            aboutRef: aboutRef,
+                                        }}
+                                    />
+                                );
+                            }}
+                        />
                         <BlockRoute path={'/signup'} component={Signup} />
                         <BlockRoute path={'/login'} component={Login} />
                         <PrivateRoute path={'/profile'} component={Profile} />

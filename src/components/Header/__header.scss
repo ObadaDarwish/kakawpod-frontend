@@ -55,9 +55,11 @@
     height: 7rem;
     position: relative;
     transition: all 0.5s;
+
     &__animateHeader {
       transform: scaleX(0.98);
     }
+
     &__logo {
       flex-basis: 50%;
       @include flex(row);
@@ -224,6 +226,7 @@
 
       &:hover {
         color: $text-hover;
+        cursor: pointer;
       }
 
       &.active {
