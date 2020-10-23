@@ -184,7 +184,7 @@ const Landing = React.forwardRef((props, ref) => {
                         'landingContainer__topSellingContainer__products'
                     }
                 >
-                    {!isLoadingTopSelling ? (
+                    {!isLoadingTopSelling && topSelling ? (
                         topSelling.map((product) => {
                             return (
                                 <Product

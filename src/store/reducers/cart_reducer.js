@@ -42,6 +42,7 @@ const cart_reducer = (
         }
         state = {
             ...state,
+            can_show_dropDown: !state.can_show_dropDown,
             items: cartItems,
         };
         localStorage.setItem('cart', stringfyJSON(state));
