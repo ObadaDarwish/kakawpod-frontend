@@ -5,6 +5,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import { useMediaQuery } from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
 const BoxSummary = ({
     price,
     type,
@@ -108,7 +109,7 @@ const BoxSummary = ({
 
                 <div className={'boxSummary__controlWrapper__addToCart'}>
                     <ButtonUI
-                        name={`Add to cart (EGP${price})`}
+                        name={`Add to cart (EGP${price ? price : '--'})`}
                         is_disabled={itemsCount !== boxLimit}
                         clickHandler={handleAddToCart}
                     />

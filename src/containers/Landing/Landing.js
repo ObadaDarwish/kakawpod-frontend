@@ -25,6 +25,7 @@ import {
     successNotification,
 } from '../../utils/notification-utils';
 import useValidateInputs from '../../hooks/useValidateInputs';
+import SkeletonComp from '../../components/Skeleton/Skeleton';
 
 const Landing = React.forwardRef((props, ref) => {
     const { contactRef, aboutRef } = ref;
@@ -184,23 +185,25 @@ const Landing = React.forwardRef((props, ref) => {
                         'landingContainer__topSellingContainer__products'
                     }
                 >
-                    {!isLoadingTopSelling && topSelling ? (
-                        topSelling.map((product) => {
-                            return (
-                                <Product
-                                    key={product._id}
-                                    image={product.images[0].url}
-                                    title={product.name}
-                                    weight={product.weight}
-                                    price={`EGP${product.price}`}
-                                    productId={product._id}
-                                    handleAddProduct={() => addBar(product)}
-                                />
-                            );
-                        })
-                    ) : (
-                        <CircularLoadingIndicator />
-                    )}
+                    {!isLoadingTopSelling && topSelling
+                        ? topSelling.map((product) => {
+                              return (
+                                  <Product
+                                      key={product._id}
+                                      image={product.images[0].url}
+                                      title={product.name}
+                                      weight={product.weight}
+                                      price={`EGP${product.price}`}
+                                      productId={product._id}
+                                      handleAddProduct={() => addBar(product)}
+                                  />
+                              );
+                          })
+                        : Array(6)
+                              .fill(0)
+                              .map((item, index) => {
+                                  return <SkeletonComp key={index} />;
+                              })}
                 </div>
             </section>
             <section className={'landingContainer__chocolateBoxPromo'}>

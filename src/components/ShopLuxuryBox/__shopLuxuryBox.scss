@@ -7,6 +7,9 @@
   .shopFiltersContainer {
     width: 100%;
     justify-content: flex-end;
+    @include media-breakpoint-down(sm){
+      width: unset;
+    }
   }
 
   .filtersWrapper {
@@ -86,6 +89,9 @@
       width: 100%;
       min-height: 60rem;
       align-items: flex-start;
+      @include media-breakpoint-down(sm){
+        justify-content: center;
+      }
     }
   }
 }

@@ -3,7 +3,6 @@ import LuxuryBoxFilters from './LuxuryBoxFilters/LuxuryBoxFilters';
 import { stringfyJSON } from '../../utils/jsonConversion';
 import { infoNotification } from '../../utils/notification-utils';
 import useFetchLuxuryBox from '../../hooks/useFetchLuxuryBox';
-import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import ShopFilters from '../ShopFilters/ShopFilters';
 import { useHistory } from 'react-router-dom';
 import BoxSummary from '../BoxSummary/BoxSummary';
@@ -14,6 +13,8 @@ import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
 import { addToCart } from '../../store/actions/cart_actions';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import SkeletonComp from '../Skeleton/Skeleton';
+import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 
 const queryString = require('query-string');
 const ShopLuxuryBox = ({ match, location }) => {
@@ -216,115 +217,111 @@ const ShopLuxuryBox = ({ match, location }) => {
                 onClose={clearLuxuryBox}
                 close={closeConfirmDialog}
             />
-            {!isLoading ? (
-                <>
-                    <div className={'priceTag'}>
-                        <p>
-                            Total EGP
-                            {myLuxuryBox.total}
-                        </p>
-                    </div>
-                    <h1 className={'luxuryBoxContainer__title'}>
-                        Choose a box
-                    </h1>
+            <>
+                <div className={'priceTag'}>
+                    <p>
+                        Total EGP
+                        {myLuxuryBox.total}
+                    </p>
+                </div>
+                <h1 className={'luxuryBoxContainer__title'}>Choose a box</h1>
+                {luxuryBoxes.length > 0 && (
                     <LuxuryBoxFilters
                         luxuryBoxes={luxuryBoxes}
                         selectedBox={myLuxuryBox}
                         handleChange={handleBoxChange}
                     />
-                    <div
-                        className={
-                            'luxuryBoxContainer__luxuryBoxPackagesWrapper'
-                        }
-                    >
-                        {luxuryBoxesPackages &&
-                            luxuryBoxesPackages.map((packageBox) => {
-                                return (
-                                    <div
-                                        className={`luxuryBoxContainer__luxuryBoxPackagesWrapper__package 
+                )}
+
+                <div className={'luxuryBoxContainer__luxuryBoxPackagesWrapper'}>
+                    {!isLoading && luxuryBoxesPackages ? (
+                        luxuryBoxesPackages.map((packageBox) => {
+                            return (
+                                <div
+                                    className={`luxuryBoxContainer__luxuryBoxPackagesWrapper__package 
                                     ${
                                         myLuxuryBox.package._id ===
                                             packageBox._id &&
                                         'luxuryBoxContainer__luxuryBoxPackagesWrapper__package--active'
                                     }`}
-                                        key={packageBox._id}
-                                        onClick={() =>
-                                            handlePackageChange(packageBox)
-                                        }
-                                    >
-                                        <img
-                                            src={packageBox.images[0].url}
-                                            alt={packageBox.name}
-                                        />
-                                        <p>
-                                            {packageBox.price
-                                                ? 'EGP' + packageBox.price
-                                                : 'free'}
-                                        </p>
-                                    </div>
-                                );
-                            })}
-                    </div>
-                    <h1 className={'luxuryBoxContainer__title'}>
-                        Add chocolate
-                    </h1>
-                    <ShopFilters
-                        handleChange={handleFilterChange}
-                        filter={type}
-                        direction={'row'}
+                                    key={packageBox._id}
+                                    onClick={() =>
+                                        handlePackageChange(packageBox)
+                                    }
+                                >
+                                    <img
+                                        src={packageBox.images[0].url}
+                                        alt={packageBox.name}
+                                    />
+                                    <p>
+                                        {packageBox.price
+                                            ? 'EGP' + packageBox.price
+                                            : 'free'}
+                                    </p>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <CircularLoadingIndicator height={'5rem'} />
+                    )}
+                </div>
+                <h1 className={'luxuryBoxContainer__title'}>Add chocolate</h1>
+                <ShopFilters
+                    handleChange={handleFilterChange}
+                    filter={type}
+                    direction={'row'}
+                />
+                <div className={'luxuryBoxContainer__productsWrapper'}>
+                    <BoxSummary
+                        type={'Luxury box'}
+                        selectedBox={myLuxuryBox}
+                        boxItems={myLuxuryBox.items}
+                        itemsCount={getItemsCount()}
+                        boxLimit={myLuxuryBox.weight}
+                        handleItemUpdate={updateLuxuryBoxItems}
+                        clearBoxHandler={confirmClearLuxuryBox}
+                        handleInputChange={countInputChangeHandler}
+                        handleAddToCart={addLuxuryBoxToCart}
+                        price={myLuxuryBox.total}
                     />
-                    <div className={'luxuryBoxContainer__productsWrapper'}>
-                        <BoxSummary
-                            type={'Luxury box'}
-                            selectedBox={myLuxuryBox}
-                            boxItems={myLuxuryBox.items}
-                            itemsCount={getItemsCount()}
-                            boxLimit={myLuxuryBox.weight}
-                            handleItemUpdate={updateLuxuryBoxItems}
-                            clearBoxHandler={confirmClearLuxuryBox}
-                            handleInputChange={countInputChangeHandler}
-                            handleAddToCart={addLuxuryBoxToCart}
-                            price={myLuxuryBox.total}
-                        />
-                        <section
-                            className={
-                                'luxuryBoxContainer__productsWrapper__products'
-                            }
-                        >
-                            {areLoadingBars ? (
-                                <CircularLoadingIndicator height={'40rem'} />
-                            ) : bars.length ? (
-                                bars.map((product) => {
-                                    return (
-                                        <Product
-                                            key={product._id}
-                                            image={product.images[0].url}
-                                            title={product.name}
-                                            description={product.description}
-                                            weight={product.weight}
-                                            price={null}
-                                            buttonText={'Add to box'}
-                                            productId={product._id}
-                                            isAddButtonDisabled={
-                                                product.isAddButtonDisabled
-                                            }
-                                            handleAddProduct={() =>
-                                                handleAddToBox(product)
-                                            }
-                                        />
-                                    );
+                    <section
+                        className={
+                            'luxuryBoxContainer__productsWrapper__products'
+                        }
+                    >
+                        {areLoadingBars ? (
+                            Array(6)
+                                .fill(0)
+                                .map((item, index) => {
+                                    return <SkeletonComp key={index} />;
                                 })
-                            ) : (
-                                <DataPrompt
-                                    message={'No products were found'}
-                                />
-                            )}
-                        </section>
-                    </div>
-                </>
-            ) : (
-                <CircularLoadingIndicator height={'40rem'} />
-            )}
+                        ) : bars.length ? (
+                            bars.map((product) => {
+                                return (
+                                    <Product
+                                        key={product._id}
+                                        image={product.images[0].url}
+                                        title={product.name}
+                                        description={product.description}
+                                        weight={product.weight}
+                                        price={null}
+                                        buttonText={'Add to box'}
+                                        productId={product._id}
+                                        isAddButtonDisabled={
+                                            product.isAddButtonDisabled
+                                        }
+                                        handleAddProduct={() =>
+                                            handleAddToBox(product)
+                                        }
+                                    />
+                                );
+                            })
+                        ) : (
+                            <DataPrompt message={'No products were found'} />
+                        )}
+                    </section>
+                </div>
+            </>
         </div>
     );
 };

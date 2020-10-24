@@ -2,13 +2,13 @@ import React from 'react';
 import ShopFilters from '../ShopFilters/ShopFilters';
 import Product from '../Product/Product';
 import useFetchData from '../../hooks/useFetchData';
-import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useDispatch } from 'react-redux';
 import { addToCart, toggleCart } from '../../store/actions/cart_actions';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import SkeletonComp from '../Skeleton/Skeleton';
 
 const queryString = require('query-string');
 
@@ -55,7 +55,11 @@ const ShopProducts = ({ match, location, category, sample }) => {
                 />
                 <div className={'shopBarsContainer__products'}>
                     {isLoading ? (
-                        <CircularLoadingIndicator height={'40rem'} />
+                        Array(6)
+                            .fill(0)
+                            .map((item, index) => {
+                                return <SkeletonComp key={index} />;
+                            })
                     ) : products && products.length ? (
                         products.map((product) => {
                             return (

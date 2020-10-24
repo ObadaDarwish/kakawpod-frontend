@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ShopFilters from '../ShopFilters/ShopFilters';
 import { useHistory } from 'react-router-dom';
-import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import Product from '../Product/Product';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import BoxSummary from '../BoxSummary/BoxSummary';
@@ -9,12 +8,12 @@ import MixBoxFilters from './MixBoxFilters/MixBoxFilters';
 import ConfirmDialog from '../Dialogs/ConfirmDialog/ConfirmDialog';
 import { infoNotification } from '../../utils/notification-utils';
 import useFetchProducts from '../../hooks/useFetchProducts';
-import LoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import { stringfyJSON } from '../../utils/jsonConversion';
 import useFetchMixBox from '../../hooks/useFetchMixBox';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../store/actions/cart_actions';
 import { setLoading } from '../../store/actions/loadingIndicator_actions';
+import SkeletonComp from '../Skeleton/Skeleton';
 
 const queryString = require('query-string');
 
@@ -196,14 +195,15 @@ const ShopMixBox = ({ match, location }) => {
                 onClose={clearMixBox}
                 close={closeConfirmDialog}
             />
-            {!isLoading ? (
-                <>
-                    <div className={'priceTag'}>
-                        <p>
-                            Total EGP
-                            {myMixBox.price}
-                        </p>
-                    </div>
+
+            <>
+                <div className={'priceTag'}>
+                    <p>
+                        Total EGP
+                        {myMixBox.price}
+                    </p>
+                </div>
+                {mixBoxes.length > 0 && (
                     <div className={'filtersWrapper'}>
                         <MixBoxFilters
                             mixBoxes={mixBoxes}
@@ -216,62 +216,60 @@ const ShopMixBox = ({ match, location }) => {
                             direction={'row'}
                         />
                     </div>
-                    <div
+                )}
+                <div
+                    className={'shopMixBoxContainer__boxSummaryProductsWrapper'}
+                >
+                    <BoxSummary
+                        price={myMixBox.price}
+                        type={'Mix box'}
+                        selectedBox={myMixBox}
+                        boxItems={myMixBox.items}
+                        itemsCount={getItemsCount()}
+                        boxLimit={myMixBox.limit}
+                        handleItemUpdate={updateMixBoxItems}
+                        clearBoxHandler={confirmClearMixBox}
+                        handleInputChange={countInputChangeHandler}
+                        handleAddToCart={addToCartHandler}
+                    />
+                    <section
                         className={
-                            'shopMixBoxContainer__boxSummaryProductsWrapper'
+                            'shopMixBoxContainer__boxSummaryProductsWrapper__products'
                         }
                     >
-                        <BoxSummary
-                            price={myMixBox.price}
-                            type={'Mix box'}
-                            selectedBox={myMixBox}
-                            boxItems={myMixBox.items}
-                            itemsCount={getItemsCount()}
-                            boxLimit={myMixBox.limit}
-                            handleItemUpdate={updateMixBoxItems}
-                            clearBoxHandler={confirmClearMixBox}
-                            handleInputChange={countInputChangeHandler}
-                            handleAddToCart={addToCartHandler}
-                        />
-                        <section
-                            className={
-                                'shopMixBoxContainer__boxSummaryProductsWrapper__products'
-                            }
-                        >
-                            {isLoadingBars ? (
-                                <CircularLoadingIndicator height={'20rem'} />
-                            ) : bars.length ? (
-                                bars.map((product) => {
-                                    return (
-                                        <Product
-                                            key={product._id}
-                                            image={product.images[0].url}
-                                            title={product.name}
-                                            description={product.description}
-                                            weight={product.weight}
-                                            price={null}
-                                            productId={product._id}
-                                            buttonText={'Add to box'}
-                                            isAddButtonDisabled={
-                                                product.isAddButtonDisabled
-                                            }
-                                            handleAddProduct={() =>
-                                                handleAddToBox(product)
-                                            }
-                                        />
-                                    );
+                        {isLoadingBars ? (
+                            Array(6)
+                                .fill(0)
+                                .map((item, index) => {
+                                    return <SkeletonComp key={index} />;
                                 })
-                            ) : (
-                                <DataPrompt
-                                    message={'No products were found'}
-                                />
-                            )}
-                        </section>
-                    </div>
-                </>
-            ) : (
-                <LoadingIndicator height={'40rem'} />
-            )}
+                        ) : bars.length ? (
+                            bars.map((product) => {
+                                return (
+                                    <Product
+                                        key={product._id}
+                                        image={product.images[0].url}
+                                        title={product.name}
+                                        description={product.description}
+                                        weight={product.weight}
+                                        price={null}
+                                        productId={product._id}
+                                        buttonText={'Add to box'}
+                                        isAddButtonDisabled={
+                                            product.isAddButtonDisabled
+                                        }
+                                        handleAddProduct={() =>
+                                            handleAddToBox(product)
+                                        }
+                                    />
+                                );
+                            })
+                        ) : (
+                            <DataPrompt message={'No products were found'} />
+                        )}
+                    </section>
+                </div>
+            </>
         </div>
     );
 };

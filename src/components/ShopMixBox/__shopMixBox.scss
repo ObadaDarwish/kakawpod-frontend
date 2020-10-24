@@ -5,18 +5,20 @@
 
   .filtersWrapper {
     width: 100%;
-    &__mixBox{
+
+    &__mixBox {
       margin: 0;
     }
+
     .shopFiltersContainer {
       flex-basis: 75%;
       justify-content: flex-end;
-      @include media-breakpoint-down(sm){
-        width: 100%;
+      @include media-breakpoint-down(sm) {
         justify-content: flex-start;
       }
     }
   }
+
   &__boxSummaryProductsWrapper {
     @include flex(row);
     margin: 4rem 2rem;
@@ -28,13 +30,14 @@
     }
 
 
-
-
     &__products {
       @include flex(row wrap);
       align-items: flex-start;
       width: 100%;
       min-height: 60rem;
+      @include media-breakpoint-down(sm) {
+        justify-content: center;
+      }
     }
   }
 }
