@@ -25,8 +25,8 @@ import Cart from './containers/Cart/Cart';
 import Checkout from './containers/Checkout/Checkout';
 import MyOrders from './containers/MyOrders/MyOrders';
 import Product from './containers/Product/Product';
-import ScrollToTop from './HOC/ScrollToTop/ScrollToTop';
-
+import AdminRoute from './HOC/AdminRoute/AdminRoute';
+import Admin from './containers/Admin/Admin';
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -37,6 +37,7 @@ axios.interceptors.request.use(function (config) {
 function App() {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
+    const globalState = useSelector((state) => state.global);
     const contactsRef = useRef();
     const aboutRef = useRef();
     const history = useHistory();
@@ -120,6 +121,7 @@ function App() {
                             path={'/my-orders'}
                             component={MyOrders}
                         />
+                        <AdminRoute path={'/admin'} component={Admin} />
                         <Route
                             path={'/forgotPassword'}
                             component={ResetPassword}
@@ -129,7 +131,7 @@ function App() {
                         <Route path={'/cart'} component={Cart} />
                         <Route component={Missing} />
                     </Switch>
-                    <Footer />
+                    {globalState.showFooter && <Footer />}
                 </Auth>
             </div>
             <NotificationContainer />
