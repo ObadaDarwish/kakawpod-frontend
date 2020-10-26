@@ -1,0 +1,61 @@
+.summaryContainer {
+  width: 25%;
+  margin: 1rem;
+
+  @include flex(column);
+
+  &__summaryWrapper {
+    background: $color3;
+
+    padding: 1rem;
+
+    .table {
+      width: 100%;
+      font-size: 1.4rem;
+
+      .MuiInput-input {
+        text-align: center;
+      }
+
+      &__tableItem {
+        &:hover {
+          cursor: pointer;
+          background: $color4;
+        }
+        &__selected{
+          background: $color4;
+        }
+      }
+
+      th, td {
+        color: $color1;
+      }
+
+      tr {
+        text-align: center;
+        height: 4rem;
+      }
+    }
+  }
+
+  &__itemControl {
+    margin-top: 0.5rem;
+    box-shadow: 0 0 3px 1px $gray-300;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+
+    &__item {
+      background: $color3;
+      border-radius: 3rem;
+      padding: 1rem;
+      transition: box-shadow 0.4s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0 0 3px 1px $gray-300;
+      }
+    }
+  }
+
+}

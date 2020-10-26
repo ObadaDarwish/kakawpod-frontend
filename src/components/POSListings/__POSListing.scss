@@ -1,0 +1,114 @@
+.listingContainer {
+  width: 75%;
+  //@include media-breakpoint-down(md){
+  //  width: 70rem;
+  //}
+  @include flex(column);
+
+  &__searchBar {
+    background: $color3;
+    @include flex(row);
+    align-items: center;
+    border-radius: 0.5rem;
+    margin: 0 1rem;
+
+    .MuiTextField-root {
+      margin: 0.7rem 1rem;
+    }
+
+    .MuiSvgIcon-root {
+      margin: 0 1rem;
+    }
+  }
+
+  &__listingWrapper {
+    border: 0.2rem solid $color3;
+    box-shadow: 0 0 3px 1px $gray-300;
+    padding: 1rem;
+    margin: 1rem;
+    overflow-y: auto;
+    height: 60vh;
+    @include flex(row wrap);
+    align-content: flex-start;
+
+    &__listedItem {
+      width: 15rem;
+      height: 15rem;
+      margin: 0.5rem;
+      position: relative;
+      transition: box-shadow 0.3s ease-in-out;
+      overflow: hidden;
+
+      &__tag {
+        position: absolute;
+        width: 1rem;
+        right: 10px;
+        top: -10px;
+        height: 5rem;
+        transform: rotate(-45deg);
+        &__blue{
+          background: $blue;
+        }
+        &__yellow{
+          background: $yellow;
+        }
+        &__dark{
+          background: $black;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0 0 6px 2px $gray-500;
+      }
+
+      img {
+        width: inherit;
+        height: inherit;
+      }
+
+      &__title {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        color: $white;
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem 0;
+        font-size: 1.3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &__price{
+        position: absolute;
+        background: rgba(0, 0, 0, 0.6);
+        color: $white;
+        top: 0;
+        left: 0;
+        padding: 1rem;
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  &__listingCategoriesWrapper {
+    @include flex(row);
+    justify-content: center;
+
+    &__category {
+      margin: 0.3rem;
+      background: $color3;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.4s ease-in-out;
+      border-radius: 0.3rem;
+
+      &:hover {
+        background: $color2;
+
+      }
+    }
+  }
+}

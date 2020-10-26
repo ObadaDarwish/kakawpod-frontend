@@ -27,12 +27,14 @@ const InputUI = ({
     errorMessage,
     disabled,
     changeHandler,
+    placeholder,
     ...props
 }) => {
     const matches = useMediaQuery('(max-width:768px)');
     const classes = useStyles(props);
     return (
         <TextField
+            placeholder={placeholder}
             required={required}
             className={classes.inputField}
             label={label}

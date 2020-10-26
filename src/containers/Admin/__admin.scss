@@ -1,0 +1,66 @@
+.adminContainer {
+  margin-top: 7rem;
+  @include flex(column);
+  position: relative;
+
+  &__drawerIcon {
+    position: absolute;
+    right: 30px;
+    width: 3rem;
+    height: 3rem;
+    @include flex_center(row);
+    border-radius: 13rem;
+    top: -35px;
+    padding: 0.5rem;
+    z-index: 1000000;
+    background: $color1;
+    color: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+    &:hover{
+      box-shadow: 0 0 4px 2px $white;
+    }
+  }
+
+  &__navTabs {
+    margin: 2rem 0;
+    @include flex(column);
+
+    &__item {
+      padding: 1rem 2.5rem;
+      transition: all 0.4s ease-in-out;
+      @include flex(row);
+      position: relative;
+      margin-bottom: 1rem;
+      //&:after{
+      //  position: absolute;
+      //  content: '';
+      //  bottom: 0;
+      //  left: 25%;
+      //  height: 0.2rem;
+      //  width: 50%;
+      //  background: $color2;
+      //}
+      //
+      //&:last-child {
+      //  &:after{
+      //    display: none;
+      //  }
+      //}
+
+      h1 {
+        margin-left: 2rem;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background: $color3;
+      }
+    }
+
+  }
+
+  .active {
+    background: $color3;
+  }
+}
