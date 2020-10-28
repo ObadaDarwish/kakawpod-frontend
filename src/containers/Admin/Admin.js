@@ -5,9 +5,10 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import LabelIcon from '@material-ui/icons/Label';
+import HomeIcon from '@material-ui/icons/Home';
 import POS from './POS/POS.js';
 import { useDispatch } from 'react-redux';
-import { toggleFooter } from '../../store/actions/global_actions';
+import { toggleFooter, toggleLogo } from '../../store/actions/global_actions';
 import Drawer from '@material-ui/core/Drawer';
 import ListIcon from '@material-ui/icons/List';
 
@@ -16,8 +17,10 @@ const Admin = () => {
     const [drawer, setDrawer] = useState(false);
     useEffect(() => {
         dispatch(toggleFooter(false));
+        dispatch(toggleLogo(false));
         return () => {
             dispatch(toggleFooter(true));
+            dispatch(toggleLogo(true));
         };
     }, []);
     const toggleDrawer = () => {
@@ -36,6 +39,13 @@ const Admin = () => {
             </div>
             <Drawer anchor={'left'} open={drawer} onClose={toggleDrawer}>
                 <div className={'adminContainer__navTabs'} onClick={itemClick}>
+                    <NavLink
+                        to={'/'}
+                        className={'adminContainer__navTabs__item'}
+                    >
+                        <HomeIcon fontSize={'large'} />
+                        <h1>Home</h1>
+                    </NavLink>
                     <NavLink
                         to={'/admin/pos'}
                         className={'adminContainer__navTabs__item'}

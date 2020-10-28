@@ -28,6 +28,7 @@ const Header = ({ scrollToContact, scrollToAbout }) => {
     const history = useHistory();
     const isAuth = useSelector((state) => state.user);
     const isLoading = useSelector((state) => state.loadingIndicator);
+    const global = useSelector((state) => state.global);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const sm = useMediaQuery('(max-width:768px)');
@@ -98,24 +99,29 @@ const Header = ({ scrollToContact, scrollToAbout }) => {
                 ref={headerRef}
             >
                 {cart.can_show_dropDown && <CartDropDown cart={cart} />}
-                <section
-                    className={'headerOuterContainer__headerContainer__logo'}
-                >
-                    <Link
-                        to={'/'}
+                {global.showLogo && (
+                    <section
                         className={
-                            'headerOuterContainer__headerContainer__logo__wrapper'
+                            'headerOuterContainer__headerContainer__logo'
                         }
                     >
-                        <img
-                            src={icon}
-                            name="ODs chocolate logo"
-                            alt="ODs chocolate logo"
-                        />
-                        <p>D&H</p>
-                        <span>Chocolate</span>
-                    </Link>
-                </section>
+                        <Link
+                            to={'/'}
+                            className={
+                                'headerOuterContainer__headerContainer__logo__wrapper'
+                            }
+                        >
+                            <img
+                                src={icon}
+                                name="ODs chocolate logo"
+                                alt="ODs chocolate logo"
+                            />
+                            <p>D&H</p>
+                            <span>Chocolate</span>
+                        </Link>
+                    </section>
+                )}
+
                 <section className={'headerOuterContainer__navigationTabs'}>
                     {isAuth && <UserMenu isAuth={isAuth} />}
                     {!isAuth && (

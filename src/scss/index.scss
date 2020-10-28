@@ -5,7 +5,7 @@ $grid-breakpoints: (
         xs: 0,
         sm: 480px,
         md: 768px,
-        lg: 1024px,
+        lg: 1025px,
         xl: 1300px
 ) !default;
 @import "./bootstrap/bootstrap";
@@ -35,7 +35,6 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
-
 *::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
@@ -49,7 +48,10 @@ body {
   background-color: $color1;
   //outline: 1px solid slategrey;
 }
-
+:root{
+  scrollbar-color: $gray-300 $color1 !important;
+  scrollbar-width: thin;
+}
 
 html {
   font-size: 10px;

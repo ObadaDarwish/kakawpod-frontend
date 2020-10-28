@@ -1,13 +1,26 @@
 .summaryContainer {
-  width: 25%;
+  width: 30%;
   margin: 1rem;
-
+  @include media-breakpoint-down(md) {
+    width: 35%;
+  }
   @include flex(column);
 
   &__summaryWrapper {
     background: $color3;
 
     padding: 1rem;
+
+    &__itemsList {
+      height: 30rem;
+      overflow-y: auto;
+
+      &__stickyHeader {
+        position: sticky;
+        top: 0;
+        background: $color2;
+      }
+    }
 
     .table {
       width: 100%;
@@ -18,22 +31,76 @@
       }
 
       &__tableItem {
+        transition: all 0.4s ease-in-out;
+
         &:hover {
           cursor: pointer;
-          background: $color4;
+          box-shadow: inset 0 0 3px 1px $color1;
         }
-        &__selected{
+
+        &__selected {
           background: $color4;
+          box-shadow: inset 0 0 3px 1px $color1;
         }
       }
 
+
       th, td {
         color: $color1;
+        font-size: 1.4rem;
+        font-weight: bold;
       }
 
       tr {
         text-align: center;
         height: 4rem;
+
+        th {
+          &:nth-child(2) {
+            width: 40%;
+          }
+        }
+
+        td {
+          &:nth-child(2) {
+            width: 50%;
+          }
+        }
+
+      }
+
+      tbody {
+        display: block;
+        height: 22rem;
+        overflow-y: scroll;
+      }
+
+      thead, tbody tr {
+        display: table;
+        width: 100%;
+      }
+    }
+  }
+
+  &__posBlock {
+    margin-top: 0.5rem;
+    box-shadow: 0 0 3px 1px $gray-300;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: $color3;
+
+    p {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    &__grandTotal {
+      background: $color1;
+
+      p {
+        color: $white;
       }
     }
   }
@@ -44,11 +111,25 @@
     display: flex;
     justify-content: space-around;
     padding: 1rem;
+    position: relative;
+
+    &__disabled {
+      position: absolute;
+      //background: $gray-500;
+      background: $black;
+      width: 100%;
+      top: 0;
+      left: 0;
+      height: 100%;
+      //opacity: 0.7;
+      opacity: 0.5;
+      pointer-events: none;
+    }
 
     &__item {
       background: $color3;
-      border-radius: 3rem;
-      padding: 1rem;
+      border-radius: 1rem;
+      padding: 0.8rem 3rem;
       transition: box-shadow 0.4s ease-in-out;
 
       &:hover {
@@ -58,4 +139,36 @@
     }
   }
 
+  &__posControl {
+    margin-top: 0.5rem;
+    box-shadow: 0 0 3px 1px $gray-300;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+
+    .MuiButton-root {
+      margin: 0 0.5rem;
+      height: 4.5rem;
+
+      &:last-child {
+        background: $green;
+      }
+
+      &:nth-child(2) {
+        background: $yellow;
+        color: $color1;
+      }
+
+      //&:nth-child(3) {
+      //  background: transparent;
+      //  padding: 0 2rem;
+      //  border: 0.2rem solid $green;
+      //  color: $green;
+      //}
+
+      &:first-child {
+        background: $red;
+      }
+    }
+  }
 }

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import img from '../../assets/images/milkbar.jpg';
 import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
-import InputUI from '../UI/InputUI/InputUI';
-import SearchIcon from '@material-ui/icons/Search';
+import DataPrompt from '../DataPrompt/DataPrompt';
 
 const POSListings = ({ addItem }) => {
     const [category, setCategory] = useState('bar');
@@ -36,14 +35,10 @@ const POSListings = ({ addItem }) => {
     };
     return (
         <div className={'listingContainer'}>
-            {/*<div className={'listingContainer__searchBar'}>*/}
-            {/*    <InputUI placeholder={'search'} />*/}
-            {/*    <SearchIcon fontSize={'large'} />*/}
-            {/*</div>*/}
             <div className={'listingContainer__listingWrapper'}>
                 {isLoading ? (
-                    <CircularLoadingIndicator height={'5rem'} />
-                ) : (
+                    <CircularLoadingIndicator height={'20rem'} />
+                ) : data.products.length ? (
                     data.products.map((product) => {
                         return (
                             <div
@@ -79,6 +74,8 @@ const POSListings = ({ addItem }) => {
                             </div>
                         );
                     })
+                ) : (
+                    <DataPrompt message={'No products were found.'} />
                 )}
             </div>
             <div className={'listingContainer__listingCategoriesWrapper'}>
@@ -113,6 +110,22 @@ const POSListings = ({ addItem }) => {
                     onClick={() => changeCategory('cooking')}
                 >
                     <h1>cooking</h1>
+                </div>
+                <div
+                    className={
+                        'listingContainer__listingCategoriesWrapper__category'
+                    }
+                    onClick={() => changeCategory('drinks')}
+                >
+                    <h1>drinks</h1>
+                </div>
+                <div
+                    className={
+                        'listingContainer__listingCategoriesWrapper__category'
+                    }
+                    onClick={() => changeCategory('cakes')}
+                >
+                    <h1>cakes</h1>
                 </div>
             </div>
         </div>

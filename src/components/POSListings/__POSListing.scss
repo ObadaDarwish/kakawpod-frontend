@@ -1,8 +1,8 @@
 .listingContainer {
-  width: 75%;
-  //@include media-breakpoint-down(md){
-  //  width: 70rem;
-  //}
+  width: 70%;
+  @include media-breakpoint-down(md){
+    width: 65%;
+  }
   @include flex(column);
 
   &__searchBar {
@@ -32,12 +32,16 @@
     align-content: flex-start;
 
     &__listedItem {
-      width: 15rem;
-      height: 15rem;
+      width: 14rem;
+      height: 13rem;
       margin: 0.5rem;
       position: relative;
       transition: box-shadow 0.3s ease-in-out;
       overflow: hidden;
+      @include media-breakpoint-up(lg) {
+        width: 15rem;
+        height: 15rem;
+      }
 
       &__tag {
         position: absolute;
@@ -46,13 +50,16 @@
         top: -10px;
         height: 5rem;
         transform: rotate(-45deg);
-        &__blue{
+
+        &__blue {
           background: $blue;
         }
-        &__yellow{
+
+        &__yellow {
           background: $yellow;
         }
-        &__dark{
+
+        &__dark {
           background: $black;
         }
       }
@@ -80,8 +87,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        font-weight: bold;
       }
-      &__price{
+
+      &__price {
         position: absolute;
         background: rgba(0, 0, 0, 0.6);
         color: $white;
@@ -100,10 +109,20 @@
     &__category {
       margin: 0.3rem;
       background: $color3;
-      padding: 1rem 2rem;
+      padding: 2rem 1.5rem;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
       border-radius: 0.3rem;
+      display: flex;
+      align-items: center;
+
+      h1 {
+        text-align: center;
+        font-size: 1.8rem;
+        @include media-breakpoint-down(md){
+          font-size: 1.6rem;
+        }
+      }
 
       &:hover {
         background: $color2;

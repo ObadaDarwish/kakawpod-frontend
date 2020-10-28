@@ -10,3 +10,4 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAR_CART = 'CLEAR_CART';
 export const OUT_OF_STOCK = 'OUT_OF_STOCK';
 export const TOGGLE_FOOTER = 'TOGGLE_FOOTER';
+export const TOGGLE_LOGO = 'TOGGLE_LOGO';
