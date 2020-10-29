@@ -44,9 +44,7 @@ const Product = ({ match }) => {
             dispatch(setLoading(false));
         }, 500);
     };
-    const handleClick = () => {
-        console.log(match);
-    };
+
     const getProductBackLink = (category) => {
         let link = '';
         switch (category) {
@@ -76,7 +74,6 @@ const Product = ({ match }) => {
                                 <NavLink
                                     color="inherit"
                                     to={getProductBackLink(product.category)}
-                                    onClick={handleClick}
                                 >
                                     {product.category}
                                 </NavLink>

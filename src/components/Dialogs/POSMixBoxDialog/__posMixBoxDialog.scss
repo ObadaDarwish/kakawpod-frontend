@@ -1,0 +1,14 @@
+.posMixBoxContainer {
+  @include flex(column);
+
+  &__wrapper {
+    @include flex(row);
+    margin: 1rem;
+    &__listing {
+      width: 60rem;
+      height: 35rem;
+      overflow-y: auto;
+      @include flex(row wrap);
+    }
+  }
+}

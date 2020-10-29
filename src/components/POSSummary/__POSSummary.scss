@@ -1,14 +1,15 @@
 .summaryContainer {
   width: 30%;
   margin: 1rem;
-  @include media-breakpoint-down(md) {
-    width: 35%;
+  height: 85vh;
+  @include media-breakpoint-up(xl) {
+   height: auto;
   }
   @include flex(column);
 
   &__summaryWrapper {
     background: $color3;
-
+    flex-grow: 1;
     padding: 1rem;
 
     &__itemsList {
@@ -71,7 +72,7 @@
 
       tbody {
         display: block;
-        height: 22rem;
+        height: 30rem;
         overflow-y: scroll;
       }
 
@@ -140,23 +141,25 @@
   }
 
   &__posControl {
-    margin-top: 0.5rem;
     box-shadow: 0 0 3px 1px $gray-300;
     display: flex;
     justify-content: space-between;
     padding: 1rem;
+    background: $color3;
+    margin-top: 0.5rem;
 
     .MuiButton-root {
       margin: 0 0.5rem;
       height: 4.5rem;
 
-      &:last-child {
-        background: $green;
-      }
+      //&:last-child {
+      //  background: $green;
+      //}
 
       &:nth-child(2) {
-        background: $yellow;
-        color: $color1;
+        //background: $white;
+        //color: $color1;
+        border: 0.2rem solid $color1;
       }
 
       //&:nth-child(3) {

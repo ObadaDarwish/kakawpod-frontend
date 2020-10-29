@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import POSListings from '../../../components/POSListings/POSListings';
 import POSSummary from '../../../components/POSSummary/POSSummary';
+import { parseJSON, stringfyJSON } from '../../../utils/jsonConversion';
+import PosBoxDialog from '../../../components/Dialogs/POSMixBoxDialog/POSMixBoxDialog';
 
 const Pos = () => {
-    let Style = {
-        display: 'flex',
-        flexFlow: 'row',
-        overFlow: 'hidden',
-        justifyContent: 'space-around',
-    };
-    const [activeOrder, setActiveOrder] = useState({ items: [], total: 0 });
+    const [heldPOS, setHeldPos] = useState(
+        localStorage.getItem('heldPOS')
+            ? parseJSON(localStorage.getItem('heldPOS'))
+            : Array(3).fill(0)
+    );
+    const [boxDialog, setBoxDialog] = useState(false);
+    const [box, setBox] = useState();
+    let activeOrderDefault = localStorage.getItem('pos')
+        ? parseJSON(localStorage.getItem('pos'))
+        : { items: [], total: 0 };
+    const [activeOrder, setActiveOrder] = useState(activeOrderDefault);
     const getTotal = (items) => {
         let total = 0;
         items.forEach((item) => {
@@ -18,22 +24,48 @@ const Pos = () => {
         return total;
     };
     const addItemHandler = (product) => {
-        setActiveOrder((prevState) => {
-            let items = [...prevState.items];
-            let isProdFound = -1;
-            isProdFound = items.findIndex((item) => item._id === product._id);
-            let newCount = 1;
-            if (isProdFound >= 0) {
-                newCount = items[isProdFound].count + 1;
-                items[isProdFound].count = newCount;
-            } else {
-                items.push({ ...product, count: 1 });
-            }
-            return {
-                total: getTotal(items),
-                items: items,
-            };
-        });
+        if (product.category === 'mixBox') {
+            setBox({
+                items: [],
+                limit: 3,
+                name: '3 bars',
+                ...product,
+            });
+            setBoxDialog(true);
+        } else if (product.category === 'luxuryBox') {
+            setBox({
+                items: [],
+                weight: 500,
+                name: '500g luxury box',
+                package: {
+                    _id: 0,
+                },
+                total: 0,
+                ...product,
+            });
+            setBoxDialog(true);
+        } else {
+            setActiveOrder((prevState) => {
+                let items = [...prevState.items];
+                let isProdFound = -1;
+                isProdFound = items.findIndex(
+                    (item) => item._id === product._id
+                );
+                let newCount = 1;
+                if (isProdFound >= 0) {
+                    newCount = items[isProdFound].count + 1;
+                    items[isProdFound].count = newCount;
+                } else {
+                    items.push({ ...product, count: 1 });
+                }
+                let updatedState = {
+                    total: getTotal(items),
+                    items: items,
+                };
+                localStorage.setItem('pos', stringfyJSON(updatedState));
+                return updatedState;
+            });
+        }
     };
     const handleUpdateItem = (type, item) => {
         setActiveOrder((prevState) => {
@@ -64,25 +96,85 @@ const Pos = () => {
                     }
                 }
             }
-            return {
+            let updatedState = {
                 total: getTotal(updatedItems),
                 items: updatedItems,
             };
+            localStorage.setItem('pos', stringfyJSON(updatedState));
+            return updatedState;
         });
     };
     const handleClearPOS = () => {
-        setActiveOrder({
-            total: 0,
-            items: [],
+        setActiveOrder((prevState) => {
+            localStorage.removeItem('pos');
+            return {
+                total: 0,
+                items: [],
+            };
+        });
+    };
+    const closePOSBoxDialog = () => {
+        setBoxDialog(false);
+    };
+    const holdPOSHandler = (pos) => {
+        setHeldPos((prevState) => {
+            let updatedPOS = [...prevState];
+            for (let i = 0; i < 3; i++) {
+                if (!updatedPOS[i]) {
+                    updatedPOS[i] = pos;
+                    break;
+                }
+            }
+            localStorage.setItem('heldPOS', stringfyJSON(updatedPOS));
+            handleClearPOS();
+            return updatedPOS;
+        });
+    };
+    const retrievePOS = (pos, index) => {
+        setActiveOrder(() => {
+            localStorage.setItem('pos', stringfyJSON(pos));
+            setHeldPos((prevState) => {
+                let updatedPOS = [...prevState];
+                updatedPOS[index] = 0;
+                localStorage.setItem('heldPOS', stringfyJSON(updatedPOS));
+                return updatedPOS;
+            });
+            return pos;
         });
     };
     return (
-        <div style={Style}>
+        <div className={'posContainer'}>
+            <div className={'posContainer__heldPOS'}>
+                {heldPOS.map((pos, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className={'posContainer__heldPOS__posItem'}
+                            onClick={() => retrievePOS(pos, index)}
+                        >
+                            {pos ? (
+                                <h1>EGP{pos.total}</h1>
+                            ) : (
+                                <h1>{index + 1}</h1>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+            {box && (
+                <PosBoxDialog
+                    open={boxDialog}
+                    box={box}
+                    close={closePOSBoxDialog}
+                />
+            )}
+
             <POSListings addItem={addItemHandler} />
             <POSSummary
                 activeOrder={activeOrder}
                 updateItem={handleUpdateItem}
                 clearPOS={handleClearPOS}
+                holdPOS={holdPOSHandler}
             />
         </div>
     );

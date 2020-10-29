@@ -96,7 +96,7 @@ const Order = ({ order, user, handleCancelOrder }) => {
                                 }
                             >
                                 <p>
-                                    {item.item_id.name}
+                                    * {item.item_id.name}
                                     <span>X {item.quantity}</span>
                                 </p>
                                 {item.sub_items && (

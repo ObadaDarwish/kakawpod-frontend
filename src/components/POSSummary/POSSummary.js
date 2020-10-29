@@ -6,7 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
 
-const POSSummary = ({ activeOrder, updateItem, clearPOS }) => {
+const POSSummary = ({ activeOrder, updateItem, clearPOS, holdPOS }) => {
     const [selectedItem, setSelectedItem] = useState({});
     const selectItem = (item) => {
         setSelectedItem(item);
@@ -111,7 +111,11 @@ const POSSummary = ({ activeOrder, updateItem, clearPOS }) => {
             </div>
             <div className={'summaryContainer__posControl'}>
                 <ButtonUI name={'clear'} clickHandler={clearPOS} />
-                <ButtonUI name={'hold'} />
+                <ButtonUI
+                    name={'hold'}
+                    inverseBackground
+                    clickHandler={() => holdPOS(activeOrder)}
+                />
                 <ButtonUI name={'pay'} />
             </div>
         </div>

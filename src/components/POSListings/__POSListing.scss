@@ -1,10 +1,10 @@
 .listingContainer {
   width: 70%;
-  @include media-breakpoint-down(md){
-    width: 65%;
-  }
+  height: 85vh;
   @include flex(column);
-
+  @include media-breakpoint-up(xl) {
+    height: auto;
+  }
   &__searchBar {
     background: $color3;
     @include flex(row);
@@ -28,88 +28,22 @@
     margin: 1rem;
     overflow-y: auto;
     height: 60vh;
+    flex-grow: 1;
     @include flex(row wrap);
     align-content: flex-start;
 
-    &__listedItem {
-      width: 14rem;
-      height: 13rem;
-      margin: 0.5rem;
-      position: relative;
-      transition: box-shadow 0.3s ease-in-out;
-      overflow: hidden;
-      @include media-breakpoint-up(lg) {
-        width: 15rem;
-        height: 15rem;
-      }
 
-      &__tag {
-        position: absolute;
-        width: 1rem;
-        right: 10px;
-        top: -10px;
-        height: 5rem;
-        transform: rotate(-45deg);
-
-        &__blue {
-          background: $blue;
-        }
-
-        &__yellow {
-          background: $yellow;
-        }
-
-        &__dark {
-          background: $black;
-        }
-      }
-
-      &:hover {
-        cursor: pointer;
-        box-shadow: 0 0 6px 2px $gray-500;
-      }
-
-      img {
-        width: inherit;
-        height: inherit;
-      }
-
-      &__title {
-        position: absolute;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.6);
-        color: $white;
-        width: 100%;
-        text-align: center;
-        padding: 0.5rem 0;
-        font-size: 1.3rem;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-      }
-
-      &__price {
-        position: absolute;
-        background: rgba(0, 0, 0, 0.6);
-        color: $white;
-        top: 0;
-        left: 0;
-        padding: 1rem;
-        font-size: 1.3rem;
-      }
-    }
   }
 
   &__listingCategoriesWrapper {
     @include flex(row);
     justify-content: center;
+    margin-bottom: 1rem;
 
     &__category {
       margin: 0.3rem;
       background: $color3;
-      padding: 2rem 1.5rem;
+      padding: 1.5rem 2rem;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
       border-radius: 0.3rem;
@@ -119,7 +53,7 @@
       h1 {
         text-align: center;
         font-size: 1.8rem;
-        @include media-breakpoint-down(md){
+        @include media-breakpoint-down(md) {
           font-size: 1.6rem;
         }
       }

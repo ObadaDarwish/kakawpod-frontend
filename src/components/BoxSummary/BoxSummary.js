@@ -17,6 +17,7 @@ const BoxSummary = ({
     handleInputChange,
     handleItemUpdate,
     handleAddToCart,
+    buttonName,
 }) => {
     const matches = useMediaQuery('(max-width:768px)');
     const plusButton = (bar) => {
@@ -109,7 +110,9 @@ const BoxSummary = ({
 
                 <div className={'boxSummary__controlWrapper__addToCart'}>
                     <ButtonUI
-                        name={`Add to cart (EGP${price ? price : '--'})`}
+                        name={`${buttonName ? buttonName : 'Add to cart'} (EGP${
+                            price ? price : '--'
+                        })`}
                         is_disabled={itemsCount !== boxLimit}
                         clickHandler={handleAddToCart}
                     />
