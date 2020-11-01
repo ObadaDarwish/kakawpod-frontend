@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: 'column',
             background: '#FAF2F2',
             minWidth: '50rem',
-            maxWidth: 'unset',
+            maxWidth: (props) => props.maxWidth || 'unset',
             [theme.breakpoints.down('sm')]: {
                 minWidth: '90%',
             },
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const DialogWrapper = ({ open, onClose, close, ...rest }) => {
-    const classes = useStyles();
+    const classes = useStyles(rest);
     return (
         <Dialog
             aria-labelledby="simple-dialog-title"

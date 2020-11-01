@@ -1,36 +1,15 @@
 import React, { createRef, useEffect, useState } from 'react';
-import Dialog from '@material-ui/core/Dialog';
 import InputUI from '../../UI/InputUI/InputUI';
-import { makeStyles } from '@material-ui/core/styles';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
-import { IconButton } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import useCallServer from '../../../hooks/useCallServer';
 import {
     errorNotification,
     successNotification,
 } from '../../../utils/notification-utils';
 import CircularLoadingIndicator from '../../LoadingIndicator/CircularLoadingIndicator';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& .MuiDialog-paper': {
-            display: 'flex',
-            flexDirection: 'column',
-            background: '#F1D1D1',
-            minWidth: '50rem',
-            [theme.breakpoints.down('sm')]: {
-                minWidth: '90%',
-            },
-        },
-        '& .MuiButton-root': {
-            marginTop: '2rem',
-        },
-    },
-}));
+import DialogWrapper from '../DialogWrapper/DialogWrapper';
 
 const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
-    const classes = useStyles();
     const confirmInputRef = createRef();
     const phoneRef = createRef();
     const [, , , , callServer, loadingCode, setLoadingCode] = useCallServer();
@@ -162,21 +141,12 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
         </>
     );
     return (
-        <Dialog
-            aria-labelledby="simple-dialog-title"
+        <DialogWrapper
             open={open}
-            className={classes.root}
+            onClose={onClose}
+            maxWidth={'60rem'}
+            close={close}
         >
-            <IconButton
-                onClick={close}
-                style={{
-                    alignSelf: 'flex-end',
-                    margin: '1rem',
-                    outline: 'none',
-                }}
-            >
-                <CloseIcon fontSize={'large'} />
-            </IconButton>
             <form
                 className={`formWrapper`}
                 style={{ margin: '2rem', marginTop: 0 }}
@@ -190,7 +160,7 @@ const VerifyPhoneDialog = ({ open, phone, onClose, close }) => {
                     phoneTemplate
                 )}
             </form>
-        </Dialog>
+        </DialogWrapper>
     );
 };
 

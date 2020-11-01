@@ -1,12 +1,8 @@
 import React, { createRef, useEffect, useState } from 'react';
-import Dialog from '@material-ui/core/Dialog';
 import InputUI from '../../UI/InputUI/InputUI';
-import { makeStyles } from '@material-ui/core/styles';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import SelectUi from '../../UI/SelectUI/SelectUI';
 import useFetchData from '../../../hooks/useFetchData';
-import { IconButton } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import useCallServer from '../../../hooks/useCallServer';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../store/actions/auth_actions';
@@ -15,23 +11,8 @@ import {
     successNotification,
 } from '../../../utils/notification-utils';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
+import DialogWrapper from '../DialogWrapper/DialogWrapper';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& .MuiDialog-paper': {
-            display: 'flex',
-            flexDirection: 'column',
-            background: '#F1D1D1',
-            minWidth: '50rem',
-            [theme.breakpoints.down('sm')]: {
-                minWidth: '90%',
-            },
-        },
-        '& .MuiButton-root': {
-            marginTop: '2rem',
-        },
-    },
-}));
 const AddressDialog = ({
     onClose,
     open,
@@ -39,7 +20,6 @@ const AddressDialog = ({
     selectedAddress,
     addressesCount,
 }) => {
-    const classes = useStyles();
     const [selectedArea, setSelectedArea] = useState('');
     const [selectedCity, setSelectedCity] = useState('Cairo');
     const [, , , , callServer] = useCallServer();
@@ -143,21 +123,12 @@ const AddressDialog = ({
     };
 
     return (
-        <Dialog
-            aria-labelledby="simple-dialog-title"
+        <DialogWrapper
             open={open}
-            className={classes.root}
+            onClose={onClose}
+            maxWidth={'60rem'}
+            close={onClose}
         >
-            <IconButton
-                onClick={onClose}
-                style={{
-                    alignSelf: 'flex-end',
-                    margin: '1rem',
-                    outline: 'none',
-                }}
-            >
-                <CloseIcon fontSize={'large'} />
-            </IconButton>
             <div className={`formWrapper`} style={{ margin: '1.5rem' }}>
                 <div
                     className={
@@ -243,7 +214,7 @@ const AddressDialog = ({
                     clickHandler={saveAddress}
                 />
             </div>
-        </Dialog>
+        </DialogWrapper>
     );
 };
 
