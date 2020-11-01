@@ -88,7 +88,7 @@ const Landing = React.forwardRef((props, ref) => {
         return <RoomIcon style={{ color: '#cd9292', fontSize: '2.5rem' }} />;
     };
     const getGoogleAPIKey = () => {
-        return process.env.REACT_APP_MAPS_API_KEY;
+        return process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
     };
     const handleContact = (e) => {
         e.preventDefault();
