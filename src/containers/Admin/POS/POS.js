@@ -11,7 +11,7 @@ const Pos = () => {
             : Array(3).fill(0)
     );
     const [boxDialog, setBoxDialog] = useState(false);
-    const [box, setBox] = useState();
+    const [box, setBox] = useState({ items: [] });
     let activeOrderDefault = localStorage.getItem('pos')
         ? parseJSON(localStorage.getItem('pos'))
         : { items: [], total: 0 };
@@ -26,46 +26,38 @@ const Pos = () => {
     const addItemHandler = (product) => {
         if (product.category === 'mixBox') {
             setBox({
-                items: [],
-                limit: 3,
-                name: '3 bars',
+                limit: parseInt(product.name.substr(0, 1)),
                 ...product,
             });
             setBoxDialog(true);
         } else if (product.category === 'luxuryBox') {
             setBox({
-                items: [],
-                weight: 500,
-                name: '500g luxury box',
-                package: {
-                    _id: 0,
-                },
-                total: 0,
                 ...product,
             });
             setBoxDialog(true);
         } else {
-            setActiveOrder((prevState) => {
-                let items = [...prevState.items];
-                let isProdFound = -1;
-                isProdFound = items.findIndex(
-                    (item) => item._id === product._id
-                );
-                let newCount = 1;
-                if (isProdFound >= 0) {
-                    newCount = items[isProdFound].count + 1;
-                    items[isProdFound].count = newCount;
-                } else {
-                    items.push({ ...product, count: 1 });
-                }
-                let updatedState = {
-                    total: getTotal(items),
-                    items: items,
-                };
-                localStorage.setItem('pos', stringfyJSON(updatedState));
-                return updatedState;
-            });
+            addItemToPOS(product);
         }
+    };
+    const addItemToPOS = (product) => {
+        setActiveOrder((prevState) => {
+            let items = [...prevState.items];
+            let isProdFound = -1;
+            isProdFound = items.findIndex((item) => item._id === product._id);
+            let newCount = 1;
+            if (isProdFound >= 0) {
+                newCount = items[isProdFound].count + 1;
+                items[isProdFound].count = newCount;
+            } else {
+                items.push({ ...product, count: 1 });
+            }
+            let updatedState = {
+                total: getTotal(items),
+                items: items,
+            };
+            localStorage.setItem('pos', stringfyJSON(updatedState));
+            return updatedState;
+        });
     };
     const handleUpdateItem = (type, item) => {
         setActiveOrder((prevState) => {
@@ -142,6 +134,19 @@ const Pos = () => {
             return pos;
         });
     };
+    const handleBoxPOS = (box_item) => {
+        setActiveOrder((prevState) => {
+            let newItems = [...prevState.items];
+            newItems.unshift(box_item);
+            let updatedState = {
+                total: getTotal(newItems),
+                items: newItems,
+            };
+            localStorage.setItem('pos', stringfyJSON(updatedState));
+            return updatedState;
+        });
+        closePOSBoxDialog();
+    };
     return (
         <div className={'posContainer'}>
             <div className={'posContainer__heldPOS'}>
@@ -166,6 +171,7 @@ const Pos = () => {
                     open={boxDialog}
                     box={box}
                     close={closePOSBoxDialog}
+                    addToPOS={handleBoxPOS}
                 />
             )}
 

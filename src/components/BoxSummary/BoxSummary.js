@@ -62,13 +62,13 @@ const BoxSummary = ({
                                 >
                                     <ButtonUI
                                         height={'2rem'}
-                                        width={'2rem'}
+                                        width={'3rem'}
                                         name={'+'}
                                         clickHandler={() => plusButton(item)}
                                     />
                                     <ButtonUI
                                         height={'2rem'}
-                                        width={'2rem'}
+                                        width={'3rem'}
                                         name={'-'}
                                         clickHandler={() => minusButton(item)}
                                     />

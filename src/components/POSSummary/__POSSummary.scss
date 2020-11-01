@@ -3,7 +3,7 @@
   margin: 1rem;
   height: 85vh;
   @include media-breakpoint-up(xl) {
-   height: auto;
+    height: auto;
   }
   @include flex(column);
 
@@ -33,6 +33,17 @@
 
       &__tableItem {
         transition: all 0.4s ease-in-out;
+
+        &__name {
+          @include flex(column);
+          ul {
+            padding-left: 2rem;
+            li{
+              font-size: 1.3rem;
+              text-align: start;
+            }
+          }
+        }
 
         &:hover {
           cursor: pointer;

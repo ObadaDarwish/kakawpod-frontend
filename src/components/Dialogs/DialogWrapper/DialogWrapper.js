@@ -29,6 +29,7 @@ const DialogWrapper = ({ open, onClose, close, ...rest }) => {
             open={open}
             className={classes.root}
             onBackdropClick={close}
+            onClose={onClose}
         >
             <IconButton
                 onClick={close}

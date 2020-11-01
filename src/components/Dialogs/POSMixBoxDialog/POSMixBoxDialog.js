@@ -5,17 +5,21 @@ import useFetchProducts from '../../../hooks/useFetchProducts';
 import ShopFilters from '../../ShopFilters/ShopFilters';
 import PosProduct from '../../POSProduct/POSProduct';
 import CircularLoadingIndicator from '../../LoadingIndicator/CircularLoadingIndicator';
+import { infoNotification } from '../../../utils/notification-utils';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import { v4 as uuidv4 } from 'uuid';
 
-const PosBoxDialog = ({ open, close, box }) => {
+const PosBoxDialog = ({ open, close, box, addToPOS }) => {
     const [type, setType] = useState('milk');
-    let [isLoadingBars, bars, setBars] = useFetchProducts(
+    const [localBox, setLocalBox] = useState({ items: [] });
+    let [isLoadingBars, bars] = useFetchProducts(
         `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=${
             box.category === 'mixBox' ? 'bar' : 'miniBar'
         }&type=${type}`
     );
     const getItemsCount = () => {
         let count = 0;
-        box.items.forEach((item) => {
+        localBox.items.forEach((item) => {
             if (box.category === 'mixBox') {
                 count += item.count;
             } else {
@@ -28,8 +32,118 @@ const PosBoxDialog = ({ open, close, box }) => {
         const event = e.target;
         setType(event.name);
     };
+    const addItem = (product) => {
+        let items = [...localBox.items];
+        const updateMixBoxState = (prevState) => {
+            return {
+                ...prevState,
+                items: items,
+            };
+        };
+        let limit = box.category === 'mixBox' ? box.limit : box.weight;
+        if (getItemsCount() < limit) {
+            let isProdFound = items.findIndex(
+                (item) => item._id === product._id
+            );
+            let newCount = 1;
+            if (isProdFound >= 0) {
+                newCount = items[isProdFound].count + 1;
+                items[isProdFound].count = newCount;
+                setLocalBox((prevState) => {
+                    return updateMixBoxState(prevState);
+                });
+            } else {
+                items.push({ ...product, count: 1 });
+                setLocalBox((prevState) => {
+                    return updateMixBoxState(prevState);
+                });
+            }
+        } else {
+            infoNotification(
+                'Box is full, please upgrade your box.',
+                'Box limit'
+            );
+        }
+    };
+    const updateBoxItems = (type, bar) => {
+        let limit = box.category === 'mixBox' ? box.limit : box.weight;
+        if (getItemsCount() < limit || type === 'subtract') {
+            let newCount = type === 'add' ? ++bar.count : --bar.count;
+            setLocalBox((prevState) => {
+                let items = [...prevState.items];
+                let index = items.findIndex((item) => item._id === bar._id);
+                if (newCount > 0) {
+                    items[index].count = newCount;
+                } else {
+                    items.splice(index, 1);
+                }
+                return {
+                    ...prevState,
+                    items: items,
+                };
+            });
+        } else {
+            infoNotification(
+                'Box is full, please upgrade your box.',
+                'Box limit'
+            );
+        }
+    };
+
+    const clearBox = () => {
+        setLocalBox((prevState) => {
+            return {
+                ...prevState,
+                items: [],
+            };
+        });
+    };
+    const getBoxCount = (value, product) => {
+        let weight = 0;
+        localBox.items.forEach((item) => {
+            let newCount = product._id === item._id ? value : item.count;
+            weight +=
+                box.category === 'mixBox' ? newCount : item.weight * newCount;
+        });
+        return weight;
+    };
+    const countInputChangeHandler = (e, item) => {
+        let { value } = e.target;
+        let limit = box.category === 'mixBox' ? box.limit : box.weight;
+        value = value ? parseInt(value) : 0;
+        if (getBoxCount(value, item) <= limit) {
+            setLocalBox((prevState) => {
+                let updatedItems = [...prevState.items];
+                let isFound = updatedItems.findIndex(
+                    (bar) => bar._id === item._id
+                );
+                updatedItems[isFound] = {
+                    ...updatedItems[isFound],
+                    count: value,
+                };
+
+                return {
+                    ...prevState,
+                    items: updatedItems,
+                };
+            });
+        } else {
+            infoNotification('Exceeding box limit.', 'limit');
+        }
+    };
+    const addToPOSHandler = () => {
+        let uniqueId = uuidv4();
+        let finalBox = {
+            ...box,
+            _id: uniqueId,
+            items: localBox.items,
+            count: 1,
+        };
+        setLocalBox({ items: [] });
+        addToPOS(finalBox);
+    };
     return (
-        <DialogWrapper open={open} close={close}>
+        <DialogWrapper open={open} close={close} onClose={clearBox}>
             <div className={'posMixBoxContainer'}>
                 <ShopFilters
                     handleChange={handleFilterChange}
@@ -44,7 +158,7 @@ const PosBoxDialog = ({ open, close, box }) => {
                             bars.map((bar) => {
                                 return (
                                     <PosProduct
-                                        // addItem={addItem}
+                                        addItem={addItem}
                                         product={bar}
                                         key={bar._id}
                                         noPrice
@@ -58,13 +172,15 @@ const PosBoxDialog = ({ open, close, box }) => {
                             box.category === 'mixBox' ? 'Mix box' : 'Luxury box'
                         }
                         selectedBox={box}
-                        boxItems={box.items}
+                        boxItems={localBox.items}
                         itemsCount={getItemsCount()}
-                        boxLimit={box.limit}
-                        // handleItemUpdate={updateLuxuryBoxItems}
-                        // clearBoxHandler={confirmClearLuxuryBox}
-                        // handleInputChange={countInputChangeHandler}
-                        // handleAddToCart={addLuxuryBoxToCart}
+                        boxLimit={
+                            box.category === 'mixBox' ? box.limit : box.weight
+                        }
+                        handleItemUpdate={updateBoxItems}
+                        clearBoxHandler={clearBox}
+                        handleInputChange={countInputChangeHandler}
+                        handleAddToCart={addToPOSHandler}
                         price={box.price}
                         buttonName={'Add'}
                     />

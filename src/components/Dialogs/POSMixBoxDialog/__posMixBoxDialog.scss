@@ -4,11 +4,15 @@
   &__wrapper {
     @include flex(row);
     margin: 1rem;
+    margin-bottom: 2remv;
     &__listing {
       width: 60rem;
       height: 35rem;
       overflow-y: auto;
       @include flex(row wrap);
+    }
+    .boxSummary{
+      height: 40rem;
     }
   }
 }

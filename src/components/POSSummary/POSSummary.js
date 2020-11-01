@@ -41,7 +41,32 @@ const POSSummary = ({ activeOrder, updateItem, clearPOS, holdPOS }) => {
                                     >
                                         <th scope="row">{index + 1}</th>
                                         <td>
-                                            {item.name} - {item.weight}g
+                                            <div
+                                                className={
+                                                    'table__tableItem__name'
+                                                }
+                                            >
+                                                <p> {item.name}</p>
+                                                {item.items && (
+                                                    <ul>
+                                                        {item.items.map(
+                                                            (subItem) => {
+                                                                return (
+                                                                    <li>
+                                                                        {
+                                                                            subItem.name
+                                                                        }{' '}
+                                                                        X{' '}
+                                                                        {
+                                                                            subItem.count
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                            </div>
                                         </td>
                                         <td>
                                             <InputUI
