@@ -6,7 +6,13 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
 
-const POSSummary = ({ activeOrder, updateItem, clearPOS, holdPOS }) => {
+const POSSummary = ({
+    activeOrder,
+    updateItem,
+    clearPOS,
+    holdPOS,
+    submitOrder,
+}) => {
     const [selectedItem, setSelectedItem] = useState({});
     const selectItem = (item) => {
         setSelectedItem(item);
@@ -32,7 +38,7 @@ const POSSummary = ({ activeOrder, updateItem, clearPOS, holdPOS }) => {
                             activeOrder.items.map((item, index) => {
                                 return (
                                     <tr
-                                        key={item._id}
+                                        key={item.uid}
                                         className={`table__tableItem ${
                                             item._id === selectedItem._id &&
                                             'table__tableItem__selected'
@@ -52,7 +58,11 @@ const POSSummary = ({ activeOrder, updateItem, clearPOS, holdPOS }) => {
                                                         {item.items.map(
                                                             (subItem) => {
                                                                 return (
-                                                                    <li>
+                                                                    <li
+                                                                        key={
+                                                                            subItem._id
+                                                                        }
+                                                                    >
                                                                         {
                                                                             subItem.name
                                                                         }{' '}
@@ -139,9 +149,9 @@ const POSSummary = ({ activeOrder, updateItem, clearPOS, holdPOS }) => {
                 <ButtonUI
                     name={'hold'}
                     inverseBackground
-                    clickHandler={() => holdPOS(activeOrder)}
+                    clickHandler={holdPOS}
                 />
-                <ButtonUI name={'pay'} />
+                <ButtonUI name={'pay'} clickHandler={submitOrder} />
             </div>
         </div>
     );

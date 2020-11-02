@@ -6,7 +6,6 @@ import ShopFilters from '../../ShopFilters/ShopFilters';
 import PosProduct from '../../POSProduct/POSProduct';
 import CircularLoadingIndicator from '../../LoadingIndicator/CircularLoadingIndicator';
 import { infoNotification } from '../../../utils/notification-utils';
-import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import { v4 as uuidv4 } from 'uuid';
 
 const PosBoxDialog = ({ open, close, box, addToPOS }) => {
@@ -135,7 +134,7 @@ const PosBoxDialog = ({ open, close, box, addToPOS }) => {
         let uniqueId = uuidv4();
         let finalBox = {
             ...box,
-            _id: uniqueId,
+            uid: uniqueId,
             items: localBox.items,
             count: 1,
         };

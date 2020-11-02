@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
                 minWidth: '90%',
             },
         },
-        '& .MuiButton-root': {
-            marginTop: '2rem',
-        },
     },
 }));
 const DialogWrapper = ({ open, onClose, close, ...rest }) => {

@@ -3,8 +3,18 @@ import POSListings from '../../../components/POSListings/POSListings';
 import POSSummary from '../../../components/POSSummary/POSSummary';
 import { parseJSON, stringfyJSON } from '../../../utils/jsonConversion';
 import PosBoxDialog from '../../../components/Dialogs/POSMixBoxDialog/POSMixBoxDialog';
+import useCallServer from '../../../hooks/useCallServer';
+import {
+    errorNotification,
+    successNotification,
+} from '../../../utils/notification-utils';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../../store/actions/loadingIndicator_actions';
+import { v4 as uuidv4 } from 'uuid';
 
 const Pos = () => {
+    const [, , , , callServer] = useCallServer();
+    const dispatch = useDispatch();
     const [heldPOS, setHeldPos] = useState(
         localStorage.getItem('heldPOS')
             ? parseJSON(localStorage.getItem('heldPOS'))
@@ -49,7 +59,8 @@ const Pos = () => {
                 newCount = items[isProdFound].count + 1;
                 items[isProdFound].count = newCount;
             } else {
-                items.push({ ...product, count: 1 });
+                let uniqueId = uuidv4();
+                items.unshift({ ...product, uid: uniqueId, count: 1 });
             }
             let updatedState = {
                 total: getTotal(items),
@@ -108,12 +119,12 @@ const Pos = () => {
     const closePOSBoxDialog = () => {
         setBoxDialog(false);
     };
-    const holdPOSHandler = (pos) => {
+    const holdPOSHandler = () => {
         setHeldPos((prevState) => {
             let updatedPOS = [...prevState];
             for (let i = 0; i < 3; i++) {
                 if (!updatedPOS[i]) {
-                    updatedPOS[i] = pos;
+                    updatedPOS[i] = activeOrder;
                     break;
                 }
             }
@@ -146,6 +157,25 @@ const Pos = () => {
             return updatedState;
         });
         closePOSBoxDialog();
+    };
+    const handleSubmitOrder = () => {
+        dispatch(setLoading(true));
+        callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/pos`, {
+            pos: activeOrder.items,
+        })
+            .then(() => {
+                handleClearPOS();
+                successNotification(
+                    'Order has been placed successfully',
+                    'Order'
+                );
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(err.response.data.message, 'Code');
+                }
+            })
+            .finally(() => dispatch(setLoading(false)));
     };
     return (
         <div className={'posContainer'}>
@@ -181,6 +211,7 @@ const Pos = () => {
                 updateItem={handleUpdateItem}
                 clearPOS={handleClearPOS}
                 holdPOS={holdPOSHandler}
+                submitOrder={handleSubmitOrder}
             />
         </div>
     );

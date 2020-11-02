@@ -2122,7 +2122,7 @@
 }
 @media (max-width: 1380px) {
   .checkoutContainer__checkoutDataWrapper {
-    flex-basis: 45%;
+    flex-basis: 65%;
   }
 }
 @media (max-width: 1024.98px) {
@@ -2925,7 +2925,7 @@ h1, h2, h3, h4, h5, h6, a, p {
 }
 @media (max-width: 1380px) {
   .orderSummaryWrapper {
-    flex-basis: 45%;
+    flex-basis: 35%;
   }
 }
 @media (max-width: 1024.98px) {
