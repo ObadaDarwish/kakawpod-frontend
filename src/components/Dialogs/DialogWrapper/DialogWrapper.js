@@ -3,9 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import CircularLoadingIndicator from '../../LoadingIndicator/CircularLoadingIndicator';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        position: 'relative',
         '& .MuiDialog-paper': {
             display: 'flex',
             flexDirection: 'column',
@@ -15,10 +17,17 @@ const useStyles = makeStyles((theme) => ({
             [theme.breakpoints.down('sm')]: {
                 minWidth: '90%',
             },
+            '& .loadingOverlay': {
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                opacity: 0.5,
+                zIndex: 2,
+            },
         },
     },
 }));
-const DialogWrapper = ({ open, onClose, close, ...rest }) => {
+const DialogWrapper = ({ open, onClose, close, loading, ...rest }) => {
     const classes = useStyles(rest);
     return (
         <Dialog
@@ -28,6 +37,11 @@ const DialogWrapper = ({ open, onClose, close, ...rest }) => {
             onBackdropClick={close}
             onClose={onClose}
         >
+            {loading && (
+                <div className={'loadingOverlay'}>
+                    <CircularLoadingIndicator height={'100%'} />
+                </div>
+            )}
             <IconButton
                 onClick={close}
                 style={{

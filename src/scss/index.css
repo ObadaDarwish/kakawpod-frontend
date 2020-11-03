@@ -2486,7 +2486,7 @@
   border-radius: 13rem;
   top: 3.5rem;
   padding: 0.5rem;
-  z-index: 1000000;
+  z-index: 100000;
   background: #7D5A5A;
   color: #fff;
   cursor: pointer;
@@ -2712,6 +2712,7 @@
 }
 .summaryContainer__summaryWrapper .table__tableItem {
   transition: all 0.4s ease-in-out;
+  margin: 0.5rem 0;
 }
 .summaryContainer__summaryWrapper .table__tableItem__name {
   display: flex;
@@ -2841,6 +2842,13 @@
 }
 .posMixBoxContainer__wrapper .boxSummary {
   height: 40rem;
+}
+
+.discountFormContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  position: relative;
 }
 
 @font-face {

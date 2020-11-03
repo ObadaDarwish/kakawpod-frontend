@@ -6,6 +6,7 @@ import PosBoxDialog from '../../../components/Dialogs/POSMixBoxDialog/POSMixBoxD
 import useCallServer from '../../../hooks/useCallServer';
 import {
     errorNotification,
+    infoNotification,
     successNotification,
 } from '../../../utils/notification-utils';
 import { useDispatch } from 'react-redux';
@@ -120,30 +121,38 @@ const Pos = () => {
         setBoxDialog(false);
     };
     const holdPOSHandler = () => {
-        setHeldPos((prevState) => {
-            let updatedPOS = [...prevState];
-            for (let i = 0; i < 3; i++) {
-                if (!updatedPOS[i]) {
-                    updatedPOS[i] = activeOrder;
-                    break;
-                }
-            }
-            localStorage.setItem('heldPOS', stringfyJSON(updatedPOS));
-            handleClearPOS();
-            return updatedPOS;
-        });
-    };
-    const retrievePOS = (pos, index) => {
-        setActiveOrder(() => {
-            localStorage.setItem('pos', stringfyJSON(pos));
+        if (activeOrder.items.length) {
             setHeldPos((prevState) => {
                 let updatedPOS = [...prevState];
-                updatedPOS[index] = 0;
+                for (let i = 0; i < 3; i++) {
+                    if (!updatedPOS[i]) {
+                        updatedPOS[i] = activeOrder;
+                        break;
+                    }
+                }
                 localStorage.setItem('heldPOS', stringfyJSON(updatedPOS));
+                handleClearPOS();
                 return updatedPOS;
             });
-            return pos;
-        });
+        } else {
+            infoNotification('POS is empty!', 'POS');
+        }
+    };
+    const retrievePOS = (pos, index) => {
+        if (pos) {
+            setActiveOrder(() => {
+                localStorage.setItem('pos', stringfyJSON(pos));
+                setHeldPos((prevState) => {
+                    let updatedPOS = [...prevState];
+                    updatedPOS[index] = 0;
+                    localStorage.setItem('heldPOS', stringfyJSON(updatedPOS));
+                    return updatedPOS;
+                });
+                return pos;
+            });
+        } else {
+            infoNotification('No held POS were found!.', 'POS');
+        }
     };
     const handleBoxPOS = (box_item) => {
         setActiveOrder((prevState) => {
@@ -158,10 +167,11 @@ const Pos = () => {
         });
         closePOSBoxDialog();
     };
-    const handleSubmitOrder = () => {
+    const handleSubmitOrder = (OTP) => {
         dispatch(setLoading(true));
         callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/pos`, {
             pos: activeOrder.items,
+            OTP: OTP,
         })
             .then(() => {
                 handleClearPOS();

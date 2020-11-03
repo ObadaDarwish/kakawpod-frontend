@@ -28,6 +28,7 @@ const InputUI = ({
     disabled,
     changeHandler,
     placeholder,
+    autofocus,
     ...props
 }) => {
     const matches = useMediaQuery('(max-width:768px)');
@@ -35,6 +36,7 @@ const InputUI = ({
     return (
         <TextField
             placeholder={placeholder}
+            autoFocus={autofocus}
             required={required}
             className={classes.inputField}
             label={label}

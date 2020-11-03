@@ -33,7 +33,7 @@
 
       &__tableItem {
         transition: all 0.4s ease-in-out;
-
+        margin: 0.5rem 0;
         &__name {
           @include flex(column);
           ul {

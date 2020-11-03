@@ -5,6 +5,8 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import ClearIcon from '@material-ui/icons/Clear';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
+import POSDiscountDialog from '../Dialogs/POSDiscountDialog/POSDiscountDialog';
+import { infoNotification } from '../../utils/notification-utils';
 
 const POSSummary = ({
     activeOrder,
@@ -14,11 +16,34 @@ const POSSummary = ({
     submitOrder,
 }) => {
     const [selectedItem, setSelectedItem] = useState({});
+    const [discountDialog, setDiscountDialog] = useState(false);
+    const [discount, setDiscount] = useState(0);
+    const [OTP, setOTP] = useState(0);
     const selectItem = (item) => {
         setSelectedItem(item);
     };
+    const openDiscount = () => {
+        if (activeOrder.items.length) {
+            setDiscountDialog(true);
+        } else {
+            infoNotification('POS is empty!', 'POS');
+        }
+    };
+    const closeDiscountDialog = () => {
+        setDiscountDialog(false);
+    };
+    const applyDiscount = (discount, OTP) => {
+        closeDiscountDialog();
+        setOTP(OTP);
+        setDiscount(discount);
+    };
     return (
         <div className={'summaryContainer'}>
+            <POSDiscountDialog
+                close={closeDiscountDialog}
+                open={discountDialog}
+                applyDiscountHandler={applyDiscount}
+            />
             <div className={'summaryContainer__summaryWrapper'}>
                 <table className="table">
                     <thead
@@ -108,8 +133,15 @@ const POSSummary = ({
             </div>
             <div className={'summaryContainer__posBlock'}>
                 <p>Discount:</p>
-                <ButtonUI name={'discount'} width={'12rem'} />
-                <p>-EGP10</p>
+                <ButtonUI
+                    name={'discount'}
+                    width={'12rem'}
+                    clickHandler={openDiscount}
+                />
+                <p>
+                    -EGP
+                    {activeOrder.total * (discount / 100)}
+                </p>
             </div>
             <div
                 className={
@@ -117,7 +149,10 @@ const POSSummary = ({
                 }
             >
                 <p>Grand total:</p>
-                <p>EGP{activeOrder.total - 10}</p>
+                <p>
+                    EGP
+                    {activeOrder.total - activeOrder.total * (discount / 100)}
+                </p>
             </div>
             <div className={`summaryContainer__itemControl`}>
                 {!selectedItem._id && (
@@ -151,7 +186,7 @@ const POSSummary = ({
                     inverseBackground
                     clickHandler={holdPOS}
                 />
-                <ButtonUI name={'pay'} clickHandler={submitOrder} />
+                <ButtonUI name={'pay'} clickHandler={() => submitOrder(OTP)} />
             </div>
         </div>
     );
