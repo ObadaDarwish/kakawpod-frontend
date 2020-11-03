@@ -2731,7 +2731,12 @@
 }
 .summaryContainer__summaryWrapper .table__tableItem__selected {
   background: #FAF2F2;
-  box-shadow: inset 0 0 3px 1px #7D5A5A;
+  box-shadow: inset 0 0 0.3rem 0.1rem #7D5A5A;
+}
+.summaryContainer__summaryWrapper .table__outOfStock {
+  box-shadow: inset 0 0 0.3rem 0.1rem red;
+  padding: 0.3rem 0;
+  position: relative;
 }
 .summaryContainer__summaryWrapper .table th, .summaryContainer__summaryWrapper .table td {
   color: #7D5A5A;

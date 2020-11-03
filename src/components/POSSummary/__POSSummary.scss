@@ -52,10 +52,15 @@
 
         &__selected {
           background: $color4;
-          box-shadow: inset 0 0 3px 1px $color1;
+          box-shadow: inset 0 0 0.3rem 0.1rem $color1;
         }
-      }
 
+      }
+      &__outOfStock{
+        box-shadow: inset 0 0 0.3rem 0.1rem red;
+        padding: 0.3rem 0;
+        position: relative;
+      }
 
       th, td {
         color: $color1;

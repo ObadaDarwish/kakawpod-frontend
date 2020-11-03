@@ -68,6 +68,9 @@ const POSSummary = ({
                                         className={`table__tableItem ${
                                             item._id === selectedItem._id &&
                                             'table__tableItem__selected'
+                                        } ${
+                                            item.outOfStock &&
+                                            'table__outOfStock'
                                         }`}
                                         onClick={() => selectItem(item)}
                                     >
@@ -78,13 +81,17 @@ const POSSummary = ({
                                                     'table__tableItem__name'
                                                 }
                                             >
-                                                <p> {item.name}</p>
+                                                <p>{item.name}</p>
                                                 {item.items && (
                                                     <ul>
                                                         {item.items.map(
                                                             (subItem) => {
                                                                 return (
                                                                     <li
+                                                                        className={`${
+                                                                            subItem.outOfStock &&
+                                                                            'table__outOfStock'
+                                                                        }`}
                                                                         key={
                                                                             subItem._id
                                                                         }

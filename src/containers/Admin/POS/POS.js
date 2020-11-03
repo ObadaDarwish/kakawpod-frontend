@@ -12,6 +12,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
 import { v4 as uuidv4 } from 'uuid';
+import { outOfStock } from '../../../store/actions/cart_actions';
 
 const Pos = () => {
     const [, , , , callServer] = useCallServer();
@@ -39,12 +40,14 @@ const Pos = () => {
     const addItemHandler = (product) => {
         if (product.category === 'mixBox') {
             setBox({
+                items: [],
                 limit: parseInt(product.name.substr(0, 1)),
                 ...product,
             });
             setBoxDialog(true);
         } else if (product.category === 'luxuryBox') {
             setBox({
+                items: [],
                 ...product,
             });
             setBoxDialog(true);
@@ -55,8 +58,9 @@ const Pos = () => {
     const addItemToPOS = (product) => {
         setActiveOrder((prevState) => {
             let items = [...prevState.items];
-            let isProdFound = -1;
-            isProdFound = items.findIndex((item) => item._id === product._id);
+            let isProdFound = items.findIndex(
+                (item) => item._id === product._id
+            );
             let newCount = 1;
             if (isProdFound >= 0) {
                 newCount = items[isProdFound].count + 1;
@@ -111,7 +115,7 @@ const Pos = () => {
         });
     };
     const handleClearPOS = () => {
-        setActiveOrder((prevState) => {
+        setActiveOrder(() => {
             localStorage.removeItem('pos');
             return {
                 total: 0,
@@ -169,6 +173,32 @@ const Pos = () => {
         });
         closePOSBoxDialog();
     };
+    const updateOutOfStockItems = (list) => {
+        setActiveOrder((prevState) => {
+            let orderList = [...prevState.items];
+            list.forEach((outOfStockItem) => {
+                for (let i = 0; i < orderList.length; i++) {
+                    if (outOfStockItem._id === orderList[i]._id) {
+                        orderList[i].outOfStock = true;
+                    }
+                    if (orderList[i].items && orderList[i].items.length) {
+                        let isSubItemFound = orderList[i].items.findIndex(
+                            (item) => item._id === outOfStockItem._id
+                        );
+                        if (isSubItemFound >= 0) {
+                            orderList[i].items[
+                                isSubItemFound
+                            ].outOfStock = true;
+                        }
+                    }
+                }
+            });
+            return {
+                ...prevState,
+                items: orderList,
+            };
+        });
+    };
     const handleSubmitOrder = () => {
         dispatch(setLoading(true));
         callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/pos`, {
@@ -186,7 +216,9 @@ const Pos = () => {
             })
             .catch((err) => {
                 if (err.response) {
-                    errorNotification(err.response.data.message, 'Code');
+                    let { message, data } = err.response.data;
+                    updateOutOfStockItems(data);
+                    errorNotification(message, 'Code');
                 }
             })
             .finally(() => dispatch(setLoading(false)));
