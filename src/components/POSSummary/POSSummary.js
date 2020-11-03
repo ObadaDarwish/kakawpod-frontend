@@ -14,11 +14,13 @@ const POSSummary = ({
     clearPOS,
     holdPOS,
     submitOrder,
+    discount,
+    OTP,
+    updateDiscountOTP,
 }) => {
     const [selectedItem, setSelectedItem] = useState({});
     const [discountDialog, setDiscountDialog] = useState(false);
-    const [discount, setDiscount] = useState(0);
-    const [OTP, setOTP] = useState(0);
+
     const selectItem = (item) => {
         setSelectedItem(item);
     };
@@ -34,8 +36,7 @@ const POSSummary = ({
     };
     const applyDiscount = (discount, OTP) => {
         closeDiscountDialog();
-        setOTP(OTP);
-        setDiscount(discount);
+        updateDiscountOTP(discount, OTP);
     };
     return (
         <div className={'summaryContainer'}>
@@ -186,7 +187,7 @@ const POSSummary = ({
                     inverseBackground
                     clickHandler={holdPOS}
                 />
-                <ButtonUI name={'pay'} clickHandler={() => submitOrder(OTP)} />
+                <ButtonUI name={'pay'} clickHandler={submitOrder} />
             </div>
         </div>
     );

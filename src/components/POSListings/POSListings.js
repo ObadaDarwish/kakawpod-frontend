@@ -3,7 +3,7 @@ import img from '../../assets/images/milkbar.jpg';
 import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import DataPrompt from '../DataPrompt/DataPrompt';
-import PosMixBoxDialog from '../Dialogs/POSMixBoxDialog/POSMixBoxDialog';
+import PosMixBoxDialog from '../Dialogs/POSBoxDialog/POSBoxDialog';
 import PosProduct from '../POSProduct/POSProduct';
 
 const POSListings = ({ addItem }) => {

@@ -11,17 +11,8 @@ import {
 const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
     const discountRef = useRef();
     const OTPReference = useRef();
-    const [stage, setStage] = useState('applyDiscount');
-    const [showOTPInput, setShowOTPInput] = useState(false);
+    const [stage, setStage] = useState('requestOTP');
     const [, , , , callServer, loading, setLoading] = useCallServer();
-    const changeDiscount = (e) => {
-        const { value } = e.target;
-        if (value > 15) {
-            setStage('requestOTP');
-        } else {
-            setStage('applyDiscount');
-        }
-    };
     const requestOTP = () => {
         setLoading(true);
         callServer(
@@ -32,7 +23,6 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
             }
         )
             .then(() => {
-                setShowOTPInput(true);
                 setStage('applyDiscount');
                 successNotification(
                     'OTP has been send successfully',
@@ -47,7 +37,7 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
             .finally(() => setLoading(false));
     };
     const applyDiscount = () => {
-        if (discountRef.current.value > 15) {
+        if (OTPReference.current.value && discountRef.current.value) {
             setLoading(true);
             callServer(
                 'POST',
@@ -58,7 +48,6 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
                         discountRef.current.value,
                         OTPReference.current.value
                     );
-                    setShowOTPInput(false);
                 })
                 .catch((err) => {
                     if (err.response) {
@@ -66,13 +55,10 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
                     }
                 })
                 .finally(() => setLoading(false));
-        } else {
-            applyDiscountHandler(discountRef.current.value, null);
         }
     };
     const handleClosingDialog = () => {
         setStage('applyDiscount');
-        setShowOTPInput(false);
         close();
     };
     return (
@@ -89,9 +75,8 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
                     defaultValue={0}
                     autofocus
                     type={'number'}
-                    changeHandler={changeDiscount}
                 />
-                {showOTPInput && (
+                {stage === 'applyDiscount' && (
                     <InputUI
                         label={'OTP'}
                         reference={OTPReference}

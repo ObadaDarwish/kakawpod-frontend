@@ -135,6 +135,7 @@ const PosBoxDialog = ({ open, close, box, addToPOS }) => {
         let finalBox = {
             ...box,
             uid: uniqueId,
+            total: box.price,
             items: localBox.items,
             count: 1,
         };

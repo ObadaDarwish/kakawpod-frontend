@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import POSListings from '../../../components/POSListings/POSListings';
 import POSSummary from '../../../components/POSSummary/POSSummary';
 import { parseJSON, stringfyJSON } from '../../../utils/jsonConversion';
-import PosBoxDialog from '../../../components/Dialogs/POSMixBoxDialog/POSMixBoxDialog';
+import PosBoxDialog from '../../../components/Dialogs/POSBoxDialog/POSBoxDialog';
 import useCallServer from '../../../hooks/useCallServer';
 import {
     errorNotification,
@@ -15,6 +15,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Pos = () => {
     const [, , , , callServer] = useCallServer();
+    const [discount, setDiscount] = useState(0);
+    const [OTP, setOTP] = useState(0);
     const dispatch = useDispatch();
     const [heldPOS, setHeldPos] = useState(
         localStorage.getItem('heldPOS')
@@ -167,7 +169,7 @@ const Pos = () => {
         });
         closePOSBoxDialog();
     };
-    const handleSubmitOrder = (OTP) => {
+    const handleSubmitOrder = () => {
         dispatch(setLoading(true));
         callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/pos`, {
             pos: activeOrder.items,
@@ -175,6 +177,8 @@ const Pos = () => {
         })
             .then(() => {
                 handleClearPOS();
+                setDiscount(0);
+                setOTP(0);
                 successNotification(
                     'Order has been placed successfully',
                     'Order'
@@ -186,6 +190,10 @@ const Pos = () => {
                 }
             })
             .finally(() => dispatch(setLoading(false)));
+    };
+    const handleUpdateDiscountOTP = (updatedDiscount, updatedOTP) => {
+        setDiscount(updatedDiscount);
+        setOTP(updatedOTP);
     };
     return (
         <div className={'posContainer'}>
@@ -222,6 +230,9 @@ const Pos = () => {
                 clearPOS={handleClearPOS}
                 holdPOS={holdPOSHandler}
                 submitOrder={handleSubmitOrder}
+                OTP={OTP}
+                discount={discount}
+                updateDiscountOTP={handleUpdateDiscountOTP}
             />
         </div>
     );
