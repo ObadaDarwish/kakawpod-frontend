@@ -3,7 +3,8 @@ import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import { format } from 'date-fns';
 import DataPrompt from '../DataPrompt/DataPrompt';
-const AdminOrdersList = ({ orders, loading, incrementPage }) => {
+const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
+    console.log(areOrdersLoading);
     const getDate = (isoDate) => {
         const date = new Date(isoDate);
         return format(date, 'PP');
@@ -44,7 +45,7 @@ const AdminOrdersList = ({ orders, loading, incrementPage }) => {
                                   </tr>
                               );
                           })
-                        : !loading && (
+                        : !areOrdersLoading && (
                               <tr
                                   style={{
                                       display: 'flex',
@@ -62,20 +63,17 @@ const AdminOrdersList = ({ orders, loading, incrementPage }) => {
                                   </td>
                               </tr>
                           )}
-                    {loading && (
-                        <tr
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <td>
-                                <CircularLoadingIndicator height={'20rem'} />
-                            </td>
-                        </tr>
-                    )}
                 </tbody>
             </table>
+            {areOrdersLoading && (
+                <div
+                    className={
+                        'adminOrdersContainer__ordersWrapper__orders__loadingIndication'
+                    }
+                >
+                    <CircularLoadingIndicator height={'20rem'} />
+                </div>
+            )}
         </div>
     );
 };

@@ -6,12 +6,13 @@ const useFetchAdminOrders = (url, page) => {
     const [response, setResponse] = useState({ orders: [], total: 0 });
     const [error, setError] = useState(false);
     const getRequest = (canUpdate, callback) => {
+        setIsLoading(true);
         axios
             .get(url)
             .then((res) => {
                 if (canUpdate) {
-                    callback(res);
                     setIsLoading(false);
+                    callback(res);
                 }
             })
             .catch((err) => {
@@ -24,7 +25,6 @@ const useFetchAdminOrders = (url, page) => {
     useEffect(() => {
         if (page === 1) {
             let canUpdate = true;
-            setIsLoading(true);
             getRequest(canUpdate, (res) => {
                 setResponse(res.data);
             });
@@ -37,7 +37,6 @@ const useFetchAdminOrders = (url, page) => {
     useEffect(() => {
         if (page !== 1) {
             let canUpdate = true;
-            setIsLoading(true);
             getRequest(canUpdate, (res) => {
                 setResponse((prevState) => {
                     let previousOrders = prevState.orders;

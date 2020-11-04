@@ -13,11 +13,13 @@
     align-items: center;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
+
     &__datePicker {
       padding: 1rem 0;
-      &__menu{
-        .MuiPaper-root{
-          top: 100px!important;
+
+      &__menu {
+        .MuiPaper-root {
+          top: 100px !important;
         }
       }
     }
@@ -26,6 +28,7 @@
   &__ordersWrapper {
     @include flex(row);
     justify-content: space-between;
+
     &__list {
       @include flex(column);
       list-style: none;
@@ -52,12 +55,11 @@
     }
 
 
-
     &__orders {
       @include flex(column);
       padding: 1rem 0;
       padding-left: 1rem;
-
+      position: relative;
 
       td, th {
         font-size: 1.8rem;
@@ -102,6 +104,19 @@
             vertical-align: middle;
           }
         }
+      }
+
+      &__loadingIndication {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        width: 100%;
+        height: 100% ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #bbbbbb;
+        opacity: 0.5;
       }
     }
   }

@@ -151,7 +151,7 @@ const AdminOrders = () => {
 
                 <AdminOrdersList
                     orders={fetchedOrders}
-                    loading={areOrdersLoading}
+                    areOrdersLoading={areOrdersLoading}
                     incrementPage={handleNextPage}
                 />
             </div>

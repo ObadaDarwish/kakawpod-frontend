@@ -3174,6 +3174,7 @@
   flex-flow: column;
   padding: 1rem 0;
   padding-left: 1rem;
+  position: relative;
 }
 .adminOrdersContainer__ordersWrapper__orders td, .adminOrdersContainer__ordersWrapper__orders th {
   font-size: 1.8rem;
@@ -3208,6 +3209,18 @@
   width: 22rem;
   text-align: center;
   vertical-align: middle;
+}
+.adminOrdersContainer__ordersWrapper__orders__loadingIndication {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #bbbbbb;
+  opacity: 0.5;
 }
 
 .rdrCalendarWrapper {
