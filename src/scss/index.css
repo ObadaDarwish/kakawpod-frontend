@@ -3136,35 +3136,38 @@
   margin-bottom: 1rem;
   border-radius: 0.5rem;
 }
-.adminOrdersContainer__topBar__list {
-  display: flex;
-  flex-flow: row;
-  list-style: none;
-  padding: 0;
+.adminOrdersContainer__topBar__datePicker {
+  padding: 1rem 0;
 }
-.adminOrdersContainer__topBar__list__item {
-  padding: 1rem 2rem;
-  background: #FAF2F2;
-  color: #7D5A5A;
-  border-radius: 0.5rem;
-  margin-right: 1rem;
-  transition: background-color 0.5s ease-in-out;
-  font-size: 1.8rem;
-}
-.adminOrdersContainer__topBar__list__item:hover {
-  background-color: #f3e1e1;
-  cursor: pointer;
-}
-.adminOrdersContainer__topBar__list__item__selected {
-  background-color: #ead2d2;
+.adminOrdersContainer__topBar__datePicker__menu .MuiPaper-root {
+  top: 100px !important;
 }
 .adminOrdersContainer__ordersWrapper {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
 }
-.adminOrdersContainer__ordersWrapper__datePicker {
-  padding: 1rem 0;
+.adminOrdersContainer__ordersWrapper__list {
+  display: flex;
+  flex-flow: column;
+  list-style: none;
+  padding: 0;
+}
+.adminOrdersContainer__ordersWrapper__list__item {
+  padding: 1rem 2rem;
+  background: #FAF2F2;
+  color: #7D5A5A;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  transition: background-color 0.5s ease-in-out;
+  font-size: 1.8rem;
+}
+.adminOrdersContainer__ordersWrapper__list__item:hover {
+  background-color: #f3e1e1;
+  cursor: pointer;
+}
+.adminOrdersContainer__ordersWrapper__list__item__selected {
+  background-color: #ead2d2;
 }
 .adminOrdersContainer__ordersWrapper__orders {
   display: flex;
@@ -3181,7 +3184,7 @@
   height: 5rem;
 }
 .adminOrdersContainer__ordersWrapper__orders thead tr th {
-  width: 20rem;
+  width: 22rem;
   height: 3rem;
   vertical-align: middle;
   background: #FAF2F2;
@@ -3202,7 +3205,7 @@
   vertical-align: middle;
 }
 .adminOrdersContainer__ordersWrapper__orders tbody tr td {
-  width: 20rem;
+  width: 22rem;
   text-align: center;
   vertical-align: middle;
 }

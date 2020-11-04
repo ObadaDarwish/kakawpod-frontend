@@ -27,6 +27,7 @@ const ButtonUI = ({
     clickHandler,
     type,
     Icon,
+    ariaControls,
     ...props
 }) => {
     const classes = useStyles(props);
@@ -37,6 +38,7 @@ const ButtonUI = ({
             type={type}
             disabled={is_disabled}
             onClick={clickHandler}
+            aria-controls={ariaControls}
         >
             {name}
         </Button>

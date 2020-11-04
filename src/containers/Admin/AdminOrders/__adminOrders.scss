@@ -13,8 +13,21 @@
     align-items: center;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
+    &__datePicker {
+      padding: 1rem 0;
+      &__menu{
+        .MuiPaper-root{
+          top: 100px!important;
+        }
+      }
+    }
+  }
+
+  &__ordersWrapper {
+    @include flex(row);
+    justify-content: space-between;
     &__list {
-      @include flex(row);
+      @include flex(column);
       list-style: none;
       padding: 0;
 
@@ -23,7 +36,7 @@
         background: $color4;
         color: $color1;
         border-radius: 0.5rem;
-        margin-right: 1rem;
+        margin-bottom: 1rem;
         transition: background-color 0.5s ease-in-out;
         font-size: 1.8rem;
 
@@ -37,16 +50,8 @@
         }
       }
     }
-  }
-
-  &__ordersWrapper {
-    @include flex(row);
-    justify-content: space-between;
 
 
-    &__datePicker {
-      padding: 1rem 0;
-    }
 
     &__orders {
       @include flex(column);
@@ -65,7 +70,7 @@
           height: 5rem;
 
           th {
-            width: 20rem;
+            width: 22rem;
             height: 3rem;
             vertical-align: middle;
             background: $color4;
@@ -92,7 +97,7 @@
           }
 
           td {
-            width: 20rem;
+            width: 22rem;
             text-align: center;
             vertical-align: middle;
           }
