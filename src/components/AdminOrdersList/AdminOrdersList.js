@@ -1,6 +1,22 @@
-import React from 'react';
-
-const AdminOrdersList = () => {
+import React, { useRef } from 'react';
+import ButtonUI from '../UI/ButtonUI/ButtonUI';
+import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
+import { format } from 'date-fns';
+import DataPrompt from '../DataPrompt/DataPrompt';
+const AdminOrdersList = ({ orders, loading, incrementPage }) => {
+    const getDate = (isoDate) => {
+        const date = new Date(isoDate);
+        return format(date, 'PP');
+    };
+    const tbodyRef = useRef();
+    const handleScroll = () => {
+        if (tbodyRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = tbodyRef.current;
+            if (scrollTop + clientHeight === scrollHeight) {
+                incrementPage();
+            }
+        }
+    };
     return (
         <div className={'adminOrdersContainer__ordersWrapper__orders'}>
             <table className="table">
@@ -13,154 +29,51 @@ const AdminOrdersList = () => {
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
+                <tbody onScroll={handleScroll} ref={tbodyRef}>
+                    {orders.orders.length
+                        ? orders.orders.map((order, index) => {
+                              return (
+                                  <tr key={order._id}>
+                                      <th scope="row">{index + 1}</th>
+                                      <td>{order.user_id.name}</td>
+                                      <td>{order.total}</td>
+                                      <td>{getDate(order.createdAt)}</td>
+                                      <td>
+                                          <ButtonUI name={'View'} />
+                                      </td>
+                                  </tr>
+                              );
+                          })
+                        : !loading && (
+                              <tr
+                                  style={{
+                                      display: 'flex',
+                                  }}
+                              >
+                                  <td
+                                      style={{
+                                          display: 'flex',
+                                          flexGrow: 1,
+                                      }}
+                                  >
+                                      <DataPrompt
+                                          message={'No products were found.'}
+                                      />
+                                  </td>
+                              </tr>
+                          )}
+                    {loading && (
+                        <tr
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <td>
+                                <CircularLoadingIndicator height={'20rem'} />
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>
