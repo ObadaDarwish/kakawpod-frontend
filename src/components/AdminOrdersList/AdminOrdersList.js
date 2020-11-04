@@ -4,7 +4,6 @@ import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicat
 import { format } from 'date-fns';
 import DataPrompt from '../DataPrompt/DataPrompt';
 const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
-    console.log(areOrdersLoading);
     const getDate = (isoDate) => {
         const date = new Date(isoDate);
         return format(date, 'PP');
