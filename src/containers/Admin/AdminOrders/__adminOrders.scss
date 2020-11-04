@@ -1,0 +1,104 @@
+.adminOrdersContainer {
+  @include flex(column);
+  justify-content: space-around;
+  padding: 3rem;
+  padding-bottom: 0;
+
+  &__topBar {
+    flex-basis: 100%;
+    padding: 0 1rem;
+    background-color: $color3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    &__list {
+      @include flex(row);
+      list-style: none;
+      padding: 0;
+
+      &__item {
+        padding: 1rem 2rem;
+        background: $color4;
+        color: $color1;
+        border-radius: 0.5rem;
+        margin-right: 1rem;
+        transition: background-color 0.5s ease-in-out;
+        font-size: 1.8rem;
+
+        &:hover {
+          background-color: $color3;
+          cursor: pointer;
+        }
+
+        &__selected {
+          background-color: #ead2d2;
+        }
+      }
+    }
+  }
+
+  &__ordersWrapper {
+    @include flex(row);
+    justify-content: space-between;
+
+
+    &__datePicker {
+      padding: 1rem 0;
+    }
+
+    &__orders {
+      @include flex(column);
+      padding: 1rem 0;
+      padding-left: 1rem;
+
+
+      td, th {
+        font-size: 1.8rem;
+        color: $color1;
+      }
+
+      thead {
+        tr {
+          display: block;
+          height: 5rem;
+
+          th {
+            width: 20rem;
+            height: 3rem;
+            vertical-align: middle;
+            background: $color4;
+
+            &:first-child {
+              width: 5rem;
+            }
+          }
+        }
+
+      }
+
+      tbody {
+        height: 65vh;
+        overflow-y: auto;
+        display: block;
+
+        tr {
+          height: 5rem;
+
+          th {
+            width: 5rem;
+            vertical-align: middle;
+          }
+
+          td {
+            width: 20rem;
+            text-align: center;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+
+}

@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { toggleFooter, toggleLogo } from '../../store/actions/global_actions';
 import Drawer from '@material-ui/core/Drawer';
 import ListIcon from '@material-ui/icons/List';
+import AdminOrders from './AdminOrders/AdminOrders';
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Admin = () => {
                         <h1>POS</h1>
                     </NavLink>
                     <NavLink
-                        to={'/admin/orders'}
+                        to={'/admin/orders?filter=pending'}
                         className={'adminContainer__navTabs__item'}
                     >
                         <LocalMallIcon fontSize={'large'} />
@@ -84,6 +85,7 @@ const Admin = () => {
                     render={() => <Redirect to={'/admin/pos'} />}
                 />
                 <Route path={'/admin/pos'} component={POS} />
+                <Route path={'/admin/orders'} component={AdminOrders} />
             </Switch>
         </div>
     );
