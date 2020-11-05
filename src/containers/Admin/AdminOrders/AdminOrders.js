@@ -42,6 +42,7 @@ const AdminOrders = () => {
     const handleDateChange = (dateEvent) => {
         let formattedStartDate = format(dateEvent.selection.startDate, 't');
         let formattedEndDate = format(dateEvent.selection.endDate, 't');
+        setPage(1);
         history.push({
             pathname: location.pathname,
             search: `?filter=${filter}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
@@ -61,11 +62,23 @@ const AdminOrders = () => {
             setPage(newPage);
         }
     };
+    const resetDatePicker = () => {
+        setPage(1);
+        history.push({
+            pathname: location.pathname,
+            search: `?filter=${filter}`,
+        });
+    };
     return (
         <div className={'adminOrdersContainer'}>
             <div className={'adminOrdersContainer__topBar'}>
                 <h1>{fetchedOrders.total} Orders</h1>
                 <div className={'adminOrdersContainer__topBar__datePicker'}>
+                    <ButtonUI
+                        name={'rest'}
+                        clickHandler={resetDatePicker}
+                        width={'10rem'}
+                    />
                     <ButtonUI
                         name={`${
                             startDate

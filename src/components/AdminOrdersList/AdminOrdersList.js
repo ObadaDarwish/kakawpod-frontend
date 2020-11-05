@@ -1,14 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import ButtonUI from '../UI/ButtonUI/ButtonUI';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 import { format } from 'date-fns';
 import DataPrompt from '../DataPrompt/DataPrompt';
+import AdminOrderViewDialog from '../Dialogs/AdminOrderViewDialog/AdminOrderViewDialog';
 const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
     const getDate = (isoDate) => {
         const date = new Date(isoDate);
         return format(date, 'PP');
     };
     const tbodyRef = useRef();
+    const [orderDialog, setOrderDialog] = useState(null);
     const handleScroll = () => {
         if (tbodyRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = tbodyRef.current;
@@ -17,8 +19,21 @@ const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
             }
         }
     };
+    const handleOpenDialog = (order) => {
+        setOrderDialog(order);
+    };
+    const handleCloseOrderDialog = () => {
+        setOrderDialog(null);
+    };
     return (
         <div className={'adminOrdersContainer__ordersWrapper__orders'}>
+            {orderDialog && (
+                <AdminOrderViewDialog
+                    open={Boolean(orderDialog)}
+                    close={handleCloseOrderDialog}
+                    order={orderDialog}
+                />
+            )}
             <table className="table">
                 <thead>
                     <tr>
@@ -39,7 +54,12 @@ const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
                                       <td>{order.total}</td>
                                       <td>{getDate(order.createdAt)}</td>
                                       <td>
-                                          <ButtonUI name={'View'} />
+                                          <ButtonUI
+                                              name={'View'}
+                                              clickHandler={() =>
+                                                  handleOpenDialog(order)
+                                              }
+                                          />
                                       </td>
                                   </tr>
                               );

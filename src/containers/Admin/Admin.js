@@ -55,7 +55,7 @@ const Admin = () => {
                         <h1>POS</h1>
                     </NavLink>
                     <NavLink
-                        to={'/admin/orders?filter=pending'}
+                        to={'/admin/orders'}
                         className={'adminContainer__navTabs__item'}
                     >
                         <LocalMallIcon fontSize={'large'} />

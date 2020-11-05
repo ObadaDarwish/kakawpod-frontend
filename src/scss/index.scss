@@ -410,3 +410,7 @@ input[type=number]::-webkit-outer-spin-button {
 .MuiDialog-paperWidthSm{
   max-width: unset;
 }
+
+th,td{
+  vertical-align: middle!important;
+}
