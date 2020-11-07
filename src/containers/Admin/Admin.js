@@ -7,7 +7,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import LabelIcon from '@material-ui/icons/Label';
 import HomeIcon from '@material-ui/icons/Home';
 import POS from './POS/POS.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleFooter, toggleLogo } from '../../store/actions/global_actions';
 import Drawer from '@material-ui/core/Drawer';
 import ListIcon from '@material-ui/icons/List';
@@ -16,6 +16,7 @@ import AdminOrders from './AdminOrders/AdminOrders';
 const Admin = () => {
     const dispatch = useDispatch();
     const [drawer, setDrawer] = useState(false);
+    const isAuth = useSelector((state) => state.user);
     useEffect(() => {
         dispatch(toggleFooter(false));
         dispatch(toggleLogo(false));
@@ -61,20 +62,24 @@ const Admin = () => {
                         <LocalMallIcon fontSize={'large'} />
                         <h1>Orders</h1>
                     </NavLink>
-                    <NavLink
-                        to={'/admin/products'}
-                        className={'adminContainer__navTabs__item'}
-                    >
-                        <LabelIcon fontSize={'large'} />
-                        <h1>Products</h1>
-                    </NavLink>
-                    <NavLink
-                        to={'/admin/stats'}
-                        className={'adminContainer__navTabs__item'}
-                    >
-                        <TrendingUpIcon fontSize={'large'} />
-                        <h1>Stats</h1>
-                    </NavLink>
+                    {isAuth.authority === 1 && (
+                        <>
+                            <NavLink
+                                to={'/admin/products'}
+                                className={'adminContainer__navTabs__item'}
+                            >
+                                <LabelIcon fontSize={'large'} />
+                                <h1>Products</h1>
+                            </NavLink>
+                            <NavLink
+                                to={'/admin/stats'}
+                                className={'adminContainer__navTabs__item'}
+                            >
+                                <TrendingUpIcon fontSize={'large'} />
+                                <h1>Stats</h1>
+                            </NavLink>
+                        </>
+                    )}
                 </div>
             </Drawer>
 
@@ -86,6 +91,7 @@ const Admin = () => {
                 />
                 <Route path={'/admin/pos'} component={POS} />
                 <Route path={'/admin/orders'} component={AdminOrders} />
+                // add admin route to stats and products
             </Switch>
         </div>
     );

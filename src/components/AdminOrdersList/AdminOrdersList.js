@@ -4,7 +4,13 @@ import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicat
 import { format } from 'date-fns';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import AdminOrderViewDialog from '../Dialogs/AdminOrderViewDialog/AdminOrderViewDialog';
-const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
+
+const AdminOrdersList = ({
+    orders,
+    areOrdersLoading,
+    incrementPage,
+    removeOrder,
+}) => {
     const getDate = (isoDate) => {
         const date = new Date(isoDate);
         return format(date, 'PP');
@@ -25,6 +31,10 @@ const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
     const handleCloseOrderDialog = () => {
         setOrderDialog(null);
     };
+    const updateOrdersList = (id) => {
+        handleCloseOrderDialog();
+        removeOrder(id);
+    };
     return (
         <div className={'adminOrdersContainer__ordersWrapper__orders'}>
             {orderDialog && (
@@ -32,6 +42,7 @@ const AdminOrdersList = ({ orders, areOrdersLoading, incrementPage }) => {
                     open={Boolean(orderDialog)}
                     close={handleCloseOrderDialog}
                     order={orderDialog}
+                    onClose={updateOrdersList}
                 />
             )}
             <table className="table">

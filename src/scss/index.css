@@ -3225,8 +3225,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #bbbbbb;
-  opacity: 0.5;
+  background: #b5b5b5c7;
 }
 
 .viewOrderContainer__userSection {
@@ -3254,7 +3253,7 @@
   display: none;
 }
 .viewOrderContainer__itemsSection {
-  height: 40rem;
+  height: 35rem;
   overflow-y: auto;
   display: flex;
   flex-flow: column;

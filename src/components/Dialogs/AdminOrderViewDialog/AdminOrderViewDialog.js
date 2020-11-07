@@ -1,15 +1,90 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import DialogWrapper from '../DialogWrapper/DialogWrapper';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
 import SelectUi from '../../UI/SelectUI/SelectUI';
+import useCallServer from '../../../hooks/useCallServer';
+import {
+    errorNotification,
+    successNotification,
+} from '../../../utils/notification-utils';
+import InputUI from '../../UI/InputUI/InputUI';
+import { useSelector } from 'react-redux';
 
-const AdminOrderViewDialog = ({ open, onClose, close, loading, order }) => {
+const AdminOrderViewDialog = ({ open, onClose, close, order }) => {
+    const [status, setStatus] = useState(order.status);
+    const isAuth = useSelector((state) => state.user);
+    const [showOTPButton, setshowOTPButton] = useState(true);
+    const [, , , , callServer, isLoading, setLoading] = useCallServer();
+    const OTPRef = useRef();
+    const statusChange = (e) => {
+        const { value } = e.target;
+        setStatus(value);
+    };
+    const saveStatusChange = () => {
+        const changeStatus = (OTP) => {
+            setLoading(true);
+            callServer(
+                'PUT',
+                `${process.env.REACT_APP_API_ENDPOINT}/admin/order/${order._id}`,
+                {
+                    order_status: status,
+                    OTP: OTP,
+                }
+            )
+                .then((response) => {
+                    onClose(order._id);
+                    successNotification(
+                        `order status has been successfully changed to ${status}`,
+                        'Order'
+                    );
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        errorNotification(err.response.data.message, 'Order');
+                        setLoading(false);
+                    }
+                });
+        };
+        if (canShowOTP()) {
+            changeStatus(OTPRef.current.value);
+        } else {
+            changeStatus();
+        }
+    };
+    const canShowOTP = () => {
+        let canShow = false;
+        if (isAuth.authority === 2) {
+            if (status !== 'out for delivery' && status !== 'delivered') {
+                canShow = true;
+            }
+        }
+        return canShow;
+    };
+    const requestOTP = () => {
+        setLoading(true);
+        callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/OTP`, {
+            percentage: 0,
+        })
+            .then(() => {
+                setshowOTPButton(false);
+                successNotification(
+                    'OTP has been send successfully',
+                    'Discount'
+                );
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(err.response.data.message, 'Code');
+                }
+            })
+            .finally(() => setLoading(false));
+    };
     return (
         <DialogWrapper
             open={open}
             onClose={onClose}
             close={close}
-            loading={loading}
+            loading={isLoading}
         >
             <div className={'viewOrderContainer'}>
                 <section className={'viewOrderContainer__userSection'}>
@@ -76,7 +151,8 @@ const AdminOrderViewDialog = ({ open, onClose, close, loading, order }) => {
                 <section className={'viewOrderContainer__statusControl'}>
                     <SelectUi
                         label={'status'}
-                        value={order.status}
+                        value={status}
+                        handleChange={statusChange}
                         list={[
                             'pending',
                             'out for delivery',
@@ -85,7 +161,20 @@ const AdminOrderViewDialog = ({ open, onClose, close, loading, order }) => {
                             'completed',
                         ]}
                     />
-                    <ButtonUI name={'save'} />
+                    {canShowOTP() && !showOTPButton && (
+                        <InputUI label={'OTP'} reference={OTPRef} />
+                    )}
+                    {canShowOTP() && showOTPButton ? (
+                        <ButtonUI
+                            name={'request otp'}
+                            clickHandler={requestOTP}
+                        />
+                    ) : (
+                        <ButtonUI
+                            name={'save'}
+                            clickHandler={saveStatusChange}
+                        />
+                    )}
                 </section>
             </div>
         </DialogWrapper>

@@ -15,13 +15,9 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
     const [, , , , callServer, loading, setLoading] = useCallServer();
     const requestOTP = () => {
         setLoading(true);
-        callServer(
-            'POST',
-            `${process.env.REACT_APP_API_ENDPOINT}/admin/pos/discountOTP`,
-            {
-                percentage: discountRef.current.value,
-            }
-        )
+        callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/OTP`, {
+            percentage: discountRef.current.value,
+        })
             .then(() => {
                 setStage('applyDiscount');
                 successNotification(
@@ -41,7 +37,7 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
             setLoading(true);
             callServer(
                 'POST',
-                `${process.env.REACT_APP_API_ENDPOINT}/admin/pos/OTP/${OTPReference.current.value}`
+                `${process.env.REACT_APP_API_ENDPOINT}/admin/validateOTP/${OTPReference.current.value}`
             )
                 .then(() => {
                     applyDiscountHandler(

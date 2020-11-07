@@ -23,7 +23,11 @@ const AdminOrders = () => {
             key: 'selection',
         },
     ]);
-    const [areOrdersLoading, fetchedOrders] = useFetchAdminOrders(
+    const [
+        areOrdersLoading,
+        fetchedOrders,
+        setFetchedOrders,
+    ] = useFetchAdminOrders(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/orders?status=${filter}${
             startDate ? '&start_at=' + startDate : ''
         }${endDate ? '&end_at=' + endDate : ''}&page=${page}`,
@@ -67,6 +71,20 @@ const AdminOrders = () => {
         history.push({
             pathname: location.pathname,
             search: `?filter=${filter}`,
+        });
+    };
+    const handleRemoveOrder = (id) => {
+        setFetchedOrders((prevState) => {
+            let updatedOrders = [...prevState.orders];
+            let isFound = updatedOrders.findIndex((order) => order._id === id);
+            if (isFound >= 0) {
+                updatedOrders.splice(isFound, 1);
+            }
+
+            return {
+                ...prevState,
+                orders: updatedOrders,
+            };
         });
     };
     return (
@@ -166,6 +184,7 @@ const AdminOrders = () => {
                     orders={fetchedOrders}
                     areOrdersLoading={areOrdersLoading}
                     incrementPage={handleNextPage}
+                    removeOrder={handleRemoveOrder}
                 />
             </div>
         </div>
