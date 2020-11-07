@@ -36,14 +36,13 @@
   }
 
   &__listingCategoriesWrapper {
-    @include flex(row);
+    @include flex(row wrap);
     justify-content: center;
-    margin-bottom: 1rem;
 
     &__category {
       margin: 0.3rem;
       background: $color3;
-      padding: 1.5rem 2rem;
+      padding: 1.5rem 2.5rem;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
       border-radius: 0.3rem;

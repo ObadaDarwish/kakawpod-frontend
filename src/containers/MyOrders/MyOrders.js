@@ -70,7 +70,9 @@ const MyOrders = () => {
                 onClose={cancelOrder}
                 close={closeConfirmDialog}
             />
-            <h1 className={'myOrdersContainer__title'}>my orders</h1>
+            <h1 className={'myOrdersContainer__title'}>
+                {data && data.total} orders
+            </h1>
             {isLoading ? (
                 <CircularLoadingIndicator height={'40rem'} />
             ) : data.orders.length ? (

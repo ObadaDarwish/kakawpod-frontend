@@ -163,11 +163,11 @@ const POSSummary = ({
                 </p>
             </div>
             <div className={`summaryContainer__itemControl`}>
-                {!selectedItem._id && (
-                    <div
-                        className={'summaryContainer__itemControl__disabled'}
-                    />
-                )}
+                {/*{!selectedItem._id && (*/}
+                {/*    <div*/}
+                {/*        className={'summaryContainer__itemControl__disabled'}*/}
+                {/*    />*/}
+                {/*)}*/}
                 <div
                     className={'summaryContainer__itemControl__item'}
                     onClick={() => updateItem('delete', selectedItem)}

@@ -2913,14 +2913,13 @@
 }
 .listingContainer__listingCategoriesWrapper {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   justify-content: center;
-  margin-bottom: 1rem;
 }
 .listingContainer__listingCategoriesWrapper__category {
   margin: 0.3rem;
   background: #f3e1e1;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 2.5rem;
   cursor: pointer;
   transition: all 0.4s ease-in-out;
   border-radius: 0.3rem;
