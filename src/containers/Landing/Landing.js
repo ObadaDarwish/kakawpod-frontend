@@ -105,6 +105,9 @@ const Landing = React.forwardRef((props, ref) => {
             )
                 .then(() => {
                     successNotification('Message was successfully received');
+                    nameRef.current.value = '';
+                    emailRef.current.value = '';
+                    messageRef.current.value = '';
                 })
                 .catch((err) => {
                     if (err.response) {
