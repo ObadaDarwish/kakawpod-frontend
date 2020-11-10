@@ -12,6 +12,8 @@ import { toggleFooter, toggleLogo } from '../../store/actions/global_actions';
 import Drawer from '@material-ui/core/Drawer';
 import ListIcon from '@material-ui/icons/List';
 import AdminOrders from './AdminOrders/AdminOrders';
+import AdminProducts from './AdminProducts/AdminProducts';
+import AdminRoute from '../../HOC/AdminRoute/AdminRoute';
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -91,6 +93,10 @@ const Admin = () => {
                 />
                 <Route path={'/admin/pos'} component={POS} />
                 <Route path={'/admin/orders'} component={AdminOrders} />
+                <AdminRoute
+                    path={'/admin/products'}
+                    component={AdminProducts}
+                />
                 // add admin route to stats and products
             </Switch>
         </div>

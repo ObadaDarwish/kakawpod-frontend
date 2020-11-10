@@ -2437,7 +2437,6 @@
   flex-flow: column;
   margin-top: 10rem;
   padding: 6rem 10rem;
-  min-height: 60rem;
 }
 @media (max-width: 1024.98px) {
   .myOrdersContainer {
@@ -2740,14 +2739,14 @@
 .adminContainer__drawerIcon {
   position: fixed;
   right: 2.5rem;
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   flex-flow: row;
   justify-content: center;
   align-items: center;
   border-radius: 13rem;
-  top: 3.5rem;
+  top: 3.2rem;
   padding: 0.5rem;
   z-index: 100000;
   background: #7D5A5A;
@@ -3876,6 +3875,72 @@
   font-weight: 600;
   color: #849095;
   padding: 0.833em;
+}
+
+.adminProductsContainer {
+  padding: 4rem;
+  display: flex;
+  flex-flow: column;
+}
+.adminProductsContainer__CreateButtonWrapper {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+.adminProductsContainer__productsListWrapper td, .adminProductsContainer__productsListWrapper th {
+  font-size: 1.8rem;
+  color: #7D5A5A;
+}
+.adminProductsContainer__productsListWrapper thead tr {
+  display: block;
+  height: 5rem;
+}
+.adminProductsContainer__productsListWrapper thead tr th {
+  width: 25rem;
+  height: 3rem;
+  vertical-align: middle;
+  background: #FAF2F2;
+}
+.adminProductsContainer__productsListWrapper thead tr th:first-child {
+  width: 5rem;
+}
+.adminProductsContainer__productsListWrapper tbody {
+  height: 65vh;
+  overflow-y: auto;
+  display: block;
+}
+.adminProductsContainer__productsListWrapper tbody tr {
+  height: 5rem;
+}
+.adminProductsContainer__productsListWrapper tbody tr th {
+  width: 5rem;
+  vertical-align: middle;
+}
+.adminProductsContainer__productsListWrapper tbody tr td {
+  width: 25rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.adminProductsContainer__productsListWrapper tbody tr td img {
+  width: 10rem;
+  height: 10rem;
+}
+.adminProductsContainer__productsListWrapper tbody .loadingTr {
+  display: flex;
+  justify-content: center;
+}
+.adminProductsContainer__productsListWrapper tbody .controls svg {
+  margin: 0 1rem;
+  font-size: 3rem;
+  background: #7D5A5A;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 5rem;
+  transition: all 0.5s ease-in-out;
+}
+.adminProductsContainer__productsListWrapper tbody .controls svg:hover {
+  background: #901a25;
 }
 
 @font-face {

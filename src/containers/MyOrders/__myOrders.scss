@@ -2,7 +2,6 @@
   @include flex(column);
   margin-top: 10rem;
   padding: 6rem 10rem;
-  min-height: 60rem;
   @include media-breakpoint-down(md){
     padding: 6rem 3rem;
   }
