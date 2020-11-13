@@ -6,16 +6,30 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useLocation } from 'react-router-dom';
 import useFetchAdminProducts from '../../../hooks/useFetchAdminProducts';
 import CircularLoadingIndicator from '../../../components/LoadingIndicator/CircularLoadingIndicator';
+import ProductDialog from '../../../components/Dialogs/ProductDialog/ProductDialog';
 
 const queryString = require('query-string');
 const AdminProducts = () => {
     const location = useLocation();
     const tbodyRef = useRef();
+    let dialogDefaultValue = {
+        name: '',
+        description: '',
+        ingredients: '',
+        price: '',
+        quantity: '',
+        chocolate_type: '',
+        category: '',
+        cocoa_percentage: '',
+        weight: '',
+    };
     let { page = 1 } = queryString.parse(location.search);
     const [productsPage, setProductsPage] = useState(page);
     let [productsLoading, products] = useFetchAdminProducts(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/products?page=${productsPage}`
     );
+    const [productDialog, setProductDialog] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(dialogDefaultValue);
     const handleScroll = (e) => {
         if (tbodyRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = tbodyRef.current;
@@ -28,10 +42,33 @@ const AdminProducts = () => {
             }
         }
     };
+    const handleProductChange = (product) => {
+        setSelectedProduct(product);
+        setProductDialog(true);
+    };
+    const createProductHandler = () => {
+        setSelectedProduct(dialogDefaultValue);
+        setProductDialog(true);
+    };
+    const closeProductDialog = () => {
+        setProductDialog(false);
+    };
     return (
         <div className={'adminProductsContainer'}>
+            {productDialog && (
+                <ProductDialog
+                    close={closeProductDialog}
+                    open={productDialog}
+                    product={selectedProduct}
+                />
+            )}
+
             <div className={'adminProductsContainer__CreateButtonWrapper'}>
-                <ButtonUI name={'create'} width={'15rem'} />
+                <ButtonUI
+                    name={'create'}
+                    width={'15rem'}
+                    clickHandler={createProductHandler}
+                />
             </div>
             <div className={'adminProductsContainer__productsListWrapper'}>
                 <table className="table">
@@ -65,7 +102,14 @@ const AdminProducts = () => {
                                           <td>{product.quantity}</td>
                                           <td>{product.sold}</td>
                                           <td className={'controls'}>
-                                              <EditIcon fontSize={'large'} />
+                                              <EditIcon
+                                                  fontSize={'large'}
+                                                  onClick={() =>
+                                                      handleProductChange(
+                                                          product
+                                                      )
+                                                  }
+                                              />
                                               <DeleteIcon fontSize={'large'} />
                                           </td>
                                       </tr>

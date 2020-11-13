@@ -18,7 +18,6 @@ import { updateUser } from '../../store/actions/auth_actions';
 const Checkout = () => {
     const cart = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user);
-    console.log(user);
 
     const history = useHistory();
     const [, , , , callServer] = useCallServer();

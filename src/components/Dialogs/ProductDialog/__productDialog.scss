@@ -1,0 +1,58 @@
+.productDialogWrapper {
+  padding: 1rem;
+
+  &__inputWrapper {
+    @include flex(row);
+    justify-content: space-between;
+    margin: 1rem;
+
+    & > div {
+      margin: 0.5rem;
+    }
+  }
+
+  &__buttonWrapper {
+    padding: 1rem;
+    @include flex_center(row);
+  }
+
+  &__imageContainer {
+    @include flex_center(column);
+
+    &__fileInput {
+      margin: 1rem;
+      position: relative;
+      @include flex_center(row);
+
+      &__styleButton {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: $color3;
+        font-size: 1.7rem;
+        display: flex;
+        @include flex_center(row);
+        color: $color1;
+        box-shadow: 0 0 2px 1px $gray-500;
+      }
+
+      input {
+        height: 3.5rem;
+        z-index: 1;
+        opacity: 0;
+      }
+    }
+
+    img {
+      width: 13rem;
+      height: 13rem;
+      margin: 1rem;
+    }
+
+    &__imagesWrapper {
+      @include flex(row);
+      width: 60rem;
+      overflow-y: auto;
+    }
+  }
+}

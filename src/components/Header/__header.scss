@@ -121,7 +121,7 @@
       height: 30rem;
       background: $white;
       animation: fadeCart 0.5s ease-in-out;
-      border: 0.2rem solid $color3;
+      box-shadow: 0 0 3px 1px $gray-500;
       @include media-breakpoint-down(sm) {
         right: 0;
         width: 100%;

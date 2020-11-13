@@ -6,11 +6,13 @@ const useCallServer = () => {
     const [response, setResponse] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const callServer = async (method, url, data) => {
+    const callServer = async (method, url, data, headers) => {
+        console.log(url);
         let repsonse = await axios({
             method: method,
             url: url,
             data: data,
+            headers: headers,
         });
         return repsonse;
     };
