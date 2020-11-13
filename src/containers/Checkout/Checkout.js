@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import { useDispatch, useSelector } from 'react-redux';
 import AddressComponent from '../../components/AddressComponent/AddressComponent';
@@ -18,6 +18,8 @@ import { updateUser } from '../../store/actions/auth_actions';
 const Checkout = () => {
     const cart = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user);
+    console.log(user);
+
     const history = useHistory();
     const [, , , , callServer] = useCallServer();
     const [openPhoneDialog, setOpenPhoneDialog] = useState({
@@ -25,15 +27,18 @@ const Checkout = () => {
         canOpen: false,
     });
     const dispatch = useDispatch();
-    const getDeliveryAddress = () => {
+    const getDeliveryAddress = (user) => {
         let { addresses } = user;
         let addressesList = [...addresses];
         let isFound = addressesList.findIndex((address) => address.primary);
         return isFound >= 0 ? addressesList[isFound] : {};
     };
     const [deliveryAddress, setDeliveryAddress] = useState(
-        getDeliveryAddress()
+        getDeliveryAddress(user)
     );
+    useEffect(() => {
+        setDeliveryAddress(getDeliveryAddress(user));
+    }, [user.addresses]);
     const getItemsCount = () => {
         let count = 0;
         cart.items.forEach((item) => {
@@ -139,8 +144,9 @@ const Checkout = () => {
                 </div>
                 <OrderSummary
                     deliveryFee={
-                        deliveryAddress.delivery_fees_id &&
-                        deliveryAddress.delivery_fees_id.fee
+                        deliveryAddress.delivery_fees_id
+                            ? deliveryAddress.delivery_fees_id.fee
+                            : 0
                     }
                     itemsCount={getItemsCount()}
                     totalPrice={getTotal(cart.items)}
