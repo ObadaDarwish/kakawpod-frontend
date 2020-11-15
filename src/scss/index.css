@@ -1625,6 +1625,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 1rem 0;
 }
 .product__detailsWrapper h1 {
   font-size: 1.8rem;
@@ -1950,7 +1951,7 @@
   }
 }
 .shopContainer .filtersWrapper__mixBox__box {
-  padding: 1rem 2rem;
+  padding: 1rem;
   background: #FAF2F2;
   transition: all 0.5s ease-in-out;
   display: flex;
@@ -1958,7 +1959,7 @@
   align-items: center;
 }
 .shopContainer .filtersWrapper__mixBox__box p {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 }
 .shopContainer .filtersWrapper__mixBox__box--active {
   background: #f3e1e1;
@@ -3941,6 +3942,7 @@
 }
 .adminProductsContainer__productsListWrapper tbody .controls svg:hover {
   background: #901a25;
+  cursor: pointer;
 }
 
 .productDialogWrapper {

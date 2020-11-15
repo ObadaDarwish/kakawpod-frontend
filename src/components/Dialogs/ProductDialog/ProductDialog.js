@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DialogWrapper from '../DialogWrapper/DialogWrapper';
 import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
@@ -8,14 +8,29 @@ import {
     successNotification,
 } from '../../../utils/notification-utils';
 
-const ProductDialog = ({ open, product, onClose, close }) => {
+const ProductDialog = ({ open, product, onClosingDialog, close }) => {
     const [images, setImages] = useState([]);
     const [imagesBlob, setImagesBlob] = useState();
     let dynamicRefs = useRef({});
+    let updatedProduct = {};
     const [, , , , callServer, loading, setLoading] = useCallServer();
     for (let key in product) {
         dynamicRefs.current[key] = React.createRef();
     }
+    useEffect(() => {
+        let canUpdate = true;
+        if (canUpdate) {
+            if (product.images.length) {
+                let mappedImages = product.images.map((img) => img.url);
+                setImages(mappedImages);
+            } else {
+                setImages([]);
+            }
+        }
+        return () => {
+            canUpdate = false;
+        };
+    }, [product]);
     const onImageChange = (event) => {
         if (event.target.files) {
             let imageArray = [];
@@ -23,73 +38,106 @@ const ProductDialog = ({ open, product, onClose, close }) => {
             [...event.target.files].forEach((img) => {
                 imageArray.push(URL.createObjectURL(img));
             });
-            setImages(imageArray);
+            setImages((prevState) => {
+                return [...prevState, ...imageArray];
+            });
         }
     };
-    const handlePostProduct = () => {
+
+    const handleProduct = () => {
+        let handlingType = product.name === '' ? 'create' : 'update';
         setLoading(true);
         let formData = new FormData();
-        [...imagesBlob].forEach((img) => {
-            formData.append('product_image', img);
-        });
-        callServer(
-            'POST',
-            `${process.env.REACT_APP_API_ENDPOINT}/admin/product/image`,
-            formData,
-            {
-                'Content-Type': 'multipart/form-data',
-            }
-        )
-            .then((response) => {
-                console.log(response);
-                let {
-                    name,
-                    description,
-                    ingredients,
-                    price,
-                    quantity,
-                    chocolate_type,
-                    category,
-                    cocoa_percentage,
-                    weight,
-                } = dynamicRefs.current;
-                return callServer(
+        let uploadImagePromise = new Promise((resolve, reject) => {
+            if (imagesBlob) {
+                [...imagesBlob].forEach((img) => {
+                    formData.append('product_image', img);
+                });
+                callServer(
                     'POST',
-                    `${process.env.REACT_APP_API_ENDPOINT}/admin/product`,
+                    `${process.env.REACT_APP_API_ENDPOINT}/admin/product/image`,
+                    formData,
                     {
-                        name: name.current.value,
-                        description: description.current.value,
-                        ingredients: ingredients.current.value,
-                        price: price.current.value,
-                        quantity: quantity.current.value,
-                        chocolate_type: chocolate_type.current.value,
-                        category: category.current.value,
-                        cocoa_percentage: cocoa_percentage.current.value,
-                        weight: weight.current.value,
-                        images: response.data.images,
+                        'Content-Type': 'multipart/form-data',
                     }
-                );
-            })
-            .then(() => {
-                close();
-                successNotification(
-                    'Product has been uploaded successfully',
-                    'Product'
-                );
-            })
-
-            .catch((err) => {
-                if (err.response) {
+                )
+                    .then((response) => {
+                        resolve({ images: response.data.images });
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            } else {
+                resolve({ images: [] });
+            }
+        });
+        uploadImagePromise.then((resolved, rejected) => {
+            if (rejected) {
+                if (rejected.response) {
                     setLoading(false);
-                    errorNotification(err.response.data.message, 'Product');
+                    errorNotification(
+                        rejected.response.data.message,
+                        'Product'
+                    );
                 }
-            })
-            .finally(() => setLoading(false));
+            }
+            let {
+                name,
+                description,
+                ingredients,
+                price,
+                quantity,
+                chocolate_type,
+                category,
+                cocoa_percentage,
+                weight,
+            } = dynamicRefs.current;
+            let updatedImages = product.images
+                ? [...product.images, ...resolved.images]
+                : resolved.images;
+            updatedProduct = {
+                name: name.current.value,
+                description: description.current.value,
+                ingredients: ingredients.current.value,
+                price: parseInt(price.current.value),
+                quantity: parseInt(quantity.current.value),
+                chocolate_type: chocolate_type.current.value,
+                category: category.current.value,
+                cocoa_percentage: cocoa_percentage.current.value,
+                weight: parseInt(weight.current.value),
+                images: updatedImages,
+            };
+            callServer(
+                handlingType === 'create' ? 'POST' : 'PUT',
+                `${process.env.REACT_APP_API_ENDPOINT}/admin/product${
+                    handlingType === 'update' ? '/' + product._id : ''
+                }`,
+                updatedProduct
+            )
+                .then((response) => {
+                    setImagesBlob(null);
+                    onClosingDialog(
+                        handlingType === 'create'
+                            ? response.data.product
+                            : updatedProduct
+                    );
+                    successNotification(
+                        'Product has been uploaded successfully',
+                        'Product'
+                    );
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        setLoading(false);
+                        errorNotification(err.response.data.message, 'Product');
+                    }
+                })
+                .finally(() => setLoading(false));
+        });
     };
     return (
         <DialogWrapper
             open={open}
-            onClose={onClose}
             close={close}
             minWidth={'60rem'}
             loading={loading}
@@ -196,7 +244,7 @@ const ProductDialog = ({ open, product, onClose, close }) => {
                     <ButtonUI
                         name={product.name !== '' ? 'save' : 'create'}
                         width={'70%'}
-                        clickHandler={handlePostProduct}
+                        clickHandler={handleProduct}
                     />
                 </div>
             </div>

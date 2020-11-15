@@ -3,15 +3,24 @@ import ButtonUI from '../../../components/UI/ButtonUI/ButtonUI';
 import DataPrompt from '../../../components/DataPrompt/DataPrompt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import { useLocation } from 'react-router-dom';
 import useFetchAdminProducts from '../../../hooks/useFetchAdminProducts';
 import CircularLoadingIndicator from '../../../components/LoadingIndicator/CircularLoadingIndicator';
 import ProductDialog from '../../../components/Dialogs/ProductDialog/ProductDialog';
+import ConfirmDialog from '../../../components/Dialogs/ConfirmDialog/ConfirmDialog';
+import useCallServer from '../../../hooks/useCallServer';
+import {
+    errorNotification,
+    successNotification,
+} from '../../../utils/notification-utils';
 
 const queryString = require('query-string');
 const AdminProducts = () => {
     const location = useLocation();
     const tbodyRef = useRef();
+    const [, , , , callServer] = useCallServer();
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     let dialogDefaultValue = {
         name: '',
         description: '',
@@ -22,10 +31,11 @@ const AdminProducts = () => {
         category: '',
         cocoa_percentage: '',
         weight: '',
+        images: [],
     };
     let { page = 1 } = queryString.parse(location.search);
     const [productsPage, setProductsPage] = useState(page);
-    let [productsLoading, products] = useFetchAdminProducts(
+    let [productsLoading, products, setProducts] = useFetchAdminProducts(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/products?page=${productsPage}`
     );
     const [productDialog, setProductDialog] = useState(false);
@@ -42,7 +52,7 @@ const AdminProducts = () => {
             }
         }
     };
-    const handleProductChange = (product) => {
+    const handleEditProductDialog = (product) => {
         setSelectedProduct(product);
         setProductDialog(true);
     };
@@ -53,15 +63,89 @@ const AdminProducts = () => {
     const closeProductDialog = () => {
         setProductDialog(false);
     };
+    const handleProduct = (product) => {
+        let updatedProduct = {
+            ...selectedProduct,
+            ...product,
+        };
+        closeProductDialog();
+        setProducts((prevState) => {
+            let productsList = [...prevState.products];
+            let isFound = productsList.findIndex(
+                (item) => item._id === updatedProduct._id
+            );
+            if (isFound >= 0) {
+                productsList[isFound] = updatedProduct;
+            } else {
+                productsList.unshift(updatedProduct);
+            }
+
+            return {
+                total: prevState.total,
+                products: productsList,
+            };
+        });
+    };
+    const confirmToggleDeleteProduct = (product) => {
+        setSelectedProduct(product);
+        setOpenConfirmDialog(true);
+    };
+    const softDeleteProduct = () => {
+        callServer(
+            'DELETE',
+            `${process.env.REACT_APP_API_ENDPOINT}/admin/product/${selectedProduct._id}`
+        )
+            .then(() => {
+                setOpenConfirmDialog(false);
+                setProducts((prevState) => {
+                    let productsList = [...prevState.products];
+                    let isFound = productsList.findIndex(
+                        (item) => item._id === selectedProduct._id
+                    );
+                    if (isFound >= 0) {
+                        successNotification(
+                            `Product was successfully ${
+                                productsList[isFound].is_deleted
+                                    ? 'restored'
+                                    : 'deleted'
+                            }`
+                        );
+                        productsList[
+                            isFound
+                        ].is_deleted = !selectedProduct.is_deleted;
+                    }
+                    return {
+                        total: prevState.total,
+                        products: productsList,
+                    };
+                });
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(
+                        err.response.data.message,
+                        'Delete product'
+                    );
+                }
+            });
+    };
+    const closeConfirmDialog = () => {
+        setOpenConfirmDialog(false);
+    };
     return (
         <div className={'adminProductsContainer'}>
-            {productDialog && (
-                <ProductDialog
-                    close={closeProductDialog}
-                    open={productDialog}
-                    product={selectedProduct}
-                />
-            )}
+            <ProductDialog
+                close={closeProductDialog}
+                open={productDialog}
+                product={selectedProduct}
+                onClosingDialog={handleProduct}
+            />
+            <ConfirmDialog
+                open={openConfirmDialog}
+                checkText={selectedProduct.is_deleted ? 'restore' : 'delete'}
+                onClose={softDeleteProduct}
+                close={closeConfirmDialog}
+            />
 
             <div className={'adminProductsContainer__CreateButtonWrapper'}>
                 <ButtonUI
@@ -105,12 +189,30 @@ const AdminProducts = () => {
                                               <EditIcon
                                                   fontSize={'large'}
                                                   onClick={() =>
-                                                      handleProductChange(
+                                                      handleEditProductDialog(
                                                           product
                                                       )
                                                   }
                                               />
-                                              <DeleteIcon fontSize={'large'} />
+                                              {product.is_deleted ? (
+                                                  <SettingsBackupRestoreIcon
+                                                      fontSize={'large'}
+                                                      onClick={() =>
+                                                          confirmToggleDeleteProduct(
+                                                              product
+                                                          )
+                                                      }
+                                                  />
+                                              ) : (
+                                                  <DeleteIcon
+                                                      fontSize={'large'}
+                                                      onClick={() =>
+                                                          confirmToggleDeleteProduct(
+                                                              product
+                                                          )
+                                                      }
+                                                  />
+                                              )}
                                           </td>
                                       </tr>
                                   );

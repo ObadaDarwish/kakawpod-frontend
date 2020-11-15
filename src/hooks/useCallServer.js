@@ -7,7 +7,6 @@ const useCallServer = () => {
     const [loading, setLoading] = useState(false);
 
     const callServer = async (method, url, data, headers) => {
-        console.log(url);
         let repsonse = await axios({
             method: method,
             url: url,

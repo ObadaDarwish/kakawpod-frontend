@@ -52,7 +52,7 @@
   &__detailsWrapper {
     @include flex_center(column);
     width: 100%;
-
+    padding: 1rem 0;
     h1 {
       font-size: 1.8rem;
       margin: 0.5rem 0;
