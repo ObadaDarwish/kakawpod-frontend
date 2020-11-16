@@ -71,9 +71,16 @@ const CartDropDown = ({ cart }) => {
                 <ButtonUI
                     name={'view cart'}
                     inverseBackground
+                    fontSize={'1.4rem'}
+                    height={'3rem'}
                     clickHandler={handleViewCart}
                 />
-                <ButtonUI name={'checkout'} clickHandler={handleCheckout} />
+                <ButtonUI
+                    name={'checkout'}
+                    fontSize={'1.4rem'}
+                    height={'3rem'}
+                    clickHandler={handleCheckout}
+                />
             </div>
         </div>
     );

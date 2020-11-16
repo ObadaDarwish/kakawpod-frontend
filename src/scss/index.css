@@ -380,8 +380,7 @@
   content: "";
   top: 7rem;
   right: 3rem;
-  width: 40rem;
-  height: 30rem;
+  width: 35rem;
   background: #fff;
   animation: fadeCart 0.5s ease-in-out;
   box-shadow: 0 0 3px 1px #adb5bd;
@@ -397,12 +396,14 @@
   display: flex;
   flex-flow: column;
   overflow-y: auto;
-  height: 60%;
+  height: 15rem;
 }
 .headerOuterContainer__headerContainer__dropDownCart__items__item {
   display: flex;
   flex-flow: row;
-  margin: 1rem;
+  box-shadow: 0 0 2px 1px #dee2e6;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 @media (max-width: 767.98px) {
   .headerOuterContainer__headerContainer__dropDownCart__items__item {
@@ -410,8 +411,8 @@
   }
 }
 .headerOuterContainer__headerContainer__dropDownCart__items__item img {
-  width: 10rem;
-  height: 7rem;
+  width: 5rem;
+  height: 5rem;
   margin-right: 1rem;
 }
 .headerOuterContainer__headerContainer__dropDownCart__items__item__description {
@@ -420,7 +421,7 @@
   justify-content: space-between;
 }
 .headerOuterContainer__headerContainer__dropDownCart__items__item__description p {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 .headerOuterContainer__headerContainer__dropDownCart__total {
   display: flex;
@@ -2811,6 +2812,74 @@
 .adminContainer .active {
   background: #f3e1e1;
 }
+.adminContainer .bar {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background: #f3e1e1;
+  padding: 1rem;
+}
+.adminContainer .bar p {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.adminContainer .listWrapper td, .adminContainer .listWrapper th {
+  font-size: 1.8rem;
+  color: #7D5A5A;
+}
+.adminContainer .listWrapper thead tr {
+  display: block;
+  height: 5rem;
+}
+.adminContainer .listWrapper thead tr th {
+  width: 25rem;
+  height: 3rem;
+  vertical-align: middle;
+  background: #FAF2F2;
+}
+.adminContainer .listWrapper thead tr th:first-child {
+  width: 5rem;
+}
+.adminContainer .listWrapper tbody {
+  height: 65vh;
+  overflow-y: auto;
+  display: block;
+}
+.adminContainer .listWrapper tbody tr {
+  height: 5rem;
+}
+.adminContainer .listWrapper tbody tr th {
+  width: 5rem;
+  vertical-align: middle;
+}
+.adminContainer .listWrapper tbody tr td {
+  width: 25rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.adminContainer .listWrapper tbody tr td img {
+  width: 10rem;
+  height: 10rem;
+}
+.adminContainer .listWrapper tbody .loadingTr {
+  display: flex;
+  justify-content: center;
+}
+.adminContainer .listWrapper tbody .controls svg {
+  margin: 0 1rem;
+  font-size: 3rem;
+  background: #7D5A5A;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 5rem;
+  transition: all 0.5s ease-in-out;
+}
+.adminContainer .listWrapper tbody .controls svg:hover {
+  background: #901a25;
+  cursor: pointer;
+}
 
 .posContainer {
   display: flex;
@@ -3913,67 +3982,6 @@
   display: flex;
   flex-flow: column;
 }
-.adminProductsContainer__CreateButtonWrapper {
-  display: flex;
-  flex-flow: row;
-  justify-content: flex-end;
-  margin-bottom: 2rem;
-}
-.adminProductsContainer__productsListWrapper td, .adminProductsContainer__productsListWrapper th {
-  font-size: 1.8rem;
-  color: #7D5A5A;
-}
-.adminProductsContainer__productsListWrapper thead tr {
-  display: block;
-  height: 5rem;
-}
-.adminProductsContainer__productsListWrapper thead tr th {
-  width: 25rem;
-  height: 3rem;
-  vertical-align: middle;
-  background: #FAF2F2;
-}
-.adminProductsContainer__productsListWrapper thead tr th:first-child {
-  width: 5rem;
-}
-.adminProductsContainer__productsListWrapper tbody {
-  height: 65vh;
-  overflow-y: auto;
-  display: block;
-}
-.adminProductsContainer__productsListWrapper tbody tr {
-  height: 5rem;
-}
-.adminProductsContainer__productsListWrapper tbody tr th {
-  width: 5rem;
-  vertical-align: middle;
-}
-.adminProductsContainer__productsListWrapper tbody tr td {
-  width: 25rem;
-  text-align: center;
-  vertical-align: middle;
-}
-.adminProductsContainer__productsListWrapper tbody tr td img {
-  width: 10rem;
-  height: 10rem;
-}
-.adminProductsContainer__productsListWrapper tbody .loadingTr {
-  display: flex;
-  justify-content: center;
-}
-.adminProductsContainer__productsListWrapper tbody .controls svg {
-  margin: 0 1rem;
-  font-size: 3rem;
-  background: #7D5A5A;
-  color: #fff;
-  padding: 1rem;
-  border-radius: 5rem;
-  transition: all 0.5s ease-in-out;
-}
-.adminProductsContainer__productsListWrapper tbody .controls svg:hover {
-  background: #901a25;
-  cursor: pointer;
-}
 
 .productDialogWrapper {
   padding: 1rem;
@@ -4037,6 +4045,12 @@
   flex-flow: row;
   width: 60rem;
   overflow-y: auto;
+}
+
+.adminCodesContainer {
+  padding: 4rem;
+  display: flex;
+  flex-flow: column;
 }
 
 @font-face {

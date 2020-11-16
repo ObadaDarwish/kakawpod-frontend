@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import { useLocation } from 'react-router-dom';
-import useFetchAdminProducts from '../../../hooks/useFetchAdminProducts';
+import useFetchDataScroll from '../../../hooks/useFetchDataScroll';
 import CircularLoadingIndicator from '../../../components/LoadingIndicator/CircularLoadingIndicator';
 import ProductDialog from '../../../components/Dialogs/ProductDialog/ProductDialog';
 import ConfirmDialog from '../../../components/Dialogs/ConfirmDialog/ConfirmDialog';
@@ -35,7 +35,7 @@ const AdminProducts = () => {
     };
     let { page = 1 } = queryString.parse(location.search);
     const [productsPage, setProductsPage] = useState(page);
-    let [productsLoading, products, setProducts] = useFetchAdminProducts(
+    let [productsLoading, products, setProducts] = useFetchDataScroll(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/products?page=${productsPage}`
     );
     const [productDialog, setProductDialog] = useState(false);
@@ -70,7 +70,7 @@ const AdminProducts = () => {
         };
         closeProductDialog();
         setProducts((prevState) => {
-            let productsList = [...prevState.products];
+            let productsList = [...prevState.data];
             let isFound = productsList.findIndex(
                 (item) => item._id === updatedProduct._id
             );
@@ -82,7 +82,7 @@ const AdminProducts = () => {
 
             return {
                 total: prevState.total,
-                products: productsList,
+                data: productsList,
             };
         });
     };
@@ -98,7 +98,7 @@ const AdminProducts = () => {
             .then(() => {
                 setOpenConfirmDialog(false);
                 setProducts((prevState) => {
-                    let productsList = [...prevState.products];
+                    let productsList = [...prevState.data];
                     let isFound = productsList.findIndex(
                         (item) => item._id === selectedProduct._id
                     );
@@ -116,7 +116,7 @@ const AdminProducts = () => {
                     }
                     return {
                         total: prevState.total,
-                        products: productsList,
+                        data: productsList,
                     };
                 });
             })
@@ -147,14 +147,15 @@ const AdminProducts = () => {
                 close={closeConfirmDialog}
             />
 
-            <div className={'adminProductsContainer__CreateButtonWrapper'}>
+            <div className={'bar'}>
+                <p>Total: {products.total}</p>
                 <ButtonUI
                     name={'create'}
                     width={'15rem'}
                     clickHandler={createProductHandler}
                 />
             </div>
-            <div className={'adminProductsContainer__productsListWrapper'}>
+            <div className={'listWrapper'}>
                 <table className="table">
                     <thead>
                         <tr>
@@ -168,8 +169,8 @@ const AdminProducts = () => {
                     </thead>
 
                     <tbody onScroll={handleScroll} ref={tbodyRef}>
-                        {products && products.products.length
-                            ? products.products.map((product, index) => {
+                        {products && products.data.length
+                            ? products.data.map((product, index) => {
                                   return (
                                       <tr key={product._id}>
                                           <th scope="row">{index + 1}</th>

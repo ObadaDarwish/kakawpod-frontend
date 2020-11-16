@@ -275,9 +275,10 @@ const Landing = React.forwardRef((props, ref) => {
                         className={`landingContainer__megaWeightContainer__wrapper landingContainer__megaWeightContainer__wrapper__light landingContainer__megaWeightContainer__wrapper__right`}
                     >
                         <ButtonUI
-                            name={'Quotation'}
+                            name={'coming soon..'}
                             height={'4.5rem'}
                             width={sm ? '60%' : '40%'}
+                            is_disabled={true}
                         />
                         <div
                             className={

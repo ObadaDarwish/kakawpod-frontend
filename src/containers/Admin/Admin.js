@@ -6,6 +6,7 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import LabelIcon from '@material-ui/icons/Label';
 import HomeIcon from '@material-ui/icons/Home';
+import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import POS from './POS/POS.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFooter, toggleLogo } from '../../store/actions/global_actions';
@@ -14,6 +15,7 @@ import ListIcon from '@material-ui/icons/List';
 import AdminOrders from './AdminOrders/AdminOrders';
 import AdminProducts from './AdminProducts/AdminProducts';
 import AdminRoute from '../../HOC/AdminRoute/AdminRoute';
+import AdminPromoCodes from './AdminPromoCodes/AdminPromoCodes';
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -74,6 +76,13 @@ const Admin = () => {
                                 <h1>Products</h1>
                             </NavLink>
                             <NavLink
+                                to={'/admin/codes'}
+                                className={'adminContainer__navTabs__item'}
+                            >
+                                <MoneyOffIcon fontSize={'large'} />
+                                <h1>Codes</h1>
+                            </NavLink>
+                            <NavLink
                                 to={'/admin/stats'}
                                 className={'adminContainer__navTabs__item'}
                             >
@@ -97,6 +106,7 @@ const Admin = () => {
                     path={'/admin/products'}
                     component={AdminProducts}
                 />
+                <AdminRoute path={'/admin/codes'} component={AdminPromoCodes} />
                 // add admin route to stats and products
             </Switch>
         </div>

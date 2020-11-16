@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetchAdminProducts = (url) => {
+const useFetchDataScroll = (url) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [response, setResponse] = useState({ products: [], total: 0 });
+    const [response, setResponse] = useState({ data: [], total: 0 });
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -15,10 +15,7 @@ const useFetchAdminProducts = (url) => {
                 if (canUpdate) {
                     setResponse((prevState) => {
                         return {
-                            products: [
-                                ...prevState.products,
-                                ...res.data.products,
-                            ],
+                            data: [...prevState.data, ...res.data.docs],
                             total: res.data.total,
                         };
                     });
@@ -39,4 +36,4 @@ const useFetchAdminProducts = (url) => {
     return [isLoading, response, setResponse, error, setError];
 };
 
-export default useFetchAdminProducts;
+export default useFetchDataScroll;
