@@ -20,7 +20,7 @@
       flex-basis: 70%;
       padding: 2rem 0;
       @media (max-width: 1380px) {
-        flex-basis: 50%;
+        flex-basis: 60%;
       }
       @include media-breakpoint-down(md) {
         flex-basis: 100%;
@@ -28,6 +28,7 @@
 
       .table {
         width: 100%;
+
         .MuiInput-input {
           text-align: center;
         }
@@ -110,14 +111,29 @@
         @include flex(row wrap);
         background: $color4;
         align-items: center;
+        justify-content: center;
         margin-bottom: 1rem;
-        //@include media-breakpoint-down(xs) {
-        //  @include flex(row wrap);
-        //}
+        position: relative;
+        @include media-breakpoint-down(xs) {
+          padding-bottom: 1rem;
+        }
+
+        &__removeIcon {
+          position: absolute;
+          right: 0;
+          top: 0;
+          padding: 0.5rem;
+          background: $color1;
+          color: $white;
+          border-radius: 0 0 0 0.5rem;
+          &:hover{
+            background: $color2;
+            color:$color1;
+          }
+        }
 
         .counterControlsWrapper {
           margin: 0 2rem;
-          margin-left: auto;
           width: unset;
           @include flex_center(column);
 
@@ -134,22 +150,24 @@
         img {
           width: 15rem;
           height: 15rem;
-          margin-right: 2rem;
+          margin: 1rem;
+          border-radius: 1rem;
           @include media-breakpoint-down(xs) {
             width: 100%;
+            height: 20rem;
             margin: 0;
           }
         }
 
         &__details {
-          padding-top: 0.5rem;
+          padding-top: 1rem;
           flex-grow: 1;
           @include media-breakpoint-down(xs) {
             margin: 1rem;
           }
 
           p {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             padding-bottom: 1rem;
           }
 
@@ -157,10 +175,21 @@
             height: 8rem;
             flex-grow: 1;
             overflow-y: auto;
+            background: $color3;
+            padding: 1rem;
+            margin: 1rem 0;
 
             &__subItem {
-              font-size: 1.3rem !important;
+              font-size: 1.6rem !important;
               margin-left: 1rem;
+            }
+          }
+
+          &__priceWrapper {
+            @include flex(row);
+
+            p {
+              font-weight: bold;
             }
           }
 
