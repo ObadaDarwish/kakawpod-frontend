@@ -1,18 +1,23 @@
 import React, { useRef, useState } from 'react';
 import ButtonUI from '../../../components/UI/ButtonUI/ButtonUI';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import EditIcon from '@material-ui/icons/Edit';
-import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
-import DeleteIcon from '@material-ui/icons/Delete';
 import DataPrompt from '../../../components/DataPrompt/DataPrompt';
 import CircularLoadingIndicator from '../../../components/LoadingIndicator/CircularLoadingIndicator';
 import useFetchDataScroll from '../../../hooks/useFetchDataScroll';
 import { useLocation } from 'react-router-dom';
+import SelectUi from '../../../components/UI/SelectUI/SelectUI';
+import useCallServer from '../../../hooks/useCallServer';
+import { errorNotification } from '../../../utils/notification-utils';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../../store/actions/loadingIndicator_actions';
+
 const queryString = require('query-string');
 const AdminPromoCodes = () => {
     const tbodyRef = useRef();
     const location = useLocation();
     let { page = 1 } = queryString.parse(location.search);
+    const [, , , , callServer] = useCallServer();
+    const dispatch = useDispatch();
     const [codePage, setCodesPage] = useState(page);
     let [loading, codes, setCodes] = useFetchDataScroll(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/codes?page=${codePage}`
@@ -28,6 +33,35 @@ const AdminPromoCodes = () => {
                 }
             }
         }
+    };
+    const handleCodeStatusChange = (code) => {
+        dispatch(setLoading(true));
+        callServer(
+            'PUT',
+            `${process.env.REACT_APP_API_ENDPOINT}/admin/codes/${code.code}`,
+            { is_active: !code.is_active }
+        )
+            .then(() => {
+                setCodes((prevState) => {
+                    let codeList = [...prevState.data];
+                    let isFound = codeList.findIndex(
+                        (item) => item._id === code._id
+                    );
+                    if (isFound >= 0) {
+                        codeList[isFound].is_active = !code.is_active;
+                    }
+                    return {
+                        total: prevState.total,
+                        data: codeList,
+                    };
+                });
+            })
+            .catch((err) => {
+                if (err.response) {
+                    errorNotification(err.response.data.message, 'Code');
+                }
+            })
+            .finally(() => dispatch(setLoading(false)));
     };
     return (
         <div className={'adminCodesContainer'}>
@@ -77,33 +111,20 @@ const AdminPromoCodes = () => {
                                               />
                                           </td>
                                           <td className={'controls'}>
-                                              {/*<EditIcon*/}
-                                              {/*    fontSize={'large'}*/}
-                                              {/*    onClick={() =>*/}
-                                              {/*        handleEditProductDialog(*/}
-                                              {/*            product*/}
-                                              {/*        )*/}
-                                              {/*    }*/}
-                                              {/*/>*/}
-                                              {/*{product.is_deleted ? (*/}
-                                              {/*    <SettingsBackupRestoreIcon*/}
-                                              {/*        fontSize={'large'}*/}
-                                              {/*        onClick={() =>*/}
-                                              {/*            confirmToggleDeleteProduct(*/}
-                                              {/*                product*/}
-                                              {/*            )*/}
-                                              {/*        }*/}
-                                              {/*    />*/}
-                                              {/*) : (*/}
-                                              {/*    <DeleteIcon*/}
-                                              {/*        fontSize={'large'}*/}
-                                              {/*        onClick={() =>*/}
-                                              {/*            confirmToggleDeleteProduct(*/}
-                                              {/*                product*/}
-                                              {/*            )*/}
-                                              {/*        }*/}
-                                              {/*    />*/}
-                                              {/*)}*/}
+                                              <SelectUi
+                                                  handleChange={() =>
+                                                      handleCodeStatusChange(
+                                                          code
+                                                      )
+                                                  }
+                                                  label={'status'}
+                                                  value={
+                                                      code.is_active
+                                                          ? 'active'
+                                                          : 'disabled'
+                                                  }
+                                                  list={['active', 'disabled']}
+                                              />
                                           </td>
                                       </tr>
                                   );

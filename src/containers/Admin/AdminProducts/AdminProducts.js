@@ -188,6 +188,7 @@ const AdminProducts = () => {
                                           <td>{product.sold}</td>
                                           <td className={'controls'}>
                                               <EditIcon
+                                                  className={'icon'}
                                                   fontSize={'large'}
                                                   onClick={() =>
                                                       handleEditProductDialog(
@@ -197,6 +198,7 @@ const AdminProducts = () => {
                                               />
                                               {product.is_deleted ? (
                                                   <SettingsBackupRestoreIcon
+                                                      className={'icon'}
                                                       fontSize={'large'}
                                                       onClick={() =>
                                                           confirmToggleDeleteProduct(
@@ -206,6 +208,7 @@ const AdminProducts = () => {
                                                   />
                                               ) : (
                                                   <DeleteIcon
+                                                      className={'icon'}
                                                       fontSize={'large'}
                                                       onClick={() =>
                                                           confirmToggleDeleteProduct(

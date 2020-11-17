@@ -1,4 +1,9 @@
 .adminCodesContainer{
   padding: 4rem;
   @include flex(column);
+  .controls{
+    .MuiFormControl-root{
+      width: unset;
+    }
+  }
 }

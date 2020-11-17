@@ -10,6 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: '1rem 0',
+
         width: '100%',
         '& .MuiFormLabel-root': {
             fontSize: '2rem',

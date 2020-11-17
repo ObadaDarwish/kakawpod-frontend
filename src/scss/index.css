@@ -2867,7 +2867,7 @@
   display: flex;
   justify-content: center;
 }
-.adminContainer .listWrapper tbody .controls svg {
+.adminContainer .listWrapper tbody .controls .icon {
   margin: 0 1rem;
   font-size: 3rem;
   background: #7D5A5A;
@@ -2876,7 +2876,7 @@
   border-radius: 5rem;
   transition: all 0.5s ease-in-out;
 }
-.adminContainer .listWrapper tbody .controls svg:hover {
+.adminContainer .listWrapper tbody .controls .icon:hover {
   background: #901a25;
   cursor: pointer;
 }
@@ -4051,6 +4051,9 @@
   padding: 4rem;
   display: flex;
   flex-flow: column;
+}
+.adminCodesContainer .controls .MuiFormControl-root {
+  width: unset;
 }
 
 @font-face {
