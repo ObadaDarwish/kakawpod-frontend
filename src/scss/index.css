@@ -4056,6 +4056,20 @@
   width: unset;
 }
 
+.createCodeWrapper {
+  padding: 1rem;
+}
+.createCodeWrapper__inputWrapper {
+  margin-bottom: 1rem;
+}
+.createCodeWrapper__buttonWrapper {
+  margin: 1rem 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+
 @font-face {
   font-family: "proza-libre";
   src: url("../assets/fonts/ProzaLibre-Regular.ttf");

@@ -10,12 +10,14 @@ import useCallServer from '../../../hooks/useCallServer';
 import { errorNotification } from '../../../utils/notification-utils';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../../store/actions/loadingIndicator_actions';
+import AdminCreateCodeDialog from '../../../components/Dialogs/AdminCreateCodeDialog/AdminCreateCodeDialog';
 
 const queryString = require('query-string');
 const AdminPromoCodes = () => {
     const tbodyRef = useRef();
     const location = useLocation();
     let { page = 1 } = queryString.parse(location.search);
+    const [openCreateCode, setOpenCreateCode] = useState(false);
     const [, , , , callServer] = useCallServer();
     const dispatch = useDispatch();
     const [codePage, setCodesPage] = useState(page);
@@ -63,11 +65,35 @@ const AdminPromoCodes = () => {
             })
             .finally(() => dispatch(setLoading(false)));
     };
+    const createNewCode = () => {
+        setOpenCreateCode(true);
+    };
+    const closeCreateCodeDialog = () => {
+        setOpenCreateCode(false);
+    };
+    const handleNewCodes = (codes) => {
+        setCodes((prevState) => {
+            closeCreateCodeDialog();
+            return {
+                total: prevState.total + codes.codes.length,
+                data: [...codes.codes, ...prevState.data],
+            };
+        });
+    };
     return (
         <div className={'adminCodesContainer'}>
+            <AdminCreateCodeDialog
+                open={openCreateCode}
+                close={closeCreateCodeDialog}
+                getCreatedCodesList={handleNewCodes}
+            />
             <div className={'bar'}>
                 <p>Total: {codes.total}</p>
-                <ButtonUI name={'create'} width={'15rem'} />
+                <ButtonUI
+                    name={'create'}
+                    width={'15rem'}
+                    clickHandler={createNewCode}
+                />
             </div>
             <div className={'listWrapper'}>
                 <table className="table">

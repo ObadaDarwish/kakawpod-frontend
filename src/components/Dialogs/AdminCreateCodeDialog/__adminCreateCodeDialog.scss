@@ -1,0 +1,11 @@
+.createCodeWrapper {
+  padding: 1rem;
+
+  &__inputWrapper {
+    margin-bottom: 1rem;
+  }
+  &__buttonWrapper{
+    margin: 1rem 0;
+    @include flex_center(row);
+  }
+}
