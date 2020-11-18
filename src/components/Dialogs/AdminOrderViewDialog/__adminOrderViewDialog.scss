@@ -1,4 +1,15 @@
 .viewOrderContainer {
+  position: relative;
+
+  &__editIcon {
+    position: absolute;
+    background: $color1;
+    color: $white;
+    top: -5rem;
+    left: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
 
   &__userSection {
     background: $color1;
@@ -57,10 +68,12 @@
 
             p {
               font-size: 1.7rem;
-              &:first-child{
+
+              &:first-child {
                 flex-basis: 80%;
               }
-              &:last-child{
+
+              &:last-child {
                 flex-basis: 20%;
               }
             }
@@ -69,7 +82,8 @@
       }
     }
   }
-  &__statusControl{
+
+  &__statusControl {
     padding: 1rem;
     @include flex(column);
   }

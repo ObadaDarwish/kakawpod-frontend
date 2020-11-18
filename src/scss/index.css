@@ -3326,6 +3326,18 @@
   background: #b5b5b5c7;
 }
 
+.viewOrderContainer {
+  position: relative;
+}
+.viewOrderContainer__editIcon {
+  position: absolute;
+  background: #7D5A5A;
+  color: #fff;
+  top: -5rem;
+  left: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
 .viewOrderContainer__userSection {
   background: #7D5A5A;
   padding: 1rem;
