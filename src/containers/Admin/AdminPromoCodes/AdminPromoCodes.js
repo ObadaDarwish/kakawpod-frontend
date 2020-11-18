@@ -29,7 +29,7 @@ const AdminPromoCodes = () => {
             const { scrollTop, scrollHeight, clientHeight } = tbodyRef.current;
             if (scrollTop + clientHeight === scrollHeight) {
                 let noOfPages = Math.ceil(codes.total / 20);
-                let newPage = page + 1;
+                let newPage = codePage + 1;
                 if (newPage <= noOfPages) {
                     setCodesPage(newPage);
                 }

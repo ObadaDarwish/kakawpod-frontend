@@ -8,7 +8,7 @@ import {
     successNotification,
 } from '../../../utils/notification-utils';
 
-const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
+const POSDiscountDialog = ({ open, close, applyDiscountHandler }) => {
     const discountRef = useRef();
     const OTPReference = useRef();
     const [stage, setStage] = useState('requestOTP');
@@ -54,13 +54,15 @@ const POSDiscountDialog = ({ onClose, open, close, applyDiscountHandler }) => {
         }
     };
     const handleClosingDialog = () => {
-        setStage('applyDiscount');
         close();
+    };
+    const resetDiscountState = () => {
+        setStage('requestOTP');
     };
     return (
         <DialogWrapper
             open={open}
-            onClose={onClose}
+            onClose={resetDiscountState}
             close={handleClosingDialog}
             loading={loading}
         >

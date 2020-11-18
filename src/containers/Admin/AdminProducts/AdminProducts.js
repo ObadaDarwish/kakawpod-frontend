@@ -45,7 +45,7 @@ const AdminProducts = () => {
             const { scrollTop, scrollHeight, clientHeight } = tbodyRef.current;
             if (scrollTop + clientHeight === scrollHeight) {
                 let noOfPages = Math.ceil(products.total / 20);
-                let newPage = page + 1;
+                let newPage = productsPage + 1;
                 if (newPage <= noOfPages) {
                     setProductsPage(newPage);
                 }

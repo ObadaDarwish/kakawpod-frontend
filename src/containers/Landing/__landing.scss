@@ -108,7 +108,8 @@
     @include flex(row);
     justify-content: space-between;
     align-items: center;
-    padding: 8rem 15rem;
+    padding: 0 15rem;
+    padding-bottom: 4rem;
     background: $color3;
     position: relative;
     @include media-breakpoint-down(md) {

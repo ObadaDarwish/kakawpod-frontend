@@ -948,7 +948,8 @@
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
-  padding: 8rem 15rem;
+  padding: 0 15rem;
+  padding-bottom: 4rem;
   background: #f3e1e1;
   position: relative;
 }
