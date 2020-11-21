@@ -71,7 +71,7 @@ const MyOrders = () => {
                 close={closeConfirmDialog}
             />
             <h1 className={'myOrdersContainer__title'}>
-                {data && data.total} orders
+                {data && data.total} Orders
             </h1>
             {isLoading ? (
                 <CircularLoadingIndicator height={'40rem'} />
