@@ -8,10 +8,10 @@ import {
     successNotification,
 } from '../../../utils/notification-utils';
 import RemoveIcon from '@material-ui/icons/Remove';
-
+import { v4 as uuidv4 } from 'uuid';
 const ProductDialog = ({ open, product, onClosingDialog, close }) => {
     const [images, setImages] = useState([]);
-    const [imagesBlob, setImagesBlob] = useState();
+    const [imagesBlob, setImagesBlob] = useState([]);
     let dynamicRefs = useRef({});
     let updatedProduct = {};
     const [, , , , callServer, loading, setLoading] = useCallServer();
@@ -35,9 +35,9 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
         if (event.target.files) {
             let imageArray = [];
             setImagesBlob(event.target.files);
-            [...event.target.files].forEach((img, index) => {
+            [...event.target.files].forEach((img) => {
                 imageArray.push({
-                    _id: index,
+                    _id: uuidv4(),
                     view: true,
                     url: URL.createObjectURL(img),
                 });
@@ -53,7 +53,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
         setLoading(true);
         let formData = new FormData();
         let uploadImagePromise = new Promise((resolve, reject) => {
-            if (imagesBlob) {
+            if (imagesBlob.length) {
                 [...imagesBlob].forEach((img) => {
                     formData.append('product_image', img);
                 });
@@ -117,7 +117,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                 updatedProduct
             )
                 .then((response) => {
-                    setImagesBlob(null);
+                    setImagesBlob([]);
                     onClosingDialog(
                         handlingType === 'create'
                             ? response.data.product
@@ -137,16 +137,17 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                 .finally(() => setLoading(false));
         });
     };
-    const handleImageRemove = (image) => {
-        setImages((prevState) => {
+    const handleImageRemove = (index) => {
+        const setState = (prevState) => {
             let updatedImages = [...prevState];
-            let isFound = updatedImages.findIndex(
-                (item) => item._id === image._id
-            );
-            if (isFound >= 0) {
-                updatedImages.splice(isFound, 1);
-            }
+            updatedImages.splice(index, 1);
             return updatedImages;
+        };
+        setImages((prevState) => {
+            return setState(prevState);
+        });
+        setImagesBlob((prevState) => {
+            return setState(prevState);
         });
     };
     return (
@@ -243,7 +244,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                         }
                     >
                         {images.length > 0 &&
-                            images.map((image) => {
+                            images.map((image, index) => {
                                 return (
                                     <div
                                         className={
@@ -257,7 +258,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                                             }
                                             fontSize={'large'}
                                             onClick={() =>
-                                                handleImageRemove(image)
+                                                handleImageRemove(index)
                                             }
                                         />
                                         <img src={image.url} alt="my image" />

@@ -177,8 +177,10 @@ const AdminProducts = () => {
                                           <td>
                                               <img
                                                   src={
-                                                      product.images &&
-                                                      product.images[0].url
+                                                      product.images.length
+                                                          ? product.images[0]
+                                                                .url
+                                                          : ''
                                                   }
                                                   alt={product.name}
                                               />
