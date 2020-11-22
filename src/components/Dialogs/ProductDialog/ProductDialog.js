@@ -9,6 +9,7 @@ import {
 } from '../../../utils/notification-utils';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { v4 as uuidv4 } from 'uuid';
+
 const ProductDialog = ({ open, product, onClosingDialog, close }) => {
     const [images, setImages] = useState([]);
     const [imagesBlob, setImagesBlob] = useState([]);
@@ -34,7 +35,14 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
     const onImageChange = (event) => {
         if (event.target.files) {
             let imageArray = [];
-            setImagesBlob(event.target.files);
+            setImagesBlob(
+                [...event.target.files].map((blob) => {
+                    return {
+                        blob: blob,
+                        _id: uuidv4(),
+                    };
+                })
+            );
             [...event.target.files].forEach((img) => {
                 imageArray.push({
                     _id: uuidv4(),
@@ -55,7 +63,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
         let uploadImagePromise = new Promise((resolve, reject) => {
             if (imagesBlob.length) {
                 [...imagesBlob].forEach((img) => {
-                    formData.append('product_image', img);
+                    formData.append('product_image', img.blob);
                 });
                 callServer(
                     'POST',
@@ -137,10 +145,13 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                 .finally(() => setLoading(false));
         });
     };
-    const handleImageRemove = (index) => {
+    const handleImageRemove = (id) => {
         const setState = (prevState) => {
             let updatedImages = [...prevState];
-            updatedImages.splice(index, 1);
+            let isFound = updatedImages.findIndex((item) => item._id === id);
+            if (isFound >= 0) {
+                updatedImages.splice(isFound, 1);
+            }
             return updatedImages;
         };
         setImages((prevState) => {
@@ -244,7 +255,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                         }
                     >
                         {images.length > 0 &&
-                            images.map((image, index) => {
+                            images.map((image) => {
                                 return (
                                     <div
                                         className={
@@ -258,7 +269,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                                             }
                                             fontSize={'large'}
                                             onClick={() =>
-                                                handleImageRemove(index)
+                                                handleImageRemove(image._id)
                                             }
                                         />
                                         <img src={image.url} alt="my image" />
