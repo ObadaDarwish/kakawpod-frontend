@@ -4047,6 +4047,7 @@
   height: 3.5rem;
   z-index: 1;
   opacity: 0;
+  cursor: pointer;
 }
 .productDialogWrapper__imageContainer img {
   width: 13rem;
@@ -4058,6 +4059,17 @@
   flex-flow: row;
   width: 60rem;
   overflow-y: auto;
+}
+.productDialogWrapper__imageContainer__imagesWrapper__image {
+  position: relative;
+}
+.productDialogWrapper__imageContainer__imagesWrapper__image__removeIcon {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  background: #d4c1c1;
+  border-radius: 17px;
+  cursor: pointer;
 }
 
 .adminCodesContainer {

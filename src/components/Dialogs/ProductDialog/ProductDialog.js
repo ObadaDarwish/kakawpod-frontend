@@ -7,6 +7,7 @@ import {
     errorNotification,
     successNotification,
 } from '../../../utils/notification-utils';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const ProductDialog = ({ open, product, onClosingDialog, close }) => {
     const [images, setImages] = useState([]);
@@ -21,8 +22,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
         let canUpdate = true;
         if (canUpdate) {
             if (product.images.length) {
-                let mappedImages = product.images.map((img) => img.url);
-                setImages(mappedImages);
+                setImages(product.images);
             } else {
                 setImages([]);
             }
@@ -35,8 +35,12 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
         if (event.target.files) {
             let imageArray = [];
             setImagesBlob(event.target.files);
-            [...event.target.files].forEach((img) => {
-                imageArray.push(URL.createObjectURL(img));
+            [...event.target.files].forEach((img, index) => {
+                imageArray.push({
+                    _id: index,
+                    view: true,
+                    url: URL.createObjectURL(img),
+                });
             });
             setImages((prevState) => {
                 return [...prevState, ...imageArray];
@@ -92,9 +96,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                 cocoa_percentage,
                 weight,
             } = dynamicRefs.current;
-            let updatedImages = product.images
-                ? [...product.images, ...resolved.images]
-                : resolved.images;
+            let filteredImages = [...images].filter((img) => !img.view);
             updatedProduct = {
                 name: name.current.value,
                 description: description.current.value,
@@ -105,7 +107,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                 category: category.current.value,
                 cocoa_percentage: cocoa_percentage.current.value,
                 weight: parseInt(weight.current.value),
-                images: updatedImages,
+                images: [...filteredImages, ...resolved.images],
             };
             callServer(
                 handlingType === 'create' ? 'POST' : 'PUT',
@@ -133,6 +135,18 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                     }
                 })
                 .finally(() => setLoading(false));
+        });
+    };
+    const handleImageRemove = (image) => {
+        setImages((prevState) => {
+            let updatedImages = [...prevState];
+            let isFound = updatedImages.findIndex(
+                (item) => item._id === image._id
+            );
+            if (isFound >= 0) {
+                updatedImages.splice(isFound, 1);
+            }
+            return updatedImages;
         });
     };
     return (
@@ -211,7 +225,7 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                     >
                         <div
                             className={
-                                'productDialogWrapper__imageContainer__fileInput__styleButton'
+                                'productDialogWrapper__imageContainer__fileInput__styleButton uploadButton'
                             }
                         >
                             Upload image
@@ -231,11 +245,23 @@ const ProductDialog = ({ open, product, onClosingDialog, close }) => {
                         {images.length > 0 &&
                             images.map((image) => {
                                 return (
-                                    <img
-                                        key={image}
-                                        src={image}
-                                        alt="my image"
-                                    />
+                                    <div
+                                        className={
+                                            'productDialogWrapper__imageContainer__imagesWrapper__image'
+                                        }
+                                        key={image._id}
+                                    >
+                                        <RemoveIcon
+                                            className={
+                                                'productDialogWrapper__imageContainer__imagesWrapper__image__removeIcon'
+                                            }
+                                            fontSize={'large'}
+                                            onClick={() =>
+                                                handleImageRemove(image)
+                                            }
+                                        />
+                                        <img src={image.url} alt="my image" />
+                                    </div>
                                 );
                             })}
                     </div>

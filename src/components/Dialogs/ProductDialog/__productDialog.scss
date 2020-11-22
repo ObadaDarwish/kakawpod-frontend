@@ -34,12 +34,14 @@
         @include flex_center(row);
         color: $color1;
         box-shadow: 0 0 2px 1px $gray-500;
+
       }
 
       input {
         height: 3.5rem;
         z-index: 1;
         opacity: 0;
+        cursor: pointer;
       }
     }
 
@@ -53,6 +55,18 @@
       @include flex(row);
       width: 60rem;
       overflow-y: auto;
+
+      &__image {
+        position: relative;
+        &__removeIcon {
+          position: absolute;
+          top: 3px;
+          right: 0;
+          background: #d4c1c1;
+          border-radius: 17px;
+          cursor: pointer;
+        }
+      }
     }
   }
 }
