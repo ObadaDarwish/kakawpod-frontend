@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DialogWrapper from '../DialogWrapper/DialogWrapper';
 import InputUI from '../../UI/InputUI/InputUI';
 import ButtonUI from '../../UI/ButtonUI/ButtonUI';
@@ -13,6 +13,15 @@ const POSDiscountDialog = ({ open, close, applyDiscountHandler }) => {
     const OTPReference = useRef();
     const [stage, setStage] = useState('requestOTP');
     const [, , , , callServer, loading, setLoading] = useCallServer();
+    useEffect(() => {
+        let canUpdate = true;
+        if (!open && canUpdate) {
+            setStage('requestOTP');
+        }
+        return () => {
+            canUpdate = false;
+        };
+    }, [open]);
     const requestOTP = () => {
         setLoading(true);
         callServer('POST', `${process.env.REACT_APP_API_ENDPOINT}/admin/OTP`, {
@@ -56,13 +65,14 @@ const POSDiscountDialog = ({ open, close, applyDiscountHandler }) => {
     const handleClosingDialog = () => {
         close();
     };
-    const resetDiscountState = () => {
-        setStage('requestOTP');
-    };
+    // const resetDiscountState = () => {
+    //     console.log('asdas');
+    //     setStage('requestOTP');
+    // };
     return (
         <DialogWrapper
             open={open}
-            onClose={resetDiscountState}
+            // onClose={resetDiscountState}
             close={handleClosingDialog}
             loading={loading}
         >
