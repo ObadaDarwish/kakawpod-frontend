@@ -4095,6 +4095,111 @@
   align-items: center;
 }
 
+.adminStatsContainer {
+  display: flex;
+  flex-flow: column;
+  background: #FAF2F2;
+  min-height: 100vh;
+}
+.adminStatsContainer__topSection {
+  height: 10rem;
+  background: #ead2d2;
+}
+.adminStatsContainer__bottomSection {
+  position: relative;
+  top: -3rem;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.adminStatsContainer__bottomSection__leftBlock {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding: 0 1rem;
+}
+.adminStatsContainer__bottomSection__rightBlock {
+  display: flex;
+  flex-flow: column;
+  padding: 0 2rem;
+}
+
+.blockGroup {
+  box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
+  background: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.blockGroup__groupData {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.blockGroup__groupData p:first-child {
+  background: #f3e1e1;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  width: 10rem;
+  height: 10rem;
+  margin-bottom: 1rem;
+}
+.blockGroup__groupData p:last-child {
+  font-size: 1.8rem;
+  margin: 0;
+}
+.blockGroup__subStats {
+  display: flex;
+  flex-flow: row;
+}
+.blockGroup .statsBlock {
+  margin-bottom: 0;
+}
+
+.statsBlock {
+  box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
+  background: #fff;
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem;
+  margin-bottom: 2rem;
+}
+.statsBlock__description {
+  display: flex;
+  flex-flow: column;
+}
+.statsBlock__description p {
+  font-size: 1.6rem;
+  margin: 0.5rem 0;
+}
+.statsBlock__description p:first-child {
+  font-weight: bold;
+}
+.statsBlock__description p:last-child {
+  font-size: 1.4rem;
+}
+.statsBlock__icon {
+  color: #7D5A5A;
+}
+
 @font-face {
   font-family: "proza-libre";
   src: url("../assets/fonts/ProzaLibre-Regular.ttf");
@@ -4458,6 +4563,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 th, td {
   vertical-align: middle !important;
+}
+
+.chartContainer {
+  box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
+  border-radius: 0.3rem;
+  margin-bottom: 2rem;
 }
 
 /*# sourceMappingURL=index.css.map */

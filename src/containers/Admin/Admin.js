@@ -16,6 +16,7 @@ import AdminOrders from './AdminOrders/AdminOrders';
 import AdminProducts from './AdminProducts/AdminProducts';
 import AdminRoute from '../../HOC/AdminRoute/AdminRoute';
 import AdminPromoCodes from './AdminPromoCodes/AdminPromoCodes';
+import AdminStats from './AdminStats/AdminStats';
 
 const Admin = () => {
     const dispatch = useDispatch();
@@ -107,7 +108,7 @@ const Admin = () => {
                     component={AdminProducts}
                 />
                 <AdminRoute path={'/admin/codes'} component={AdminPromoCodes} />
-                // add admin route to stats and products
+                <AdminRoute path={'/admin/stats'} component={AdminStats} />
             </Switch>
         </div>
     );
