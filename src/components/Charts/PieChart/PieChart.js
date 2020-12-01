@@ -44,10 +44,12 @@ const PieChart = ({ title, width, height }) => {
                     {
                         name: 'Online',
                         y: 60,
+                        color: '#F1D1D1',
                     },
                     {
                         name: 'Shop',
                         y: 40,
+                        color: '#f3e1e1',
                     },
                 ],
             },

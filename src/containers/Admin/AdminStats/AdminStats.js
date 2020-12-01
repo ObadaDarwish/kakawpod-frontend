@@ -11,6 +11,17 @@ import LineChart from '../../../components/Charts/LineChart/LineChart';
 import StatBlock from '../../../components/StatBlock/StatBlock';
 import PieChart from '../../../components/Charts/PieChart/PieChart';
 import BarChart from '../../../components/Charts/BarChart/BarChart';
+import { Menu, MenuItem } from '@material-ui/core';
+import { DateRange } from 'react-date-range';
+import { format, fromUnixTime } from 'date-fns';
+import { useHistory, useLocation } from 'react-router-dom';
+import ButtonUI from '../../../components/UI/ButtonUI/ButtonUI';
+import useFetchData from '../../../hooks/useFetchData';
+import CircularLoadingIndicator from '../../../components/LoadingIndicator/CircularLoadingIndicator';
+import DataPrompt from '../../../components/DataPrompt/DataPrompt';
+import GeneralStats from '../../../components/GeneralStats/GeneralStats';
+import DailyStats from '../../../components/DailyStats/DailyStats';
+const queryString = require('query-string');
 const months = [
     'Jan',
     'Feb',
@@ -26,7 +37,18 @@ const months = [
     'Dec',
 ];
 const AdminStats = () => {
+    const location = useLocation();
+    const history = useHistory();
+    const [openDatePicker, setOpenDatePicker] = useState(null);
+    let { startDate, endDate } = queryString.parse(location.search);
     const [selectLineChart, setSelectedLineChart] = useState('revenue');
+    const [selectedDate, setSelectedDate] = useState([
+        {
+            startDate: startDate ? fromUnixTime(startDate) : new Date(),
+            endDate: endDate ? fromUnixTime(endDate) : new Date(),
+            key: 'selection',
+        },
+    ]);
     const [lineChartData, setLineChartData] = useState([
         {
             name: 'Months',
@@ -43,73 +65,71 @@ const AdminStats = () => {
             },
         ]);
     };
+    const handleClose = () => {
+        setOpenDatePicker(null);
+    };
+    const handleDateChange = (dateEvent) => {
+        let formattedStartDate = format(dateEvent.selection.startDate, 't');
+        let formattedEndDate = format(dateEvent.selection.endDate, 't');
+        history.push({
+            pathname: location.pathname,
+            search: `?startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        });
+        setSelectedDate([dateEvent.selection]);
+    };
+    const openDatePickerMenu = (event) => {
+        setOpenDatePicker(event.currentTarget);
+    };
     return (
         <div className={'adminStatsContainer'}>
-            <section className={'adminStatsContainer__topSection'} />
+            <section className={'adminStatsContainer__topSection'}>
+                <div
+                    className={
+                        'adminStatsContainer__topSection__datePickerWrapper'
+                    }
+                >
+                    <ButtonUI
+                        name={`${
+                            startDate
+                                ? format(fromUnixTime(startDate), 'PP')
+                                : 'Start Date'
+                        } - ${
+                            endDate
+                                ? format(fromUnixTime(endDate), 'PP')
+                                : 'End Date'
+                        }`}
+                        ariaControls="simple-menu"
+                        clickHandler={openDatePickerMenu}
+                    />
+                    <Menu
+                        className={
+                            'adminStatsContainer__topSection__datePickerWrapper__datePicker'
+                        }
+                        open={Boolean(openDatePicker)}
+                        id={'simple-menu'}
+                        anchorEl={openDatePicker}
+                        onClose={handleClose}
+                    >
+                        <MenuItem>
+                            <DateRange
+                                onChange={handleDateChange}
+                                moveRangeOnFirstSelection={false}
+                                ranges={selectedDate}
+                                color={'#7D5A5A'}
+                                rangeColors={['#7D5A5A']}
+                            />
+                        </MenuItem>
+                    </Menu>
+                </div>
+            </section>
             <section className={'adminStatsContainer__bottomSection'}>
                 <div
                     className={'adminStatsContainer__bottomSection__leftBlock'}
                 >
-                    <StatBlock
-                        background={'#7D5A5A'}
-                        color={'#fff'}
-                        amount={'EGP5,000'}
-                        title={'Revenue'}
-                    >
-                        <AttachMoneyIcon fontSize={'large'} />
-                    </StatBlock>
-                    <StatBlock amount={'EGP1,500'} title={'Discounts'}>
-                        <MoneyOffIcon fontSize={'large'} />
-                    </StatBlock>
-                    <StatBlock amount={'150'} title={'Users'}>
-                        <GroupIcon fontSize={'large'} />
-                    </StatBlock>
-                    <div className={'blockGroup'}>
-                        <div className={'blockGroup__groupData'}>
-                            <p>250</p>
-                            <p>Orders</p>
-                        </div>
-                        <div className={'blockGroup__subStats'}>
-                            <StatBlock amount={'100'} title={'Shop orders'}>
-                                <StoreIcon fontSize={'large'} />
-                            </StatBlock>
-                            <StatBlock amount={'150'} title={'Online orders'}>
-                                <ShoppingCartIcon fontSize={'large'} />
-                            </StatBlock>
-                        </div>
-                    </div>
-                    <div
-                        className={
-                            'adminStatsContainer__bottomSection__leftBlock__generalStats'
-                        }
-                    >
-                        <h1
-                            className={
-                                'adminStatsContainer__bottomSection__leftBlock__generalStats__title'
-                            }
-                        >
-                            General Stats
-                        </h1>
-                        <div
-                            className={
-                                'adminStatsContainer__bottomSection__leftBlock__generalStats__wrapper'
-                            }
-                        >
-                            <StatBlock amount={'1500'} title={'Orders'}>
-                                <LocalMallIcon fontSize={'large'} />
-                            </StatBlock>
-                            <StatBlock amount={'42'} title={'Users'}>
-                                <GroupIcon fontSize={'large'} />
-                            </StatBlock>
-                            <StatBlock amount={'112'} title={'Codes'}>
-                                <CodeIcon fontSize={'large'} />
-                            </StatBlock>
-                            <StatBlock amount={'43'} title={'Products'}>
-                                <LabelIcon fontSize={'large'} />
-                            </StatBlock>
-                        </div>
-                    </div>
+                    <DailyStats startDate={startDate} endDate={endDate} />
+                    <GeneralStats />
                 </div>
+
                 <div
                     className={'adminStatsContainer__bottomSection__rightBlock'}
                 >
@@ -167,7 +187,7 @@ const AdminStats = () => {
                 <BarChart
                     title={'Inventory'}
                     dataList={[
-                        ['milk bar', 50],
+                        ['milk bar', 50, { color: 'green' }],
                         ['milk almond bar', 230],
                         ['milk hazelnut bar', 420],
                         ['milk cashew bar', 30],

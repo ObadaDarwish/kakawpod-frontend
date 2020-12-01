@@ -26,6 +26,9 @@ const LineChart = ({
             },
         },
         plotOptions: {
+            series: {
+                color: '#7D5A5A',
+            },
             line: {
                 dataLabels: {
                     enabled: true,

@@ -23,14 +23,27 @@ const BarChart = ({ title, dataList, yAxisName, width, height }) => {
         yAxis: {
             min: 0,
             title: {
-                text: 'Inventory (KG)',
+                text: 'Inventory (KGs)',
             },
         },
         legend: {
             enabled: false,
         },
         tooltip: {
-            pointFormat: 'Inventory: <b>{point.y:.1f} KGs</b>',
+            pointFormat: 'Inventory: <b>{point.y:.0f} KGs</b>',
+        },
+        plotOptions: {
+            series: {
+                color: '#7D5A5A',
+            },
+            column: {
+                zones: [
+                    {
+                        value: 100,
+                        color: 'red',
+                    },
+                ],
+            },
         },
         series: [
             {

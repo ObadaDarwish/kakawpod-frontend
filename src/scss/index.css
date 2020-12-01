@@ -4104,6 +4104,13 @@
 .adminStatsContainer__topSection {
   height: 10rem;
   background: #ead2d2;
+  display: flex;
+  justify-content: flex-start;
+}
+.adminStatsContainer__topSection__datePickerWrapper {
+  width: 20%;
+  margin-top: 1rem;
+  margin-left: 3.5rem;
 }
 .adminStatsContainer__bottomSection {
   position: relative;
@@ -4116,10 +4123,13 @@
   align-items: flex-start;
 }
 .adminStatsContainer__bottomSection__leftBlock {
+  padding: 0 1rem;
+}
+.adminStatsContainer__bottomSection__leftBlock__dailyStatsWrapper {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  padding: 0 1rem;
+  align-items: flex-start;
 }
 .adminStatsContainer__bottomSection__leftBlock__generalStats {
   box-shadow: 0 0 0.4rem 0.2rem #dee2e6;

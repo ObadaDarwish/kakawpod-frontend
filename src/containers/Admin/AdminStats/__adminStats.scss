@@ -6,6 +6,19 @@
   &__topSection {
     height: 10rem;
     background: #ead2d2;
+    display: flex;
+    justify-content: flex-start;
+
+    &__datePickerWrapper {
+      width: 20%;
+      margin-top: 1rem;
+      margin-left: 3.5rem;
+
+      &__datePicker {
+
+      }
+    }
+
   }
 
   &__bottomSection {
@@ -18,19 +31,25 @@
     align-items: flex-start;
 
     &__leftBlock {
-      @include flex(row wrap);
-      justify-content: center;
       padding: 0 1rem;
+
+      &__dailyStatsWrapper {
+        @include flex(row wrap);
+        justify-content: center;
+        align-items: flex-start;
+      }
 
       &__generalStats {
         box-shadow: 0 0 0.4rem 0.2rem $gray-300;
         background: $white;
         @include flex(column);
         align-items: center;
-        margin: 0 1rem;
+        margin-left: 2rem;
+        padding: 2rem 0;
 
         &__title {
           margin: 2rem 0;
+          margin-bottom: 6rem;
         }
 
         &__wrapper {
