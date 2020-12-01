@@ -66,7 +66,7 @@ const DailyStats = ({ startDate, endDate }) => {
             </div>
         </div>
     ) : (
-        <DataPrompt message={'No Stats yet.'} margin={'10rem'} />
+        <DataPrompt message={'No Daily Stats yet.'} margin={'10rem'} />
     );
 };
 
