@@ -7,8 +7,11 @@
     height: 60rem;
     position: relative;
     padding-top: 9rem;
-    @include media-breakpoint-down(xs) {
-      height: 49rem;
+    @include media-breakpoint-down(sm) {
+      height: 45rem;
+    }
+    @include media-breakpoint-down(xs){
+      height: 35rem;
     }
 
     &__videoOverlay {
@@ -20,10 +23,12 @@
       height: 60rem;
       width: 100%;
       @include flex(column);
-      @include media-breakpoint-down(xs) {
-        height: 49rem;
+      @include media-breakpoint-down(sm) {
+        height: 45rem;
       }
-
+      @include media-breakpoint-down(xs){
+        height: 35rem;
+      }
       &__slogan {
         font-size: 3.5rem;
         font-weight: bold;
@@ -50,7 +55,7 @@
         }
         @include media-breakpoint-down(sm) {
           font-size: 3rem;
-          padding: 5rem 3rem;
+          padding: 0 3rem;
           width: auto;
           &:before {
             left: 1.5rem;
@@ -67,7 +72,7 @@
         padding: 1rem 2.5rem;
         align-self: center;
         cursor: pointer;
-        transition: background-color 0.5s ease;
+        transition: background-color 0.6s ease-in-out;
         box-shadow: 0 0 2px 1px $color4;
         z-index: 2;
         @include media-breakpoint-down(md) {
@@ -87,20 +92,34 @@
       &__image {
         width: 100%;
         position: absolute;
-        bottom: 0rem;
+        bottom: -0.2rem;
         z-index: 1;
         height: 30rem;
         @include media-breakpoint-down(sm) {
           height: 20rem;
         }
+        @include media-breakpoint-down(xs){
+         display: none;
+        }
+      }
+
+      &:hover + .bannerImage {
+        transform: scale(1.05);
       }
     }
 
 
-    &__video {
+    .bannerImage {
       width: 100%;
       height: 60rem;
       object-fit: fill;
+      transition: all 5s ease-in-out;
+      @include media-breakpoint-down(sm) {
+        height: 45rem;
+      }
+      @include media-breakpoint-down(xs){
+        height: 35rem;
+      }
     }
   }
 

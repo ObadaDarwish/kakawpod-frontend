@@ -68,12 +68,14 @@ const UserMenu = ({ isAuth }) => {
                 open={Boolean(menu)}
                 onClose={handleClose}
             >
+                <MenuItem onClick={handleClose}>
+                    <NavLink to={'/'}>Home</NavLink>
+                </MenuItem>
                 {isAuth.authority !== 0 && (
                     <MenuItem onClick={handleClose}>
                         <NavLink to={'/admin'}>Admin</NavLink>
                     </MenuItem>
                 )}
-
                 <MenuItem onClick={handleClose}>
                     <NavLink to={'/my-orders'}>Orders</NavLink>
                 </MenuItem>

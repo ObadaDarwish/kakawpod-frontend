@@ -2,10 +2,10 @@
   @include flex(column);
   align-items: center;
   margin: 1rem;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease-in-out;
 
   &:hover {
-    box-shadow: 0 0 0.2rem 0.3rem $color3;
+    box-shadow: 0 0 0.5rem 0.2rem $color3
     //transform: scale(0.95);
   }
 

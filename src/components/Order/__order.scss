@@ -1,7 +1,7 @@
 .orderWrapper {
   min-height: 20rem;
   @include flex(column);
-  box-shadow: inset 0 0 0 0.1rem $gray-400;
+  box-shadow: inset 0 0 0 0.1rem $gray-300;
   border-top: none;
   margin: 1rem 0;
 
@@ -40,7 +40,7 @@
   }
 
   &__orderHeader {
-    background: $color3;
+    background: $color2;
     @include flex(row wrap);
     justify-content: space-between;
   }

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import cocoaVideo from '../../assets/videos/cocoa.mp4';
+// import cocoaVideo from '../../assets/videos/cocoa.mp4';
+import banner1 from '../../assets/images/banner1.jpg';
 import ButtonUI from '../../components/UI/ButtonUI/ButtonUI';
 import Product from '../../components/Product/Product';
 import img from '../../assets/images/milkbar.jpg';
@@ -156,19 +157,20 @@ const Landing = React.forwardRef((props, ref) => {
                     />
                 </div>
 
-                <video
-                    className={'landingContainer__videoContainer__video'}
-                    autoPlay
-                    loop
-                    muted
-                    data-reactid=".0.1.0.0"
-                >
-                    <source
-                        type="video/mp4"
-                        data-reactid=".0.1.0.0.0"
-                        src={cocoaVideo}
-                    />
-                </video>
+                <img className={'bannerImage'} src={banner1} alt="banner" />
+                {/*<video*/}
+                {/*    className={'landingContainer__videoContainer__video'}*/}
+                {/*    autoPlay*/}
+                {/*    loop*/}
+                {/*    muted*/}
+                {/*    data-reactid=".0.1.0.0"*/}
+                {/*>*/}
+                {/*    <source*/}
+                {/*        type="video/mp4"*/}
+                {/*        data-reactid=".0.1.0.0.0"*/}
+                {/*        src={cocoaVideo}*/}
+                {/*    />*/}
+                {/*</video>*/}
             </section>
             <section className={'landingContainer__sampleContainer'}>
                 <h1>Wondering our chocolate taste</h1>
