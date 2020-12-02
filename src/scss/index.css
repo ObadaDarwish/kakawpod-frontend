@@ -841,6 +841,8 @@
   height: 60rem;
   position: relative;
   padding-top: 9rem;
+  overflow: hidden;
+  z-index: 0;
 }
 @media (max-width: 767.98px) {
   .landingContainer__videoContainer {
@@ -981,6 +983,7 @@
   padding-bottom: 4rem;
   background: #f3e1e1;
   position: relative;
+  top: -0.5rem;
 }
 @media (max-width: 1024.98px) {
   .landingContainer__sampleContainer {
