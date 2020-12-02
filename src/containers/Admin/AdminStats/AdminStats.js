@@ -9,6 +9,8 @@ import ButtonUI from '../../../components/UI/ButtonUI/ButtonUI';
 import GeneralStats from '../../../components/GeneralStats/GeneralStats';
 import DailyStats from '../../../components/DailyStats/DailyStats';
 import MonthlyStats from '../../../components/MonthlyStats/MonthlyStats';
+import useFetchData from '../../../hooks/useFetchData';
+import CircularLoadingIndicator from '../../../components/LoadingIndicator/CircularLoadingIndicator';
 const queryString = require('query-string');
 
 const AdminStats = () => {
@@ -23,6 +25,10 @@ const AdminStats = () => {
             key: 'selection',
         },
     ]);
+    const [ordersPercentageLoading, ordersPercentage] = useFetchData(
+        `${process.env.REACT_APP_API_ENDPOINT}/admin/stats/orders`
+    );
+    console.log(ordersPercentage);
     const handleClose = () => {
         setOpenDatePicker(null);
     };
@@ -92,10 +98,15 @@ const AdminStats = () => {
                     className={'adminStatsContainer__bottomSection__rightBlock'}
                 >
                     <MonthlyStats />
-                    <PieChart
-                        title={'Orders (Nov, 2020 - Dec, 2020)'}
-                        width={550}
-                    />
+                    {ordersPercentageLoading ? (
+                        <CircularLoadingIndicator height={'40rem'} />
+                    ) : (
+                        <PieChart
+                            title={'Orders (Nov, 2020 - Dec, 2020)'}
+                            width={550}
+                            ordersPercentage={ordersPercentage}
+                        />
+                    )}
                 </div>
             </section>
             <div className={'adminStatsContainer__barChartWrapper'}>

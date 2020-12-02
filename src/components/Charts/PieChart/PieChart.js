@@ -2,7 +2,7 @@ import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 
-const PieChart = ({ title, width, height }) => {
+const PieChart = ({ title, ordersPercentage, width, height }) => {
     const options = {
         chart: {
             plotBackgroundColor: null,
@@ -43,12 +43,12 @@ const PieChart = ({ title, width, height }) => {
                 data: [
                     {
                         name: 'Online',
-                        y: 60,
+                        y: ordersPercentage.online,
                         color: '#F1D1D1',
                     },
                     {
                         name: 'Shop',
-                        y: 40,
+                        y: ordersPercentage.shop,
                         color: '#f3e1e1',
                     },
                 ],
