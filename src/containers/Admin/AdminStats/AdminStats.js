@@ -31,7 +31,6 @@ const AdminStats = () => {
     const [isLoadingInventory, inventory] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/products/all`
     );
-    console.log(inventory);
     const handleClose = () => {
         setOpenDatePicker(null);
     };
@@ -121,7 +120,7 @@ const AdminStats = () => {
                         dataList={inventory.products.map((item) => {
                             return {
                                 y: item.quantity,
-                                name: item.name,
+                                name: item.name.replace('chocolate', ''),
                                 color:
                                     item.quantity < item.min_quantity
                                         ? 'red'

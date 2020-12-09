@@ -1600,9 +1600,6 @@
   margin: 1rem;
   transition: all 0.7s ease-in-out;
 }
-.product:hover {
-  box-shadow: 0 0 0.5rem 0.2rem #f3e1e1;
-}
 .product a {
   overflow: hidden;
   display: flex;
@@ -4166,6 +4163,7 @@
 .adminStatsContainer__bottomSection__topBlock__dailyStatsWrapper__statsBlockWrapper {
   display: flex;
   flex-flow: row wrap;
+  margin: 0 2rem;
 }
 .adminStatsContainer__bottomSection__topBlock__generalStats {
   box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
@@ -4173,7 +4171,7 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin: 2rem 4rem;
+  margin: 2rem;
   padding: 2rem 0;
 }
 .adminStatsContainer__bottomSection__topBlock__generalStats__title {
@@ -4244,12 +4242,12 @@
 .blockGroup {
   box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
   background: #fff;
+  margin: 0 2rem;
   padding: 2rem;
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
 }
 .blockGroup__groupData {
   margin-top: 2rem;

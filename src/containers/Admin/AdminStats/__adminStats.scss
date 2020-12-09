@@ -40,6 +40,7 @@
 
         &__statsBlockWrapper {
           @include flex(row wrap);
+          margin: 0 2rem;
         }
       }
 
@@ -48,7 +49,7 @@
         background: $white;
         @include flex(column);
         align-items: center;
-        margin: 2rem 4rem;
+        margin: 2rem;
         padding: 2rem 0;
 
         &__title {
@@ -131,9 +132,9 @@
 .blockGroup {
   box-shadow: 0 0 0.4rem 0.2rem $gray-300;
   background: $white;
+  margin: 0 2rem;
   padding: 2rem;
   @include flex_center(column);
-  margin-bottom: 2rem;
 
   &__groupData {
     margin-top: 2rem;
