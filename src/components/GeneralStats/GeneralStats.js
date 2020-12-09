@@ -16,19 +16,19 @@ const GeneralStats = () => {
     ) : (
         <div
             className={
-                'adminStatsContainer__bottomSection__leftBlock__generalStats'
+                'adminStatsContainer__bottomSection__topBlock__generalStats'
             }
         >
             <h1
                 className={
-                    'adminStatsContainer__bottomSection__leftBlock__generalStats__title'
+                    'adminStatsContainer__bottomSection__topBlock__generalStats__title'
                 }
             >
                 General Stats
             </h1>
             <div
                 className={
-                    'adminStatsContainer__bottomSection__leftBlock__generalStats__wrapper'
+                    'adminStatsContainer__bottomSection__topBlock__generalStats__wrapper'
                 }
             >
                 <StatBlock amount={generalStats.orders} title={'Orders'}>

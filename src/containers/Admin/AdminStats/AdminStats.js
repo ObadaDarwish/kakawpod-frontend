@@ -28,7 +28,10 @@ const AdminStats = () => {
     const [ordersPercentageLoading, ordersPercentage] = useFetchData(
         `${process.env.REACT_APP_API_ENDPOINT}/admin/stats/orders`
     );
-    console.log(ordersPercentage);
+    const [isLoadingInventory, inventory] = useFetchData(
+        `${process.env.REACT_APP_API_ENDPOINT}/admin/products/all`
+    );
+    console.log(inventory);
     const handleClose = () => {
         setOpenDatePicker(null);
     };
@@ -87,15 +90,15 @@ const AdminStats = () => {
                 </div>
             </section>
             <section className={'adminStatsContainer__bottomSection'}>
-                <div
-                    className={'adminStatsContainer__bottomSection__leftBlock'}
-                >
+                <div className={'adminStatsContainer__bottomSection__topBlock'}>
                     <DailyStats startDate={startDate} endDate={endDate} />
                     <GeneralStats />
                 </div>
 
                 <div
-                    className={'adminStatsContainer__bottomSection__rightBlock'}
+                    className={
+                        'adminStatsContainer__bottomSection__bottomBlock'
+                    }
                 >
                     <MonthlyStats />
                     {ordersPercentageLoading ? (
@@ -110,32 +113,24 @@ const AdminStats = () => {
                 </div>
             </section>
             <div className={'adminStatsContainer__barChartWrapper'}>
-                <BarChart
-                    title={'Inventory'}
-                    dataList={[
-                        ['milk bar', 50, { color: 'green' }],
-                        ['milk almond bar', 230],
-                        ['milk hazelnut bar', 420],
-                        ['milk cashew bar', 30],
-                        ['60% dark bar', 50],
-                        ['60% dark almond bar', 230],
-                        ['60% dark hazelnut bar', 420],
-                        ['60% dark cashew bar', 30],
-                        ['70% dark bar', 50],
-                        ['70% dark almond bar', 230],
-                        ['70% dark hazelnut bar', 420],
-                        ['70% dark cashew bar', 30],
-                        ['90% dark bar', 50],
-                        ['90% dark almond bar', 230],
-                        ['90% dark hazelnut bar', 420],
-                        ['90% dark cashew bar', 30],
-                        ['white bar', 50],
-                        ['white almond bar', 230],
-                        ['white hazelnut bar', 420],
-                        ['white cashew bar', 30],
-                    ]}
-                    yAxisName={'Inventory (KG)'}
-                />
+                {isLoadingInventory ? (
+                    <CircularLoadingIndicator height={'4rem'} />
+                ) : (
+                    <BarChart
+                        title={'Inventory'}
+                        dataList={inventory.products.map((item) => {
+                            return {
+                                y: item.quantity,
+                                name: item.name,
+                                color:
+                                    item.quantity < item.min_quantity
+                                        ? 'red'
+                                        : '#7D5A5A',
+                            };
+                        })}
+                        yAxisName={'Inventory (KG)'}
+                    />
+                )}
             </div>
         </div>
     );

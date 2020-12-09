@@ -4150,51 +4150,56 @@
   width: 100%;
   z-index: 1;
   display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.adminStatsContainer__bottomSection__topBlock {
+  width: 100%;
+}
+.adminStatsContainer__bottomSection__topBlock__dailyStatsWrapper {
+  display: flex;
   flex-flow: row;
   justify-content: space-around;
   align-items: flex-start;
 }
-.adminStatsContainer__bottomSection__leftBlock {
-  padding: 0 1rem;
-  flex-basis: 55%;
-}
-.adminStatsContainer__bottomSection__leftBlock__dailyStatsWrapper {
+.adminStatsContainer__bottomSection__topBlock__dailyStatsWrapper__statsBlockWrapper {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: flex-start;
+  flex-flow: row;
 }
-.adminStatsContainer__bottomSection__leftBlock__generalStats {
+.adminStatsContainer__bottomSection__topBlock__generalStats {
   box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
   background: #fff;
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-left: 2rem;
+  margin: 2rem;
   padding: 2rem 0;
 }
-.adminStatsContainer__bottomSection__leftBlock__generalStats__title {
+.adminStatsContainer__bottomSection__topBlock__generalStats__title {
   margin: 2rem 0;
   margin-bottom: 6rem;
 }
-.adminStatsContainer__bottomSection__leftBlock__generalStats__wrapper {
+.adminStatsContainer__bottomSection__topBlock__generalStats__wrapper {
   display: flex;
   flex-flow: row wrap;
 }
-.adminStatsContainer__bottomSection__rightBlock {
+.adminStatsContainer__bottomSection__bottomBlock {
   display: flex;
-  flex-flow: column;
-  padding: 0 2rem;
+  flex-flow: row;
   position: relative;
+  margin-top: 9rem;
+  width: 100%;
+  justify-content: space-around;
 }
-.adminStatsContainer__bottomSection__rightBlock__tabs {
+.adminStatsContainer__bottomSection__bottomBlock__tabs {
   position: absolute;
-  top: -4rem;
-  left: 3rem;
+  top: -5rem;
+  left: 7rem;
   display: flex;
   flex-flow: row;
 }
-.adminStatsContainer__bottomSection__rightBlock__tabs__tab {
+.adminStatsContainer__bottomSection__bottomBlock__tabs__tab {
   padding: 0.5rem 1.5rem;
   font-size: 1.8rem;
   transition: all 0.6s ease-in-out;
@@ -4202,15 +4207,15 @@
   background: #f3e1e1;
 }
 @media (max-width: 479.98px) {
-  .adminStatsContainer__bottomSection__rightBlock__tabs__tab {
+  .adminStatsContainer__bottomSection__bottomBlock__tabs__tab {
     font-size: 1.6rem;
   }
 }
-.adminStatsContainer__bottomSection__rightBlock__tabs__tab--active {
+.adminStatsContainer__bottomSection__bottomBlock__tabs__tab--active {
   color: #7D5A5A;
   background: #F1D1D1;
 }
-.adminStatsContainer__bottomSection__rightBlock__tabs__tab--active:after {
+.adminStatsContainer__bottomSection__bottomBlock__tabs__tab--active:after {
   content: "";
   position: absolute;
   bottom: -0.3rem;
@@ -4228,7 +4233,7 @@
     opacity: 1;
   }
 }
-.adminStatsContainer__bottomSection__rightBlock__tabs__tab:hover {
+.adminStatsContainer__bottomSection__bottomBlock__tabs__tab:hover {
   color: #cd9292;
   cursor: pointer;
 }

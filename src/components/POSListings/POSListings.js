@@ -9,7 +9,7 @@ import PosProduct from '../POSProduct/POSProduct';
 const POSListings = ({ addItem }) => {
     const [category, setCategory] = useState('bar');
     const [isLoading, data] = useFetchData(
-        `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=${category}`
+        `${process.env.REACT_APP_API_ENDPOINT}/admin/products/all?category=${category}`
     );
     const changeCategory = (category) => {
         setCategory(category);

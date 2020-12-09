@@ -12,7 +12,7 @@ const PosBoxDialog = ({ open, close, box, addToPOS }) => {
     const [type, setType] = useState('milk');
     const [localBox, setLocalBox] = useState({ items: [] });
     let [isLoadingBars, bars] = useFetchProducts(
-        `${process.env.REACT_APP_API_ENDPOINT}/product/all?category=${
+        `${process.env.REACT_APP_API_ENDPOINT}/admin/products/all?category=${
             box.category === 'mixBox' ? 'bar' : 'miniBar'
         }&type=${type}`
     );

@@ -80,14 +80,14 @@ const MonthlyStats = () => {
         <>
             <div
                 className={
-                    'adminStatsContainer__bottomSection__rightBlock__tabs'
+                    'adminStatsContainer__bottomSection__bottomBlock__tabs'
                 }
             >
                 <div
-                    className={`adminStatsContainer__bottomSection__rightBlock__tabs__tab 
+                    className={`adminStatsContainer__bottomSection__bottomBlock__tabs__tab 
                             ${
                                 selectLineChart === 'revenue'
-                                    ? 'adminStatsContainer__bottomSection__rightBlock__tabs__tab--active'
+                                    ? 'adminStatsContainer__bottomSection__bottomBlock__tabs__tab--active'
                                     : ''
                             }`}
                     onClick={() => handleLineChartSelection('revenue')}
@@ -95,9 +95,9 @@ const MonthlyStats = () => {
                     Revenue
                 </div>
                 <div
-                    className={`adminStatsContainer__bottomSection__rightBlock__tabs__tab       ${
+                    className={`adminStatsContainer__bottomSection__bottomBlock__tabs__tab       ${
                         selectLineChart === 'orders'
-                            ? 'adminStatsContainer__bottomSection__rightBlock__tabs__tab--active'
+                            ? 'adminStatsContainer__bottomSection__bottomBlock__tabs__tab--active'
                             : ''
                     }`}
                     onClick={() => handleLineChartSelection('orders')}
@@ -105,9 +105,9 @@ const MonthlyStats = () => {
                     Orders
                 </div>
                 <div
-                    className={`adminStatsContainer__bottomSection__rightBlock__tabs__tab       ${
+                    className={`adminStatsContainer__bottomSection__bottomBlock__tabs__tab       ${
                         selectLineChart === 'users'
-                            ? 'adminStatsContainer__bottomSection__rightBlock__tabs__tab--active'
+                            ? 'adminStatsContainer__bottomSection__bottomBlock__tabs__tab--active'
                             : ''
                     }`}
                     onClick={() => handleLineChartSelection('users')}
@@ -123,7 +123,6 @@ const MonthlyStats = () => {
                     xAxisCategories={months}
                     yAxisName={'Total (EGP)'}
                     seriesList={lineChartData}
-                    width={550}
                 />
             )}
         </>

@@ -21,26 +21,32 @@ const DailyStats = ({ startDate, endDate }) => {
     ) : dailyStats.length > 0 ? (
         <div
             className={
-                'adminStatsContainer__bottomSection__leftBlock__dailyStatsWrapper'
+                'adminStatsContainer__bottomSection__topBlock__dailyStatsWrapper'
             }
         >
-            <StatBlock
-                background={'#7D5A5A'}
-                color={'#fff'}
-                amount={`EGP${dailyStats[0].revenue}`}
-                title={'Revenue'}
+            <div
+                className={
+                    'adminStatsContainer__bottomSection__topBlock__dailyStatsWrapper__statsBlockWrapper'
+                }
             >
-                <AttachMoneyIcon fontSize={'large'} />
-            </StatBlock>
-            <StatBlock
-                amount={`EGP${dailyStats[0].discounts}`}
-                title={'Discounts'}
-            >
-                <MoneyOffIcon fontSize={'large'} />
-            </StatBlock>
-            <StatBlock amount={`EGP${dailyStats[0].users}`} title={'Users'}>
-                <GroupIcon fontSize={'large'} />
-            </StatBlock>
+                <StatBlock
+                    background={'#7D5A5A'}
+                    color={'#fff'}
+                    amount={`EGP${dailyStats[0].revenue}`}
+                    title={'Revenue'}
+                >
+                    <AttachMoneyIcon fontSize={'large'} />
+                </StatBlock>
+                <StatBlock
+                    amount={`EGP${dailyStats[0].discounts}`}
+                    title={'Discounts'}
+                >
+                    <MoneyOffIcon fontSize={'large'} />
+                </StatBlock>
+                <StatBlock amount={`EGP${dailyStats[0].users}`} title={'Users'}>
+                    <GroupIcon fontSize={'large'} />
+                </StatBlock>
+            </div>
             <div className={'blockGroup'}>
                 <div className={'blockGroup__groupData'}>
                     <p>
