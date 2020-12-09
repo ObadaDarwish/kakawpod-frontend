@@ -39,7 +39,7 @@
         align-items: flex-start;
 
         &__statsBlockWrapper {
-          @include flex(row);
+          @include flex(row wrap);
         }
       }
 
@@ -48,7 +48,7 @@
         background: $white;
         @include flex(column);
         align-items: center;
-        margin: 2rem;
+        margin: 2rem 4rem;
         padding: 2rem 0;
 
         &__title {

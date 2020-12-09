@@ -4165,7 +4165,7 @@
 }
 .adminStatsContainer__bottomSection__topBlock__dailyStatsWrapper__statsBlockWrapper {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
 }
 .adminStatsContainer__bottomSection__topBlock__generalStats {
   box-shadow: 0 0 0.4rem 0.2rem #dee2e6;
@@ -4173,7 +4173,7 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin: 2rem;
+  margin: 2rem 4rem;
   padding: 2rem 0;
 }
 .adminStatsContainer__bottomSection__topBlock__generalStats__title {

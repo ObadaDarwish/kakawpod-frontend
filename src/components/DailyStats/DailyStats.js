@@ -6,6 +6,7 @@ import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import GroupIcon from '@material-ui/icons/Group';
 import StoreIcon from '@material-ui/icons/Store';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import CodeIcon from '@material-ui/icons/Code';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import useFetchData from '../../hooks/useFetchData';
 
@@ -45,6 +46,9 @@ const DailyStats = ({ startDate, endDate }) => {
                 </StatBlock>
                 <StatBlock amount={`EGP${dailyStats[0].users}`} title={'Users'}>
                     <GroupIcon fontSize={'large'} />
+                </StatBlock>
+                <StatBlock amount={dailyStats[0].codes} title={'Codes'}>
+                    <CodeIcon fontSize={'large'} />
                 </StatBlock>
             </div>
             <div className={'blockGroup'}>
