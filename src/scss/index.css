@@ -1198,6 +1198,7 @@
   bottom: -0.1rem;
   height: 4rem;
   width: 100%;
+  z-index: 2;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 44.61%);
 }
 .landingContainer__megaWeightContainer__wrapper {
@@ -1279,6 +1280,21 @@
   flex-flow: row;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+.landingContainer__megaWeightContainer__cookingChocolateContainer:after {
+  position: absolute;
+  right: -0.5rem;
+  content: "";
+  width: 1rem;
+  height: 100%;
+  z-index: 1;
+  background: #bfa4a4;
+}
+@media (max-width: 1024.98px) {
+  .landingContainer__megaWeightContainer__cookingChocolateContainer:after {
+    display: none;
+  }
 }
 @media (max-width: 1024.98px) {
   .landingContainer__megaWeightContainer__cookingChocolateContainer {
@@ -1290,6 +1306,7 @@
   background: url("../../assets/images/wholeSale.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  position: relative;
   display: flex;
   flex-flow: row;
   justify-content: center;

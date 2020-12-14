@@ -323,6 +323,7 @@
       bottom: -0.1rem;
       height: 4rem;
       width: 100%;
+      z-index: 2;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 44.61%);
     }
 
@@ -403,6 +404,20 @@
       background-repeat: no-repeat;
       background-size: 100% 100%;
       @include flex_center(row);
+      position: relative;
+      &:after{
+        position: absolute;
+        right: -0.5rem;
+        content: '';
+        width: 1rem;
+        height: 100%;
+        z-index: 1;
+        background: #bfa4a4;
+        //background: linear-gradient(180deg, rgba(191,142,142,1) 0%, rgba(125,90,90,1) 100%);
+        @include media-breakpoint-down(md){
+          display: none;
+        }
+      }
       @include media-breakpoint-down(md) {
         width: 100%;
       }
@@ -413,6 +428,7 @@
       background: url("../../assets/images/wholeSale.jpg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
+      position: relative;
       @include flex_center(row);
       @include media-breakpoint-down(md) {
         width: 100%;
