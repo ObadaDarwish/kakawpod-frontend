@@ -7,6 +7,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import StoreIcon from '@material-ui/icons/Store';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CodeIcon from '@material-ui/icons/Code';
+import HomeIcon from '@material-ui/icons/Home';
 import DataPrompt from '../DataPrompt/DataPrompt';
 import useFetchData from '../../hooks/useFetchData';
 
@@ -49,6 +50,9 @@ const DailyStats = ({ startDate, endDate }) => {
                 </StatBlock>
                 <StatBlock amount={dailyStats[0].codes} title={'Codes'}>
                     <CodeIcon fontSize={'large'} />
+                </StatBlock>
+                <StatBlock amount={dailyStats[0].codes} title={'Addresses'}>
+                    <HomeIcon fontSize={'large'} />
                 </StatBlock>
             </div>
             <div className={'blockGroup'}>

@@ -4,6 +4,7 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import GroupIcon from '@material-ui/icons/Group';
 import CodeIcon from '@material-ui/icons/Code';
 import LabelIcon from '@material-ui/icons/Label';
+import HomeIcon from '@material-ui/icons/Home';
 import useFetchData from '../../hooks/useFetchData';
 import CircularLoadingIndicator from '../LoadingIndicator/CircularLoadingIndicator';
 
@@ -42,6 +43,12 @@ const GeneralStats = () => {
                 </StatBlock>
                 <StatBlock amount={generalStats.products} title={'Products'}>
                     <LabelIcon fontSize={'large'} />
+                </StatBlock>
+                <StatBlock amount={generalStats.products} title={'areas'}>
+                    <LabelIcon fontSize={'large'} />
+                </StatBlock>{' '}
+                <StatBlock amount={generalStats.products} title={'Addresses'}>
+                    <HomeIcon fontSize={'large'} />
                 </StatBlock>
             </div>
         </div>

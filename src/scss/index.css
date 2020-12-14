@@ -1109,7 +1109,7 @@
   position: absolute;
   width: 100%;
   height: 40rem;
-  background: rgba(91, 61, 61, 0.5);
+  background: linear-gradient(45deg, #654949, transparent);
   z-index: 0;
 }
 .landingContainer__chocolateBoxPromo__promoWrapper {
@@ -1222,14 +1222,14 @@
   }
 }
 .landingContainer__megaWeightContainer__wrapper__dark {
-  background: #7D5A5A;
+  background: rgba(125, 90, 90, 0.95);
 }
 .landingContainer__megaWeightContainer__wrapper__dark p {
   color: #FAF2F2;
   font-size: 2.2rem;
 }
 .landingContainer__megaWeightContainer__wrapper__light {
-  background: #FAF2F2;
+  background: rgba(250, 242, 242, 0.95);
 }
 .landingContainer__megaWeightContainer__wrapper__light p {
   color: #7D5A5A;
@@ -1272,7 +1272,7 @@
 }
 .landingContainer__megaWeightContainer__cookingChocolateContainer {
   width: 50%;
-  background: url("../../assets/images/chocolatecubes.jpg");
+  background: url("../../assets/images/cooking.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: flex;
@@ -1402,9 +1402,8 @@
 .landingContainer__ourCompanyContainer {
   width: 100%;
   height: 40rem;
-  background: url("../../assets/images/always-grey.png");
-  background-repeat: repeat;
-  background-color: #7D5A5A;
+  background: #9c6d6d;
+  background: radial-gradient(circle, #9c6d6d 20%, #9c6d6d 50%, #7d5a5a 80%);
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -4172,7 +4171,7 @@
   flex-flow: column;
   align-items: center;
   margin: 2rem;
-  padding: 2rem 0;
+  padding: 2rem;
 }
 .adminStatsContainer__bottomSection__topBlock__generalStats__title {
   margin: 2rem 0;

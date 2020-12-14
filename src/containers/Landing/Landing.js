@@ -137,8 +137,8 @@ const Landing = React.forwardRef((props, ref) => {
                             'landingContainer__videoContainer__videoOverlay__slogan'
                         }
                     >
-                        The finest chocolate,
-                        <br /> you Deserve
+                        The finest, <br />
+                        organic handmade <br /> chocolate
                     </h1>
                     <NavLink
                         className={
