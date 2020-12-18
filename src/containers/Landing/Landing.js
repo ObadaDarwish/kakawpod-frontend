@@ -138,7 +138,7 @@ const Landing = React.forwardRef((props, ref) => {
                         }
                     >
                         The finest, <br />
-                        organic handmade <br /> chocolate
+                        handmade chocolate
                     </h1>
                     <NavLink
                         className={

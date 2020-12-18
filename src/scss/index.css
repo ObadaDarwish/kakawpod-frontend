@@ -1185,7 +1185,9 @@
 .landingContainer__megaWeightContainer {
   display: flex;
   flex-flow: row;
+  justify-content: space-between;
   position: relative;
+  margin: 5rem;
 }
 @media (max-width: 1025px) {
   .landingContainer__megaWeightContainer {
@@ -1205,8 +1207,8 @@
   width: 50rem;
   height: 20rem;
   transition: all 0.5s ease-in-out;
-  margin: 10rem 4rem;
-  padding: 3rem;
+  padding: 1rem 3rem;
+  margin-bottom: 5rem;
   display: flex;
   flex-flow: row;
   justify-content: center;
@@ -1217,9 +1219,11 @@
   .landingContainer__megaWeightContainer__wrapper {
     display: flex;
     flex-flow: column;
-    height: 25rem;
-    width: 90%;
-    margin: 6rem 2rem;
+    padding: 2rem;
+    height: 20rem;
+    width: 85%;
+    margin: 2rem;
+    margin-bottom: 5rem;
   }
 }
 .landingContainer__megaWeightContainer__wrapper__dark {
@@ -1272,7 +1276,8 @@
   font-weight: bold;
 }
 .landingContainer__megaWeightContainer__cookingChocolateContainer {
-  width: 50%;
+  width: 49.5%;
+  height: 55rem;
   background: url("../../assets/images/cooking.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -1280,21 +1285,8 @@
   flex-flow: row;
   justify-content: center;
   align-items: center;
+  align-items: flex-end;
   position: relative;
-}
-.landingContainer__megaWeightContainer__cookingChocolateContainer:after {
-  position: absolute;
-  right: -0.5rem;
-  content: "";
-  width: 1rem;
-  height: 100%;
-  z-index: 1;
-  background: #bfa4a4;
-}
-@media (max-width: 1024.98px) {
-  .landingContainer__megaWeightContainer__cookingChocolateContainer:after {
-    display: none;
-  }
 }
 @media (max-width: 1024.98px) {
   .landingContainer__megaWeightContainer__cookingChocolateContainer {
@@ -1302,7 +1294,8 @@
   }
 }
 .landingContainer__megaWeightContainer__wholeSaleContainer {
-  width: 50%;
+  width: 49.5%;
+  height: 55rem;
   background: url("../../assets/images/wholeSale.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -1311,6 +1304,7 @@
   flex-flow: row;
   justify-content: center;
   align-items: center;
+  align-items: flex-end;
 }
 @media (max-width: 1024.98px) {
   .landingContainer__megaWeightContainer__wholeSaleContainer {
