@@ -113,11 +113,10 @@ const Header = ({ scrollToContact, scrollToAbout }) => {
                         >
                             <img
                                 src={icon}
-                                name="ODs chocolate logo"
-                                alt="ODs chocolate logo"
+                                name="KakawPod logo"
+                                alt="KakawPod logo"
                             />
-                            <p>D&H</p>
-                            <span>Chocolate</span>
+                            <p>KakawPod</p>
                         </Link>
                     </section>
                 )}

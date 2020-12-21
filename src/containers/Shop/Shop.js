@@ -27,7 +27,7 @@ const Shop = ({ match }) => {
                             className={
                                 'shopContainer__carousel__carousel-item__image'
                             }
-                            alt={'ODs chocolate promotion banner'}
+                            alt={'KakawPod promotion banner'}
                             src={banner}
                         />
                     </div>
@@ -36,7 +36,7 @@ const Shop = ({ match }) => {
                             className={
                                 'shopContainer__carousel__carousel-item__image'
                             }
-                            alt={'ODs chocolate promotion banner'}
+                            alt={'KakawPod promotion banner'}
                             src={banner}
                         />
                         <div

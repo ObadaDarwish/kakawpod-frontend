@@ -84,7 +84,7 @@ function App() {
         <>
             {/*<ScrollToTop>*/}
             <Helmet>
-                <title>{'ODs chocolate'}</title>
+                <title>{'KakawPod'}</title>
                 <meta name="description" content="Nested component" />
             </Helmet>
             <div className={'appContainer'} onClick={checkDropDownCart}>

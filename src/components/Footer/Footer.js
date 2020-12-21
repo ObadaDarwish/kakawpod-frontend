@@ -52,15 +52,15 @@ const Footer = () => {
                             'footerContainer__topSection__rightBlock__email'
                         }
                     >
-                        <a href={'mailto:support@odschocolate.com'}>
-                            support@odschocolate.com
+                        <a href={'mailto:support@kakawpod.com'}>
+                            support@kakawpod.com
                         </a>
                     </div>
                 </div>
             </section>
             <section className={'footerContainer__bottomSection'}>
                 <CopyrightIcon />
-                <p>2020 D&H chocolate</p>
+                <p>2020 KakawPod</p>
             </section>
         </div>
     );

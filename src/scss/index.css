@@ -342,7 +342,7 @@
   height: 10rem;
   background: #f5dada;
   border-radius: 0.3rem;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem;
   box-shadow: 0 0 2px 3px #ead2d2;
 }
 @media (max-width: 1024.98px) {
@@ -365,7 +365,6 @@
   font-size: 2.2rem;
   text-align: center;
   line-height: 2.5rem;
-  padding: 0 1.5rem;
 }
 @media (max-width: 1024.98px) {
   .headerOuterContainer__headerContainer__logo__wrapper p {
